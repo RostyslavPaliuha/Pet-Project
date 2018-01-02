@@ -2,6 +2,7 @@ package ua.com.social.demo.entity.impl;
 
 import ua.com.social.demo.entity.DomainObject;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,9 +15,18 @@ public class Conversation implements DomainObject {
     private String companionName;
     private String companionLastName;
     private LocalDateTime lastMsgDate;
+    private String lastMessageContent;
     private List<Message> messageList;
 
     public Conversation() {
+    }
+
+    public String getLastMessageContent() {
+        return lastMessageContent;
+    }
+
+    public void setLastMessageContent(String lastMessageContent) {
+        this.lastMessageContent = lastMessageContent;
     }
 
     public List<Message> getMessageList() {
@@ -87,7 +97,7 @@ public class Conversation implements DomainObject {
         return lastMsgDate;
     }
 
-    public void setLastMsgDate(LocalDateTime lastMsgDate) {
-        this.lastMsgDate = lastMsgDate;
+    public void setLastMsgDate(Timestamp lastMsgDate) {
+        this.lastMsgDate = lastMsgDate.toLocalDateTime();
     }
 }

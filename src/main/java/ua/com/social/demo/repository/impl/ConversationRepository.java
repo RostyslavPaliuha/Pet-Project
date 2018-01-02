@@ -53,7 +53,23 @@ public class ConversationRepository implements EntityRepository<Conversation>, E
 
     @Override
     public List<Conversation> getAll(Integer profileId) {
-        return jdbcOperations.query("SELECT * FROM conversation WHERE profile_id= ? And companion_id=?", new Object[]{profileId,profileId}, new ConversationRowMapper());
+        return jdbcOperations.query("SELECT\n" +
+                "  c.conversation_id,\n" +
+                "  c.profile_id,\n" +
+                "  c.companion_id,\n" +
+                "  pd.first_name  AS profile_lastname,\n" +
+                "  pd.last_name   AS profile_name,\n" +
+                "  pd2.first_name AS companion_name,\n" +
+                "  pd2.last_name  AS companion_lastname,\n" +
+                "  m.message_content AS message,\n" +
+                "  m.message_date AS date\n" +
+                "FROM conversation c\n" +
+                "  JOIN profile_details pd ON\n" +
+                "                            pd.profile_id = c.profile_id\n" +
+                "  JOIN profile_details pd2 ON pd2.profile_id = c.companion_id\n" +
+                "  JOIN message m ON m.conversation_id=c.conversation_id\n" +
+                "WHERE c.profile_id = ? OR c.companion_id=?\n" +
+                "ORDER BY m.message_id DESC LIMIT 1", new Object[]{profileId,profileId}, new ConversationRowMapper());
 
     }
 
