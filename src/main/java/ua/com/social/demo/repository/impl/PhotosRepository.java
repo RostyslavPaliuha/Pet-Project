@@ -17,9 +17,9 @@ public class PhotosRepository implements EntityRepository<Photo> {
 
     @Override
     public void persist(Photo photo) {
-        Object[] params = new Object[]{photo.getPhotoId(), photo.getPhotoData(), photo.getAlbumId(), photo.getAvatar()};
-        int[] types = new int[]{Types.BLOB, Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.INTEGER};
-        jdbcOperations.update("INSERT INTO photo(photo_data, album_id, photo_name, description, avatar) VALUES (?,?,?,?,?);", params, types);
+        Object[] params = new Object[]{photo.getPhotoData(),photo.getAlbumId(),photo.getPhotoName(),photo.getPhotoDescription(),  photo.getAvatar()};
+
+        jdbcOperations.update("INSERT INTO photo(photo_data, album_id, photo_name, description, avatar) VALUES (?,?,?,?,?);", params);
     }
 
     @Override

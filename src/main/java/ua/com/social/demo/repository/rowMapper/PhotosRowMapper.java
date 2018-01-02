@@ -8,14 +8,16 @@ import com.mysql.cj.jdbc.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PhotosRowMapper implements RowMapper <Photo>{
+public class PhotosRowMapper implements RowMapper<Photo> {
     @Override
     public Photo mapRow(ResultSet rs, int rowNum) throws SQLException {
         Photo photo = new Photo();
         photo.setPhotoId(rs.getInt("photo_id"));
-        photo.setPhotoData((Blob) rs.getBlob("photo_data"));
+        photo.setPhotoData(rs.getString("photo_data"));
+        photo.setPhotoName(rs.getString("photo_name"));
+        photo.setPhotoDescription(rs.getString("description"));
         photo.setAlbumId(rs.getInt("album_id"));
-        photo.setAvatar(rs.getInt("profile_id"));
+        photo.setAvatar(rs.getInt("avatar"));
         return photo;
     }
 }

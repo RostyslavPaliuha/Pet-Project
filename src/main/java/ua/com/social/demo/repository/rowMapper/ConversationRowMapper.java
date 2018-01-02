@@ -25,7 +25,7 @@ public class ConversationRowMapper implements RowMapper<Conversation> {
             fullConversation.setProfileName(rs.getString("profile_name"));
             fullConversation.setProfileLastName(rs.getString("profile_lastname"));
             fullConversation.setCompanionName(rs.getString("companion_name"));
-            fullConversation.setCompanionName(rs.getString("companion_lastname"));
+            fullConversation.setCompanionLastName(rs.getString("companion_lastname"));
             fullConversation.setLastMsgDate(rs.getTimestamp("date"));
             fullConversation.setLastMessageContent(rs.getString("message"));
             return fullConversation;

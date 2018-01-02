@@ -17,6 +17,10 @@ public class AlbumServiceImpl {
     @Autowired
     private PhotosRepository photosRepository;
 
+    public int createAlbum(Album album) {
+        return albumRepository.persistAndRetrieveId(album);
+    }
+
     public List<Album> getAllAlbums(Integer profileId) {
         return albumRepository.getAll(profileId);
     }

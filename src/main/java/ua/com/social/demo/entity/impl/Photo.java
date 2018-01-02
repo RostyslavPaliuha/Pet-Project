@@ -3,17 +3,16 @@ package ua.com.social.demo.entity.impl;
 
 import ua.com.social.demo.entity.DomainObject;
 
-import java.sql.Blob;
 
 public class Photo implements DomainObject {
     private int photoId;
     private String photoName;
     private String photoDescription;
-    private Blob photoData;
+    private String photoData;
     private int albumId;
     private int avatar;
 
-    public Photo(int photoId, String photoName, String photoDescription, Blob photoData, int albumId, int avatar) {
+    public Photo(int photoId, String photoName, String photoDescription, String photoData, int albumId, int avatar) {
         this.photoId = photoId;
         this.photoName = photoName;
         this.photoDescription = photoDescription;
@@ -33,11 +32,11 @@ public class Photo implements DomainObject {
         this.photoId = photoId;
     }
 
-    public Blob getPhotoData() {
+    public String getPhotoData() {
         return photoData;
     }
 
-    public void setPhotoData(Blob photoData) {
+    public void setPhotoData(String photoData) {
         this.photoData = photoData;
     }
 

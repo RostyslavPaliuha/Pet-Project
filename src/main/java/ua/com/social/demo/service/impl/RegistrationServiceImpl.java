@@ -35,6 +35,9 @@ public class RegistrationServiceImpl {
         profileDetails.setSex(fullProfileDto.getSex());
         profileDetails.setProfileId(profileId);
         Integer profileDetailId = profileDetailsRepository.persistAndRetrieveId(profileDetails);
-
+        Album album=new Album();
+        album.setProfileId(profileId);
+        album.setAlbumName("Default");
+        albumRepository.persistAndRetrieveId(album);
     }
 }
