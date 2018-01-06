@@ -25,6 +25,10 @@ import ua.com.social.demo.entity.impl.Account;
 
 import javax.sql.DataSource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -47,8 +51,7 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    public void persist() throws Exception {
-
+    public void persist_andGetByEmail() throws Exception {
         accountRepository.persist(account);
         Account actual = accountRepository.getByEmail(account);
         assertEquals(account.getEmail(), actual.getEmail());
@@ -62,19 +65,11 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    public void getAll() throws Exception {
-    }
-
-    @Test
     public void delete() throws Exception {
+        account.setEmail("pro@gmail.com");
+        accountRepository.delete(new Account(1));
+        assertNull(accountRepository.getByEmail(account));
     }
 
-    @Test
-    public void get() throws Exception {
-    }
-
-    @Test
-    public void getByEmail() throws Exception {
-    }
 
 }

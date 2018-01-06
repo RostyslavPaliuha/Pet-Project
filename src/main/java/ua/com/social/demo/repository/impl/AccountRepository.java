@@ -3,6 +3,7 @@ package ua.com.social.demo.repository.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -49,7 +50,7 @@ public class AccountRepository implements EntityRepository<Account>,ExtendedEnti
 
     @Override
     public void delete(Account account) {
-        jdbcOperations.update("DELETE FROM account WHERE data_id =" + account.getAccountId() + ";");
+        jdbcOperations.update("DELETE FROM account WHERE account_id =" + account.getAccountId() + ";");
     }
 
     @Override
@@ -58,6 +59,13 @@ public class AccountRepository implements EntityRepository<Account>,ExtendedEnti
     }
 
     public Account getByEmail(Account account) {
-        return jdbcOperations.queryForObject("SELECT * FROM account where email= ?", new Object[]{account.getEmail()}, new AccountRowMapper());
+        Account accountByEmail;
+        try {
+           accountByEmail = jdbcOperations.queryForObject("SELECT * FROM account WHERE email= ?", new Object[]{account.getEmail()}, new AccountRowMapper());
+
+       }catch(EmptyResultDataAccessException exception){
+           return null;
+       }
+       return accountByEmail;
     }
 }
