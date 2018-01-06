@@ -13,7 +13,7 @@ public class ProfileDetailsRowMapper implements RowMapper<ProfileDetails> {
     @Override
     public ProfileDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
        ProfileDetails profileDetails=new ProfileDetails();
-       profileDetails.setProfileDetailsId(rs.getInt("profile_detatils_id"));
+       profileDetails.setProfileDetailsId(rs.getInt("profile_details_id"));
         profileDetails.setFirstName(rs.getString("first_name"));
         profileDetails.setLastName(rs.getString("last_name"));
         profileDetails.setSex(rs.getString("sex"));

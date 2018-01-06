@@ -30,7 +30,7 @@ public class ProfileDetailsRepository implements EntityRepository<ProfileDetails
 
     @Override
     public void delete(ProfileDetails profileDetails) {
-        jdbcOperations.update("DELETE FROM profile_details WHERE profile_details_id =" + profileDetails.getProfileDetailsId() + ";");
+        jdbcOperations.update("DELETE FROM profile_details WHERE profile_details_id =?",new Object[]{profileDetails.getProfileDetailsId()});
     }
 
     @Override
@@ -59,6 +59,6 @@ public class ProfileDetailsRepository implements EntityRepository<ProfileDetails
         return null;
     }
     public void update(ProfileDetails profileDetails){
-        jdbcOperations.query("UPDATE  profile_details SET first_name=?,last_name=?,sex=?,age=? WHERE profile_id=?",new Object[]{profileDetails.getProfileId()},new ProfileDetailsRowMapper());
+        jdbcOperations.update("UPDATE  profile_details SET first_name=?,last_name=?,sex=?,age=? WHERE profile_id=?",profileDetails.getFirstName(),profileDetails.getLastName(),profileDetails.getSex(),profileDetails.getAge(),profileDetails.getProfileId());
     }
 }

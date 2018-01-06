@@ -10,13 +10,11 @@ public class ProfileDetails implements DomainObject {
     private Integer age;
     private Integer profileId;
 
-    public ProfileDetails(Integer profileDetailsId, String firstName, String lastName, Sex sex, Integer age, Integer profileId) {
-        this.profileDetailsId = profileDetailsId;
+    public ProfileDetails( String firstName, String lastName, Sex sex, Integer age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
         this.age = age;
-        this.profileId = profileId;
     }
 
     public ProfileDetails() {
