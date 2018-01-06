@@ -2,6 +2,7 @@ package ua.com.social.demo.repository.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -33,7 +34,7 @@ public class ProfileDetailsRepository implements EntityRepository<ProfileDetails
     }
 
     @Override
-    public ProfileDetails get(Integer id) {
+    public ProfileDetails get(Integer id) throws EmptyResultDataAccessException {
         return jdbcOperations.queryForObject("SELECT * FROM profile_details where profile_id= ?", new Object[]{id}, new ProfileDetailsRowMapper());
     }
 

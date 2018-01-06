@@ -21,20 +21,20 @@ public class ProfileServiceImpl implements ProfileService {
             return profileRepository.persistAndRetrieveId(profile);
         } catch (Exception e) {
             LOG.error("Error while saving data" + e.getMessage(), e);
+            return new Integer(null);
         }
-        return new Integer(null);
     }
 
     @Override
     public Profile get(Integer id) {
         Profile profile = null;
         try {
-            profile = profileRepository.get(id);
+            return profile = profileRepository.get(id);
         } catch (EmptyResultDataAccessException e) {
             LOG.error("Error while saving data" + e.getMessage(), e);
-            return null;
+            return profile;
         }
-        return profile;
+
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ProfileServiceImpl implements ProfileService {
             return true;
         } catch (Exception e) {
             LOG.error("Error while saving data" + e.getMessage(), e);
+            return false;
         }
-        return false;
     }
 }
