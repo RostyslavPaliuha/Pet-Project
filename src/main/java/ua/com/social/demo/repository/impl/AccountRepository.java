@@ -58,14 +58,8 @@ public class AccountRepository implements EntityRepository<Account>,ExtendedEnti
         return jdbcOperations.queryForObject("SELECT * FROM account where account_id= ?", new Object[]{id}, new AccountRowMapper());
     }
 
-    public Account getByEmail(Account account) {
-        Account accountByEmail;
-        try {
-           accountByEmail = jdbcOperations.queryForObject("SELECT * FROM account WHERE email= ?", new Object[]{account.getEmail()}, new AccountRowMapper());
+    public Account getByEmail(Account account) throws EmptyResultDataAccessException {
+        return jdbcOperations.queryForObject("SELECT * FROM account WHERE email= ?", new Object[]{account.getEmail()}, new AccountRowMapper());
 
-       }catch(EmptyResultDataAccessException exception){
-           return null;
-       }
-       return accountByEmail;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
@@ -64,11 +65,12 @@ public class AccountRepositoryTest {
         assertEquals(new Integer(3), id);
     }
 
-    @Test
+    @Test(expected = EmptyResultDataAccessException.class)
     public void delete() throws Exception {
         account.setEmail("pro@gmail.com");
         accountRepository.delete(new Account(1));
-        assertNull(accountRepository.getByEmail(account));
+       accountRepository.getByEmail(account);
+
     }
 
 
