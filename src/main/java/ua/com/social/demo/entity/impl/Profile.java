@@ -13,6 +13,11 @@ public class Profile implements DomainObject {
         this.onlineStatus = onlineStatus;
     }
 
+    public Profile(Integer accountId, Integer onlineStatus) {
+        this.accountId = accountId;
+        this.onlineStatus = onlineStatus;
+    }
+
     public Profile() {
     }
 
