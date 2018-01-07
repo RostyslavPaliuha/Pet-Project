@@ -15,7 +15,7 @@ import ua.com.social.demo.repository.rowMapper.FriendRowMapper;
 import java.sql.Types;
 import java.util.List;
 
-@Repository
+@Repository("friendListRepository")
 public class FriendListRepository implements EntityRepository<FriendList>, ExtendedEntityRepository<FriendList> {
     @Autowired
     private JdbcOperations jdbcOperations;
