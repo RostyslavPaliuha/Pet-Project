@@ -40,7 +40,7 @@ public class ProfileDetailsRepositoryTest {
         this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, 25);
     }
 
-    @Test//(expected = EmptyResultDataAccessException.class)
+    @Test(expected = EmptyResultDataAccessException.class)
     public void persist_Get_Update() throws Exception {
         Integer accountId = accountRepository.persistAndRetrieveId(account);
         profile.setAccountId(accountId);
@@ -55,6 +55,7 @@ public class ProfileDetailsRepositoryTest {
         assertEquals(profileDetails.getSex(), actualProfileDetails.getSex());
         ProfileDetails updateProfileDetails = new ProfileDetails("UpdatedTestName", "UpdatedTestLastNAme", Sex.male, 25);
         updateProfileDetails.setProfileId(profileId);
+        updateProfileDetails.setProfileDetailsId(profileDetailsId);
         detailsRepository.update(updateProfileDetails);
         ProfileDetails actualUpdatedProfileDetails = detailsRepository.get(profileId);
         assertEquals(actualUpdatedProfileDetails.getProfileDetailsId(), profileDetailsId);
@@ -62,10 +63,10 @@ public class ProfileDetailsRepositoryTest {
         assertEquals(actualUpdatedProfileDetails.getFirstName(), updateProfileDetails.getFirstName());
         assertEquals(actualUpdatedProfileDetails.getLastName(), updateProfileDetails.getLastName());
         assertEquals(actualUpdatedProfileDetails.getSex(), updateProfileDetails.getSex());
-       /* Must delete and throw EmptyResultDataAccessException
+       /* Must delete and throw EmptyResultDataAccessException */
         detailsRepository.delete(updateProfileDetails);
-        ProfileDetails profileDetails1=detailsRepository.get(profileId);
-        */
+        ProfileDetails checkProfileDetailsAfterDelete=detailsRepository.get(profileId);
+
 
     }
 

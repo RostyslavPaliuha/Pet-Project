@@ -1,4 +1,3 @@
-SET foreign_key_checks = 0;
 INSERT INTO social.account (email, password)
 VALUES ('pro@gmail.com', '$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni');
 INSERT INTO social.profile (account_id, online_status) VALUES (1, 0);

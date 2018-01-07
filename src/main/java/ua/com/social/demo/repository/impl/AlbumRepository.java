@@ -1,6 +1,7 @@
 package ua.com.social.demo.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -28,11 +29,11 @@ public class AlbumRepository implements EntityRepository<Album>, ExtendedEntityR
 
     @Override
     public void delete(Album album) {
-        jdbcOperations.update("DELETE FROM album WHERE album_id =" + album.getAlbumId() + ";");
+        jdbcOperations.update("DELETE FROM album WHERE album_id =?",new Object[]{album.getAlbumId()});
     }
 
     @Override
-    public Album get(Integer id) {
+    public Album get(Integer id) throws EmptyResultDataAccessException {
         return jdbcOperations.queryForObject("SELECT * FROM album WHERE album_id= ?", new Object[]{id}, new AlbumRowMapper());
     }
 

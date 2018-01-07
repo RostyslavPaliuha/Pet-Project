@@ -7,13 +7,13 @@ public class Album implements DomainObject {
     private String albumName;
     private Integer profileId;
 
-    public Album(Integer albumId,String albumName, Integer profileId) {
-        this.albumId = albumId;
+    public Album(String albumName, Integer profileId) {
         this.albumName=albumName;
         this.profileId = profileId;
     }
 
     public Album() {
+
     }
 
     public Integer getAlbumId() {
