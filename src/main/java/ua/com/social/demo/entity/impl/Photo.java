@@ -5,19 +5,17 @@ import ua.com.social.demo.entity.DomainObject;
 
 
 public class Photo implements DomainObject {
-    private int photoId;
+    private Integer photoId;
     private String photoName;
     private String photoDescription;
     private String photoData;
     private int albumId;
     private int avatar;
 
-    public Photo(int photoId, String photoName, String photoDescription, String photoData, int albumId, int avatar) {
-        this.photoId = photoId;
+    public Photo(String photoName, String photoDescription, String photoData, int avatar) {
         this.photoName = photoName;
         this.photoDescription = photoDescription;
         this.photoData = photoData;
-        this.albumId = albumId;
         this.avatar = avatar;
     }
 

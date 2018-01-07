@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS social.message (
 
 CREATE TABLE IF NOT EXISTS social.photo (
   photo_id    INT(11)     NOT NULL AUTO_INCREMENT,
-  photo_data  BLOB        NULL     DEFAULT NULL,
+  photo_data  VARCHAR(8000)       NULL     DEFAULT NULL,
   album_id    INT(11)     NOT NULL,
   photo_name  VARCHAR(45) NOT NULL,
   description TEXT(1000)  NULL,
