@@ -1,4 +1,4 @@
-package ua.com.social.demo.service.impl;
+package ua.com.social.demo.repository.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
