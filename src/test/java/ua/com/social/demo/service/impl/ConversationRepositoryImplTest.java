@@ -1,4 +1,4 @@
-package ua.com.social.demo.repository.impl;
+package ua.com.social.demo.service.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,10 +9,12 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.entity.impl.*;
+import ua.com.social.demo.repository.impl.*;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource(locations = "classpath:test-application.properties")
@@ -21,7 +23,7 @@ import static org.junit.Assert.*;
         @Sql(scripts = "classpath:sql/insertdata.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 
-public class FriendListRepositoryTest {
+public class ConversationRepositoryImplTest {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -29,19 +31,23 @@ public class FriendListRepositoryTest {
     @Autowired
     private ProfileDetailsRepository detailsRepository;
     @Autowired
-    private FriendListRepository friendListRepository;
+    private ConversationRepository conversationRepository;
     private Account account;
     private Profile profile;
     private ProfileDetails profileDetails;
-    private FriendList friendList;
-    public FriendListRepositoryTest() {
+    private Conversation firstConversation;
+    private Conversation secondConversation;
+
+    public ConversationRepositoryImplTest() {
         this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         this.profile = new Profile();
         this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, 25);
-        this.friendList=new FriendList();
+        this.firstConversation = new Conversation();
+        this.secondConversation = new Conversation();
     }
+
     @Test
-    public void addFriend_checkFriends_deleteFriend_checkFriends() throws Exception {
+    public void createAcc_createConversation_reviewConversation_reviewConversations() throws Exception {
         Integer accountId = accountRepository.persistAndRetrieveId(account);
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
@@ -49,21 +55,22 @@ public class FriendListRepositoryTest {
         profileDetails.setProfileId(profileId);
         Integer profileDetailsId = detailsRepository.persistAndRetrieveId(profileDetails);
         ProfileDetails actualProfileDetails = detailsRepository.get(profileId);
-        friendList.setProfileId(profileId);
-        friendList.setFriendProfileId(1);
-        friendListRepository.persist(friendList);
-        List<Friend> friends=friendListRepository.getFriends(profileId);
-        assertEquals(new Integer(1),new Integer(friends.size()));
-        List<Friend> myFriendFriends=friendListRepository.getFriends(1);
-        assertEquals(new Integer(2),new Integer(myFriendFriends.size()));
-        assertEquals("Rostyslav",friends.get(0).getFirstName());
-        friendListRepository.delete(friendList);
-       List<Friend>afterDeleteFriendList= friendListRepository.getFriends(profileId);
-        assertEquals(new Integer(0),new Integer(afterDeleteFriendList.size()));
-        List<Friend> myFriendFriendsAfterDelete=friendListRepository.getFriends(1);
-        assertEquals(new Integer(1),new Integer(myFriendFriendsAfterDelete.size()));
+        firstConversation.setProfileId(profileId);
+        firstConversation.setCompanionId(1);
+        secondConversation.setProfileId(profileId);
+        secondConversation.setCompanionId(2);
+        Integer conversationId = conversationRepository.persistAndRetrieveId(firstConversation);
+        Integer secondConversationId = conversationRepository.persistAndRetrieveId(secondConversation);
+        assertEquals(new Integer(1), conversationId);
+        assertEquals(new Integer(2),secondConversationId);
+        Conversation certainConversation = conversationRepository.getByProfileIdCompanionId(profileId, 1);
+        Conversation certainSecondConversation = conversationRepository.getByProfileIdCompanionId(profileId, 2);
+        assertEquals(firstConversation.getProfileId(), certainConversation.getProfileId());
+        assertEquals(firstConversation.getCompanionId(), certainConversation.getCompanionId());
+        assertEquals(secondConversation.getProfileId(), certainSecondConversation.getProfileId());
+        assertEquals(secondConversation.getCompanionId(), certainSecondConversation.getCompanionId());
+        List<Conversation> conversations = conversationRepository.getAll(profileId);
+        assertEquals(2, conversations.size());//Some bug!
     }
-
-
 
 }
