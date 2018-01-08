@@ -1,4 +1,4 @@
-package ua.com.social.demo.repository.impl;
+package it.ua.com.social.demo.repository.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,15 +9,19 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.entity.impl.Sex;
+import ua.com.social.demo.repository.impl.AccountRepository;
+import ua.com.social.demo.repository.impl.ProfileDetailsRepository;
+import ua.com.social.demo.repository.impl.ProfileRepository;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 @TestPropertySource(locations = "classpath:test-application.properties")
 @SqlGroup({
         @Sql(scripts = "classpath:sql/create-social.sql"),

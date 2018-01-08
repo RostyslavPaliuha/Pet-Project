@@ -1,4 +1,4 @@
-package ua.com.social.demo.repository.impl;
+package it.ua.com.social.demo.repository.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,23 +8,25 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.*;
+import ua.com.social.demo.repository.impl.AccountRepository;
+import ua.com.social.demo.repository.impl.FriendListRepository;
+import ua.com.social.demo.repository.impl.ProfileDetailsRepository;
+import ua.com.social.demo.repository.impl.ProfileRepository;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 @TestPropertySource(locations = "classpath:test-application.properties")
 @SqlGroup({
         @Sql(scripts = "classpath:sql/create-social.sql"),
         @Sql(scripts = "classpath:sql/insertdata.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 
-public class MessageRepositoryTest {
+public class FriendListRepositoryTest {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -32,25 +34,19 @@ public class MessageRepositoryTest {
     @Autowired
     private ProfileDetailsRepository detailsRepository;
     @Autowired
-    private ConversationRepository conversationRepository;
-    @Autowired
-    private MessageRepository messageRepository;
+    private FriendListRepository friendListRepository;
     private Account account;
     private Profile profile;
     private ProfileDetails profileDetails;
-    private Conversation firstConversation;
-    private Message message;
-
-    public MessageRepositoryTest() {
+    private FriendList friendList;
+    public FriendListRepositoryTest() {
         this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         this.profile = new Profile();
         this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, 25);
-        this.firstConversation = new Conversation();
-
+        this.friendList=new FriendList();
     }
-
     @Test
-    public void createAcc_createConversation_createMessage_delete() throws Exception {
+    public void addFriend_checkFriends_deleteFriend_checkFriends() throws Exception {
         Integer accountId = accountRepository.persistAndRetrieveId(account);
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
@@ -58,21 +54,21 @@ public class MessageRepositoryTest {
         profileDetails.setProfileId(profileId);
         Integer profileDetailsId = detailsRepository.persistAndRetrieveId(profileDetails);
         ProfileDetails actualProfileDetails = detailsRepository.get(profileId);
-        firstConversation.setProfileId(profileId);
-        firstConversation.setCompanionId(1);
-        Integer conversationId = conversationRepository.persistAndRetrieveId(firstConversation);
-        message = new Message();
-        message.setConversationId(conversationId);
-        message.setMessageDate(Timestamp.valueOf(LocalDateTime.now()));
-        message.setMessageContext("TEST MESSAGE!");
-        messageRepository.persist(message);
-        messageRepository.persist(message);
-        List<Message>messages=messageRepository.getAllByConversation(conversationId);
-        assertEquals(2,messages.size());
-        assertEquals(message.getMessageContext(),messages.get(0).getMessageContext());
-        message.setMessageId(messages.get(0).getMessageId());
-        messageRepository.delete(message);
-        List<Message>afterDeletemessages=messageRepository.getAllByConversation(conversationId);
-        assertEquals(1,afterDeletemessages.size());
+        friendList.setProfileId(profileId);
+        friendList.setFriendProfileId(1);
+        friendListRepository.persist(friendList);
+        List<Friend> friends=friendListRepository.getFriends(profileId);
+        assertEquals(new Integer(1),new Integer(friends.size()));
+        List<Friend> myFriendFriends=friendListRepository.getFriends(1);
+        assertEquals(new Integer(2),new Integer(myFriendFriends.size()));
+        assertEquals("Rostyslav",friends.get(0).getFirstName());
+        friendListRepository.delete(friendList);
+       List<Friend>afterDeleteFriendList= friendListRepository.getFriends(profileId);
+        assertEquals(new Integer(0),new Integer(afterDeleteFriendList.size()));
+        List<Friend> myFriendFriendsAfterDelete=friendListRepository.getFriends(1);
+        assertEquals(new Integer(1),new Integer(myFriendFriendsAfterDelete.size()));
     }
+
+
+
 }

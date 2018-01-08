@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS social.account (
   UNIQUE INDEX email_UNIQUE (email ASC)
 )
   ENGINE = InnoDB
-  AUTO_INCREMENT = 2;
+  AUTO_INCREMENT = 1;
 
 
 CREATE TABLE IF NOT EXISTS social.profile (
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS social.message (
 
 CREATE TABLE IF NOT EXISTS social.photo (
   photo_id    INT(11)     NOT NULL AUTO_INCREMENT,
-  photo_data  VARCHAR(8000)       NULL     DEFAULT NULL,
+  photo_data  LONGTEXT       NULL     DEFAULT NULL,
   album_id    INT(11)     NOT NULL,
   photo_name  VARCHAR(45) NOT NULL,
   description TEXT(1000)  NULL,

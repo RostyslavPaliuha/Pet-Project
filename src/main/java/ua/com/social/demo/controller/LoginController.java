@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ua.com.social.demo.entity.impl.Account;
-import ua.com.social.demo.repository.impl.ProfileRepository;
 import ua.com.social.demo.security.TokenAuthenticationService;
 import ua.com.social.demo.security.UserProxy;
 import ua.com.social.demo.service.AccountService;
@@ -26,7 +25,7 @@ public class LoginController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileService profileService;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -38,7 +37,7 @@ public class LoginController {
         logger.info("User with email going to login.");
         Account account = accountService.getByEmail(credential);
         if (account != null && passwordEncoder.matches(credential.getPassword(), account.getPassword())) {
-            Integer profileId = profileRepository.get(account.getAccountId()).getProfileId();
+            Integer profileId = profileService.get(account.getAccountId()).getProfileId();
             String fullToken = TokenAuthenticationService.createToken(account, profileId);
             logger.info("Token created.");
             response.addHeader(HEADER_NAME, fullToken);

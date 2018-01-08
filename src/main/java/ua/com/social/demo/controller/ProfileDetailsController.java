@@ -15,12 +15,12 @@ public class ProfileDetailsController {
     @Autowired
     private ProfileDetailsService profileDetailsService;
 
-    @GetMapping("api/profile/{id}/details")
-    public ProfileDetails get(@RequestParam("id") Integer profileId) {
+    @GetMapping("api/profile/{id}")
+    public ProfileDetails get(@PathVariable("id") Integer profileId) {
         return profileDetailsService.get(profileId);
     }
 
-    @PutMapping("api/profile/{id}/details/update")
+    @PutMapping("api/profile/{id}/update")
     public ResponseEntity update(@PathVariable("id") Integer profileId, @RequestBody ProfileDetails profileDetails, HttpServletRequest request) {
         if (profileId == TokenAuthenticationService.getAccountIdFromToken(request.getHeader("Authentication"))) {
             profileDetails.setProfileId(profileId);

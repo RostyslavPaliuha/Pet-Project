@@ -1,39 +1,24 @@
-package ua.com.social.demo.repository.impl;
+package it.ua.com.social.demo.repository.impl;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.jdbc.datasource.init.DatabasePopulator;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
+import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
-
-import javax.sql.DataSource;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import ua.com.social.demo.repository.impl.AccountRepository;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 @TestPropertySource(locations = "classpath:test-application.properties")
 @SqlGroup({
         @Sql(scripts = "classpath:sql/create-social.sql"),
@@ -41,6 +26,7 @@ import static org.junit.Assert.*;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class AccountRepositoryTest {
     @Autowired
+
     private AccountRepository accountRepository;
 
     private Account account;
@@ -69,7 +55,7 @@ public class AccountRepositoryTest {
     public void delete() throws Exception {
         account.setEmail("pro@gmail.com");
         accountRepository.delete(new Account(1));
-       accountRepository.getByEmail(account);
+        accountRepository.getByEmail(account);
 
     }
 

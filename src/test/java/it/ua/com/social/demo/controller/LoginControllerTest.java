@@ -1,4 +1,4 @@
-package ua.com.social.demo.controller;
+package it.ua.com.social.demo.controller;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,12 +11,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import ua.com.social.demo.DemoApplication;
+
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 public class LoginControllerTest {
     @Autowired
     private WebApplicationContext context;

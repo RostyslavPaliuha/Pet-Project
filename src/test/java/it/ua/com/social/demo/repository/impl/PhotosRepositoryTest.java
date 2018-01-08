@@ -1,4 +1,4 @@
-package ua.com.social.demo.repository.impl;
+package it.ua.com.social.demo.repository.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +9,11 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Photo;
+import ua.com.social.demo.repository.impl.AlbumRepository;
+import ua.com.social.demo.repository.impl.PhotosRepository;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -19,7 +22,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 @TestPropertySource(locations = "classpath:test-application.properties")
 @SqlGroup({
         @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:sql/create-social.sql"),
