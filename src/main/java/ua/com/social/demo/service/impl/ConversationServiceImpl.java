@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Conversation;
 import ua.com.social.demo.repository.impl.ConversationRepository;
+import ua.com.social.demo.service.ConversationService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class ConversationServiceImpl {
+@Service("conversationService")
+public class ConversationServiceImpl implements ConversationService {
     @Autowired
     private ConversationRepository conversationRepository;
 

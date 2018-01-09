@@ -1,10 +1,13 @@
 package ua.com.social.demo.entity.impl;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ua.com.social.demo.entity.DomainObject;
 
 
 public class Photo implements DomainObject {
+    @JsonIgnore
     private Integer photoId;
     private String photoName;
     private String photoDescription;
@@ -17,6 +20,10 @@ public class Photo implements DomainObject {
         this.photoDescription = photoDescription;
         this.photoData = photoData;
         this.avatar = avatar;
+    }
+
+    public Photo(String photoName) {
+        this.photoName = photoName;
     }
 
     public Photo() {

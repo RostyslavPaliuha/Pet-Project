@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ua.com.social.demo.entity.impl.Conversation;
 import ua.com.social.demo.entity.impl.Message;
+import ua.com.social.demo.service.ConversationService;
 import ua.com.social.demo.service.MessageService;
 import ua.com.social.demo.service.impl.ConversationServiceImpl;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class ConversationController {
 
     @Autowired
-    private ConversationServiceImpl conversationService;
+    private ConversationService conversationService;
     @Autowired
     private MessageService messageService;
 
@@ -41,7 +42,7 @@ public class ConversationController {
         }
     }
 
-    @GetMapping("api/profile/{id}/review-conversations/")
+    @GetMapping("api/profile/{id}/review-conversations")
     @ResponseStatus(HttpStatus.OK)
     public List<Conversation> reviewConversations(@PathVariable("id") Integer profileId) {
         return conversationService.reviewConversations(profileId);

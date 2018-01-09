@@ -20,6 +20,10 @@ public class Message implements DomainObject {
     public Message() {
     }
 
+    public Message(String messageContext) {
+        this.messageContext = messageContext;
+    }
+
     public int getMessageId() {
         return messageId;
     }

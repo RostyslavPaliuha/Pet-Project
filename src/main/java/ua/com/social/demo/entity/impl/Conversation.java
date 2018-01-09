@@ -21,6 +21,10 @@ public class Conversation implements DomainObject {
     public Conversation() {
     }
 
+    public Conversation(List<Message> messageList) {
+        this.messageList = messageList;
+    }
+
     public String getLastMessageContent() {
         return lastMessageContent;
     }

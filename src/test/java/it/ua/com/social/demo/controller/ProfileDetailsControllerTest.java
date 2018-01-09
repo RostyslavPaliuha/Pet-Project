@@ -54,17 +54,18 @@ public class ProfileDetailsControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         String token = mvcResult.getResponse().getHeader("Authentication");
-        mockMvc.perform(get("/api/profile/1").header("Authentication", token))
+        mockMvc.perform(get("/api/profile/1")
+                .header("Authentication", token))
                 .andExpect(status().isOk()).
                 andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("firstName").value("Test"))
                 .andExpect(jsonPath("lastName").value("Test"));
-        mockMvc.perform(put("/api/profile/2/update")
+        mockMvc.perform(put("/api/profile/1/update")
                 .header("Authentication", token)
                 .content("{\"firstName\":\"Rostyslav\",\"lastName\":\"Paliuha\"}")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
-        mockMvc.perform(put("/api/profile/1/update")
+        mockMvc.perform(put("/api/profile/2/update")
                 .header("Authentication", token)
                 .content("{\"firstName\":\"Rostyslav\",\"lastName\":\"Paliuha\"}")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))

@@ -31,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
-
 public class FriendsListControllerTest {
     private MockMvc mockMvc;
     @Autowired
@@ -49,6 +48,7 @@ public class FriendsListControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilters(springSecurityFilterChain).build();
         Mockito.when(friendListService.addFriend(friendList)).thenReturn(true);
         Mockito.when(friendListService.getFriendList(profileId)).thenReturn(friends);
+        Mockito.when(friendListService.delete(friendList)).thenReturn(true);
     }
 
     @Test
@@ -57,16 +57,18 @@ public class FriendsListControllerTest {
                 "\t\"email\":\"pro@gmail.com\",\n" +
                 "\t\"password\":\"1111\"\n" +
                 "}").contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk()).andDo(print())
+                .andExpect(status().isOk())
                 .andReturn();
-        String token =mvcResult.getResponse().getHeader("Authentication");
-        assertNotEquals("",token);
+        String token = mvcResult.getResponse().getHeader("Authentication");
+        assertNotEquals("", token);
         mockMvc.perform(post("/api/profile/1/add-friend/1").header("Authentication", token))
-                .andExpect(status().is(201)).andDo(print());
+                .andExpect(status().is(201));
         mockMvc.perform(get("/api/profile/1/friends").header("Authentication", token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print());
+        mockMvc.perform(delete("/api/profile/1/delete-friend/3").header("Authentication", token))
+                .andExpect(status().isOk());
     }
 
 }
