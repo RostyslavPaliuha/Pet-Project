@@ -11,7 +11,7 @@ import ua.com.social.demo.service.FriendListService;
 
 import java.util.List;
 
-@Service
+@Service("friendListService")
 public class FriendListServiceImpl implements FriendListService {
     private static final Logger LOG = Logger.getLogger(FriendListServiceImpl.class);
     @Autowired

@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
+import ua.com.social.demo.entity.impl.FriendList;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.service.ProfileDetailsService;
 
@@ -29,9 +30,6 @@ public class ProfileDetailsControllerTest {
     @Autowired
     private WebApplicationContext context;
     private MockMvc mockMvc;
-
-    public ProfileDetailsControllerTest() {
-    }
 
     @Before
     public void setup() {

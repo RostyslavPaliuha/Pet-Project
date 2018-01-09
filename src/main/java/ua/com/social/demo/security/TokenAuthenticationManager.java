@@ -22,9 +22,7 @@ public class TokenAuthenticationManager implements AuthenticationManager {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
         UserAuthentication userAuthentication = (UserAuthentication) authentication;
-
         try {
             int accountId = TokenAuthenticationService.getAccountIdFromToken(userAuthentication.getToken());
             String email = TokenAuthenticationService.getAccountEmailFromToken(userAuthentication.getToken());
@@ -33,7 +31,6 @@ public class TokenAuthenticationManager implements AuthenticationManager {
                     new TypeReference<List<Role>>() {
                     }
             );
-
             UserProxy userProxy = new UserProxy(accountId, email, authorities);
             userAuthentication.setPrincipal(userProxy);
             userAuthentication.setAuthenticated(true);
@@ -44,7 +41,6 @@ public class TokenAuthenticationManager implements AuthenticationManager {
             logger.info(ee.getMessage() + " Token must be refreshed");
             throw new BadCredentialsException("Token must be refreshed");
         }
-
         return userAuthentication;
     }
 }
