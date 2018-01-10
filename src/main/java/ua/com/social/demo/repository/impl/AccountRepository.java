@@ -1,7 +1,6 @@
 package ua.com.social.demo.repository.impl;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
@@ -19,7 +18,7 @@ import java.util.List;
 
 
 @Repository("accountRepository")
-public class AccountRepository implements EntityRepository<Account>,ExtendedEntityRepository<Account> {
+public class AccountRepository implements EntityRepository<Account>, ExtendedEntityRepository<Account> {
     @Autowired
     private JdbcOperations jdbcOperations;
 
@@ -34,13 +33,13 @@ public class AccountRepository implements EntityRepository<Account>,ExtendedEnti
     public Integer persistAndRetrieveId(Account account) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
-                    PreparedStatement ps =  connection.prepareStatement("INSERT INTO account(email,password) VALUES (?,?);", new String[]{"account_id"});
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO account(email,password) VALUES (?,?);", new String[]{"account_id"});
                     ps.setString(1, account.getEmail());
                     ps.setString(2, account.getPassword());
                     return ps;
                 },
                 keyHolder);
-        return  keyHolder.getKey().intValue();
+        return keyHolder.getKey().intValue();
     }
 
     @Override
@@ -55,11 +54,19 @@ public class AccountRepository implements EntityRepository<Account>,ExtendedEnti
 
     @Override
     public Account get(Integer id) {
-        return jdbcOperations.queryForObject("SELECT * FROM account where account_id= ?", new Object[]{id}, new AccountRowMapper());
+        return jdbcOperations.queryForObject("SELECT * FROM account WHERE account_id= ?", new Object[]{id}, new AccountRowMapper());
     }
 
     public Account getByEmail(Account account) throws EmptyResultDataAccessException {
         return jdbcOperations.queryForObject("SELECT * FROM account WHERE email= ?", new Object[]{account.getEmail()}, new AccountRowMapper());
 
+    }
+
+    public void updateEmail(String email, Integer profileId) {
+        jdbcOperations.update("UPDATE account SET email=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{email, profileId});
+    }
+
+    public void updatePassword(String password, Integer profileId) {
+        jdbcOperations.update("UPDATE account SET password=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{password, profileId});
     }
 }

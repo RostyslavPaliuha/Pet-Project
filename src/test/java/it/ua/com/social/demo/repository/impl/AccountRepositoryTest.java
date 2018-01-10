@@ -58,6 +58,18 @@ public class AccountRepositoryTest {
         accountRepository.getByEmail(account);
 
     }
+    @Test
+    public void update_get_assert(){
+        Account andriy=new Account();
+        andriy.setEmail("andriyMelnik@gmail.com");
+        andriy.setPassword("$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
+        accountRepository.updateEmail(andriy.getEmail(),3);
+        Account actual=accountRepository.getByEmail(andriy);
+        assertEquals(andriy.getEmail(),actual.getEmail());
+        assertEquals(andriy.getPassword(),actual.getPassword());
+        andriy.setPassword("$2y$10$P7c2zGPWZ9LLQPZiIhpJOu4WgglNabfottvvJkS1TewCSZitIfsbG");
+        accountRepository.updatePassword(andriy.getPassword(),3);
+    }
 
 
 }
