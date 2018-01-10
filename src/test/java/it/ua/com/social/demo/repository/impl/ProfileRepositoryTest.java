@@ -48,10 +48,8 @@ public class ProfileRepositoryTest {
         Profile actualProfile = profileRepository.get(accountId);
         assertEquals(profile.getAccountId(), actualProfile.getAccountId());
         assertEquals(profile.getOnlineStatus(), actualProfile.getOnlineStatus());
-        assertEquals(persistedProfileId, new Integer(3));
+        assertEquals(persistedProfileId, new Integer(4));
         profileRepository.delete(profile);
         profileRepository.get(accountId);
     }
-
-
 }

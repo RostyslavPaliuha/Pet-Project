@@ -8,9 +8,10 @@ import ua.com.social.demo.repository.impl.AccountRepository;
 import ua.com.social.demo.repository.impl.AlbumRepository;
 import ua.com.social.demo.repository.impl.ProfileDetailsRepository;
 import ua.com.social.demo.repository.impl.ProfileRepository;
+import ua.com.social.demo.service.RegistrationService;
 
 @Service("registrationService")
-public class RegistrationServiceImpl {
+public class RegistrationServiceImpl implements RegistrationService {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired

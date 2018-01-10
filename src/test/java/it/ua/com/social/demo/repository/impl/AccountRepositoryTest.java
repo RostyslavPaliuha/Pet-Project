@@ -48,7 +48,7 @@ public class AccountRepositoryTest {
     public void persistAndRetrieveId() throws Exception {
         account.setEmail("test2@gmail.com");
         Integer id = accountRepository.persistAndRetrieveId(account);
-        assertEquals(new Integer(3), id);
+        assertEquals(new Integer(4), id);
     }
 
     @Test(expected = EmptyResultDataAccessException.class)

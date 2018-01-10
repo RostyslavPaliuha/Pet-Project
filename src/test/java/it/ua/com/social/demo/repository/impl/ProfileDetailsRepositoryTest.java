@@ -70,28 +70,6 @@ public class ProfileDetailsRepositoryTest {
        /* Must delete and throw EmptyResultDataAccessException */
         detailsRepository.delete(updateProfileDetails);
         ProfileDetails checkProfileDetailsAfterDelete=detailsRepository.get(profileId);
-
-
-    }
-
-    @Test
-    public void delete() throws Exception {
-    }
-
-    @Test
-    public void get() throws Exception {
-    }
-
-    @Test
-    public void persistAndRetrieveId() throws Exception {
-    }
-
-    @Test
-    public void getAll() throws Exception {
-    }
-
-    @Test
-    public void update() throws Exception {
     }
 
 }
