@@ -7,6 +7,7 @@ import ua.com.social.demo.repository.EntityRepository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class ProfileDetailsRowMapper implements RowMapper<ProfileDetails> {
 
@@ -17,7 +18,7 @@ public class ProfileDetailsRowMapper implements RowMapper<ProfileDetails> {
         profileDetails.setFirstName(rs.getString("first_name"));
         profileDetails.setLastName(rs.getString("last_name"));
         profileDetails.setSex(rs.getString("sex"));
-        profileDetails.setAge(rs.getInt("age"));
+        profileDetails.setBirthDay((rs.getDate("birthday")).toLocalDate());
         profileDetails.setProfileId(rs.getInt("profile_id"));
         return profileDetails;
     }

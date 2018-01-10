@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS social.message (
 
 CREATE TABLE IF NOT EXISTS social.photo (
   photo_id    INT(11)     NOT NULL AUTO_INCREMENT,
-  photo_data  LONGTEXT       NULL     DEFAULT NULL,
+  photo_data  LONGTEXT    NULL     DEFAULT NULL,
   album_id    INT(11)     NOT NULL,
   photo_name  VARCHAR(45) NOT NULL,
   description TEXT(1000)  NULL,
@@ -113,7 +113,8 @@ CREATE TABLE IF NOT EXISTS social.profile_details (
   first_name         VARCHAR(45)             NOT NULL,
   last_name          VARCHAR(45)             NOT NULL,
   sex                ENUM ('male', 'female') NOT NULL,
-  age                INT(11)                 NOT NULL,
+  birthday           DATE                    NOT NULL,
+  country            VARCHAR(45)             NULL,
   profile_id         INT(11)                 NOT NULL,
   PRIMARY KEY (profile_details_id, profile_id),
   INDEX fk_profile_details_profile1_idx (profile_id ASC),

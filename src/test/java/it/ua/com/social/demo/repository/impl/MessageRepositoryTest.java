@@ -13,6 +13,7 @@ import ua.com.social.demo.entity.impl.*;
 import ua.com.social.demo.repository.impl.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class MessageRepositoryTest {
     public MessageRepositoryTest() {
         this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         this.profile = new Profile();
-        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, 25);
+        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992,03,16));
         this.firstConversation = new Conversation();
 
     }

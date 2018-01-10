@@ -2,21 +2,23 @@ package ua.com.social.demo.dto;
 
 import ua.com.social.demo.entity.DomainObject;
 
+import java.time.LocalDate;
+
 public class FullProfileDto implements DomainObject {
     private String email;
     private String password;
     private String firstName;
     private String lastName;
     private String sex;
-    private Integer age;
+    private LocalDate birthday;
 
-    public FullProfileDto(String email, String password, String firstName, String lastName, String sex, Integer age) {
+    public FullProfileDto(String email, String password, String firstName, String lastName, String sex, LocalDate birthday) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
-        this.age = age;
+        this.birthday = birthday;
     }
 
     public FullProfileDto() {
@@ -62,11 +64,11 @@ public class FullProfileDto implements DomainObject {
         this.sex = sex;
     }
 
-    public Integer getAge() {
-        return age;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 }

@@ -2,19 +2,22 @@ package ua.com.social.demo.entity.impl;
 
 import ua.com.social.demo.entity.DomainObject;
 
+import java.time.LocalDate;
+
 public class ProfileDetails implements DomainObject {
     private Integer profileDetailsId;
     private String firstName;
     private String lastName;
     private Sex sex;
-    private Integer age;
+    private LocalDate birthDay;
+    private String country;
     private Integer profileId;
 
-    public ProfileDetails( String firstName, String lastName, Sex sex, Integer age) {
+    public ProfileDetails(String firstName, String lastName, Sex sex, LocalDate birthDay) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.sex = sex;
-        this.age = age;
+        this.birthDay = birthDay;
     }
 
     public ProfileDetails() {
@@ -52,12 +55,20 @@ public class ProfileDetails implements DomainObject {
         this.sex = Sex.valueOf(sex);
     }
 
-    public Integer getAge() {
-        return age;
+    public LocalDate getBirthDay() {
+        return birthDay;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthDay(LocalDate birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Integer getProfileId() {

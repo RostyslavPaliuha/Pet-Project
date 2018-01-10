@@ -15,6 +15,7 @@ import ua.com.social.demo.repository.impl.FriendListRepository;
 import ua.com.social.demo.repository.impl.ProfileDetailsRepository;
 import ua.com.social.demo.repository.impl.ProfileRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -42,7 +43,7 @@ public class FriendListRepositoryTest {
     public FriendListRepositoryTest() {
         this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         this.profile = new Profile();
-        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, 25);
+        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992,03,16));
         this.friendList=new FriendList();
     }
     @Test

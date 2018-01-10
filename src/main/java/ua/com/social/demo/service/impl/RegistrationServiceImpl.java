@@ -32,7 +32,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         ProfileDetails profileDetails = new ProfileDetails();
         profileDetails.setFirstName(fullProfileDto.getFirstName());
         profileDetails.setLastName(fullProfileDto.getLastName());
-        profileDetails.setAge(fullProfileDto.getAge());
+        profileDetails.setBirthDay(fullProfileDto.getBirthday());
         profileDetails.setSex(fullProfileDto.getSex());
         profileDetails.setProfileId(profileId);
         Integer profileDetailId = profileDetailsRepository.persistAndRetrieveId(profileDetails);
