@@ -28,8 +28,8 @@ public class AlbumRepository implements EntityRepository<Album>, ExtendedEntityR
     }
 
     @Override
-    public void delete(Album album) {
-        jdbcOperations.update("DELETE FROM album WHERE album_id =?",new Object[]{album.getAlbumId()});
+    public void delete(Integer albumId) {
+        jdbcOperations.update("DELETE FROM album WHERE album_id =?",new Object[]{albumId});
     }
 
     @Override

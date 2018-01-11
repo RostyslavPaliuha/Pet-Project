@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
             accountRepository.persist(new Account(email, password));
             return true;
         } catch (Exception e) {
-            LOG.error("Error while saving data" + e.getMessage(), e);
+            LOG.error("Error while creating profile" + e.getMessage(), e);
             return false;
         }
     }
@@ -39,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
             accountRepository.delete(new Account(id));
             return true;
         } catch (Exception e) {
-            LOG.error("Error while deleting data" + e.getMessage(), e);
+            LOG.error("Error while deleting profile" + e.getMessage(), e);
             return false;
         }
     }
@@ -49,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             return accountRepository.get(id);
         } catch (Exception e) {
-            LOG.error("Error while getting data" + e.getMessage(), e);
+            LOG.error("Error while getting profile" + e.getMessage(), e);
         }
         return new Account();
     }
@@ -60,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (EmptyResultDataAccessException exception) {
             return null;
         } catch (Exception e) {
-            LOG.error("Error while getting data" + e.getMessage(), e);
+            LOG.error("Error while getting by email profile" + e.getMessage(), e);
         }
         return new Account();
     }
