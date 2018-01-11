@@ -4,16 +4,14 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.entity.impl.ProfileDetails;
-import ua.com.social.demo.repository.impl.ProfileDetailsRepository;
 import ua.com.social.demo.service.ProfileDetailsService;
 
 @Service
 public class ProfileDetailsServiceImpl implements ProfileDetailsService {
     private static final Logger LOG = Logger.getLogger(ProfileDetailsServiceImpl.class);
     @Autowired
-    private ProfileDetailsRepository profileDetailsRepository;
+    private ua.com.social.demo.repository.ProfileDetailsRepository profileDetailsRepository;
 
     @Override
     public boolean persist(ProfileDetails profileDetails) {
@@ -27,7 +25,7 @@ public class ProfileDetailsServiceImpl implements ProfileDetailsService {
         } catch (EmptyResultDataAccessException e) {
             LOG.error("Error while saving data" + e.getMessage(), e);
             return null;
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error("Error while saving data" + e.getMessage(), e);
             return null;
         }

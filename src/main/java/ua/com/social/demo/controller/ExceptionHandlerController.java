@@ -11,7 +11,8 @@ public class ExceptionHandlerController {
     private static final Logger LOG = Logger.getLogger(ExceptionHandlerController.class);
 
     @ExceptionHandler(RestException.class)
-    public @ResponseBody String handleException(RestException e) {
+    public @ResponseBody
+    String handleException(RestException e) {
         LOG.error("Ошибка: " + e.getMessage(), e);
         return "Ошибка: " + e.getMessage();
     }

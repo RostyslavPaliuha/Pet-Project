@@ -2,7 +2,7 @@ package ua.com.social.demo.entity.impl;
 
 import ua.com.social.demo.entity.DomainObject;
 
-public class Friend implements DomainObject{
+public class Friend implements DomainObject {
     private Integer friendProfileId;
     private String firstName;
     private String lastName;

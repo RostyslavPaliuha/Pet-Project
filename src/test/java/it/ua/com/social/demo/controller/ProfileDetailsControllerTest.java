@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
-import ua.com.social.demo.entity.impl.FriendList;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.service.ProfileDetailsService;
 
@@ -40,7 +39,7 @@ public class ProfileDetailsControllerTest {
         profileDetails.setProfileId(1);
         profileDetails.setFirstName("Test");
         profileDetails.setLastName("Test");
-        profileDetails.setBirthDay(LocalDate.of(1992,03,16));
+        profileDetails.setBirthDay(LocalDate.of(1992, 03, 16));
         profileDetails.setSex("male");
         Mockito.when(profileDetailsService.get(profileDetails.getProfileId()))
                 .thenReturn(profileDetails);

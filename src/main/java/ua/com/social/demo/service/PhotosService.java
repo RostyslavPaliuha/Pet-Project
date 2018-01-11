@@ -12,5 +12,6 @@ public interface PhotosService {
     public Photo get(Integer id);
 
     public boolean update(Photo photo);
+
     List<Photo> getAllfromAlbum(Integer albumId);
 }

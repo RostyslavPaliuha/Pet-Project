@@ -14,20 +14,19 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
-
 import ua.com.social.demo.entity.impl.Friend;
 import ua.com.social.demo.entity.impl.FriendList;
-
 import ua.com.social.demo.service.impl.FriendListServiceImpl;
 
 import javax.servlet.Filter;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
@@ -48,7 +47,7 @@ public class FriendsListControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilters(springSecurityFilterChain).build();
         Mockito.when(friendListService.addFriend(friendList)).thenReturn(true);
         Mockito.when(friendListService.getFriendList(profileId)).thenReturn(friends);
-        Mockito.when(friendListService.delete(friendList)).thenReturn(true);
+        Mockito.when(friendListService.delete(1, 2)).thenReturn(true);
     }
 
     @Test
@@ -61,7 +60,7 @@ public class FriendsListControllerTest {
                 .andReturn();
         String token = mvcResult.getResponse().getHeader("Authentication");
         assertNotEquals("", token);
-        mockMvc.perform(post("/api/profile/1/add-friend/1").header("Authentication", token))
+        mockMvc.perform(post("/api/profile/1/add-friend/3").header("Authentication", token))
                 .andExpect(status().is(201));
         mockMvc.perform(get("/api/profile/1/friends").header("Authentication", token))
                 .andExpect(status().isOk())

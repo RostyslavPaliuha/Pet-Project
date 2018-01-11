@@ -7,7 +7,6 @@ import ua.com.social.demo.entity.impl.Conversation;
 import ua.com.social.demo.entity.impl.Message;
 import ua.com.social.demo.service.ConversationService;
 import ua.com.social.demo.service.MessageService;
-import ua.com.social.demo.service.impl.ConversationServiceImpl;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

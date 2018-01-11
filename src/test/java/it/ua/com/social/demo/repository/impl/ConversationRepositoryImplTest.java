@@ -1,6 +1,5 @@
 package it.ua.com.social.demo.repository.impl;
 
-import org.apache.tomcat.jni.Local;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,15 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.*;
-import ua.com.social.demo.repository.impl.*;
+import ua.com.social.demo.repository.AccountRepository;
+import ua.com.social.demo.repository.ConversationRepository;
+import ua.com.social.demo.repository.ProfileDetailsRepository;
+import ua.com.social.demo.repository.ProfileRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
@@ -44,7 +46,7 @@ public class ConversationRepositoryImplTest {
     public ConversationRepositoryImplTest() {
         this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         this.profile = new Profile();
-        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992,03,16));
+        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992, 03, 16));
         this.firstConversation = new Conversation();
         this.secondConversation = new Conversation();
     }
@@ -65,7 +67,7 @@ public class ConversationRepositoryImplTest {
         Integer conversationId = conversationRepository.persistAndRetrieveId(firstConversation);
         Integer secondConversationId = conversationRepository.persistAndRetrieveId(secondConversation);
         assertEquals(new Integer(1), conversationId);
-        assertEquals(new Integer(2),secondConversationId);
+        assertEquals(new Integer(2), secondConversationId);
         Conversation certainConversation = conversationRepository.getByProfileIdCompanionId(profileId, 1);
         Conversation certainSecondConversation = conversationRepository.getByProfileIdCompanionId(profileId, 2);
         assertEquals(firstConversation.getProfileId(), certainConversation.getProfileId());
@@ -73,7 +75,7 @@ public class ConversationRepositoryImplTest {
         assertEquals(secondConversation.getProfileId(), certainSecondConversation.getProfileId());
         assertEquals(secondConversation.getCompanionId(), certainSecondConversation.getCompanionId());
         List<Conversation> conversations = conversationRepository.getAll(profileId);
-       // assertEquals(2, conversations.size());//Some bug!
+        // assertEquals(2, conversations.size());//Some bug!
     }
 
 }

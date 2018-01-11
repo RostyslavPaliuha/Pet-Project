@@ -3,23 +3,23 @@ package ua.com.social.demo.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.dto.FullProfileDto;
-import ua.com.social.demo.entity.impl.*;
-import ua.com.social.demo.repository.impl.AccountRepository;
-import ua.com.social.demo.repository.impl.AlbumRepository;
-import ua.com.social.demo.repository.impl.ProfileDetailsRepository;
-import ua.com.social.demo.repository.impl.ProfileRepository;
+import ua.com.social.demo.entity.impl.Account;
+import ua.com.social.demo.entity.impl.Album;
+import ua.com.social.demo.entity.impl.Profile;
+import ua.com.social.demo.entity.impl.ProfileDetails;
+import ua.com.social.demo.repository.ProfileRepository;
 import ua.com.social.demo.service.RegistrationService;
 
 @Service("registrationService")
 public class RegistrationServiceImpl implements RegistrationService {
     @Autowired
-    private AccountRepository accountRepository;
+    private ua.com.social.demo.repository.AccountRepository accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
-    private ProfileDetailsRepository profileDetailsRepository;
+    private ua.com.social.demo.repository.ProfileDetailsRepository profileDetailsRepository;
     @Autowired
-    private AlbumRepository albumRepository;
+    private ua.com.social.demo.repository.AlbumRepository albumRepository;
 
     public void register(FullProfileDto fullProfileDto) {
         Account account = new Account();
@@ -36,7 +36,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         profileDetails.setSex(fullProfileDto.getSex());
         profileDetails.setProfileId(profileId);
         Integer profileDetailId = profileDetailsRepository.persistAndRetrieveId(profileDetails);
-        Album album=new Album();
+        Album album = new Album();
         album.setProfileId(profileId);
         album.setAlbumName("Default");
         albumRepository.persistAndRetrieveId(album);

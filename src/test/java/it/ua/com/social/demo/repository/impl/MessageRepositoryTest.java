@@ -10,14 +10,14 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.*;
-import ua.com.social.demo.repository.impl.*;
+import ua.com.social.demo.repository.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
@@ -47,7 +47,7 @@ public class MessageRepositoryTest {
     public MessageRepositoryTest() {
         this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         this.profile = new Profile();
-        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992,03,16));
+        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992, 03, 16));
         this.firstConversation = new Conversation();
 
     }
@@ -70,12 +70,12 @@ public class MessageRepositoryTest {
         message.setMessageContext("TEST MESSAGE!");
         messageRepository.persist(message);
         messageRepository.persist(message);
-        List<Message>messages=messageRepository.getAllByConversation(conversationId);
-        assertEquals(2,messages.size());
-        assertEquals(message.getMessageContext(),messages.get(0).getMessageContext());
+        List<Message> messages = messageRepository.getAllByConversation(conversationId);
+        assertEquals(2, messages.size());
+        assertEquals(message.getMessageContext(), messages.get(0).getMessageContext());
         message.setMessageId(messages.get(0).getMessageId());
-        messageRepository.delete(message);
-        List<Message>afterDeletemessages=messageRepository.getAllByConversation(conversationId);
-        assertEquals(1,afterDeletemessages.size());
+        messageRepository.delete(message.getMessageId());
+        List<Message> afterDeletemessages = messageRepository.getAllByConversation(conversationId);
+        assertEquals(1, afterDeletemessages.size());
     }
 }

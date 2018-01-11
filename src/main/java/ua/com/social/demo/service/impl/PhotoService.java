@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Photo;
-import ua.com.social.demo.repository.impl.PhotosRepository;
 import ua.com.social.demo.service.PhotosService;
 
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 public class PhotoService implements PhotosService {
     private static final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
     @Autowired
-    private PhotosRepository photosRepository;
+    private ua.com.social.demo.repository.PhotosRepository photosRepository;
 
 
     @Override
@@ -44,9 +43,9 @@ public class PhotoService implements PhotosService {
 
     @Override
     public List<Photo> getAllfromAlbum(Integer albumId) {
-        try{
-           return photosRepository.getAllfromAlbum(albumId);
-        }catch(Exception e){
+        try {
+            return photosRepository.getAllFromAlbum(albumId);
+        } catch (Exception e) {
             LOG.error("Error while geting data" + e.getMessage(), e);
             return null;
         }

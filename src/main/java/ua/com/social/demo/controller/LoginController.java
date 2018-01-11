@@ -15,13 +15,14 @@ import ua.com.social.demo.service.ProfileService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @RestController
 public class LoginController {
 
+    static Logger logger = Logger.getLogger(LoginController.class.getName());
     @Value("${security.headerName}")
     private String HEADER_NAME;
-
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -29,14 +30,12 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    static Logger logger = Logger.getLogger(LoginController.class.getName());
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<UserProxy> getAuthenticationToken(@RequestBody Account credential, HttpServletResponse response) {
-        logger.info("User with email going to login.");
-        Account account = accountService.getByEmail(credential);
-        if (account != null && passwordEncoder.matches(credential.getPassword(), account.getPassword())) {
+        Optional<Account> accountOptional = accountService.getByEmail(credential);
+        Account account = accountOptional.isPresent() ? accountOptional.get() : accountOptional.orElse(new Account());
+        if (passwordEncoder.matches(credential.getPassword(), account.getPassword())) {
             Integer profileId = profileService.get(account.getAccountId()).getProfileId();
             String fullToken = TokenAuthenticationService.createToken(account, profileId);
             logger.info("Token created.");

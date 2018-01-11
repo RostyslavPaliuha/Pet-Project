@@ -10,22 +10,21 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Album;
-import ua.com.social.demo.repository.impl.AlbumRepository;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
 @TestPropertySource(locations = "classpath:test-application.properties")
 @SqlGroup({
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,scripts = "classpath:sql/create-social.sql"),
-        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,scripts = "classpath:sql/insertdata.sql"),
+        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:sql/create-social.sql"),
+        @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:sql/insertdata.sql"),
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class AlbumRepositoryTest {
     @Autowired
-    private AlbumRepository albumRepository;
+    private ua.com.social.demo.repository.AlbumRepository albumRepository;
     private Album testAlbum;
     private Album testAlbum2;
 
@@ -42,7 +41,7 @@ public class AlbumRepositoryTest {
         testAlbum2.setAlbumId(testAlbum2Id);
         List<Album> actualTestAlbums = albumRepository.getAll(1);
         assertEquals(testAlbum.getAlbumName(), actualTestAlbums.get(0).getAlbumName());
-        albumRepository.delete(testAlbum2);
+        albumRepository.delete(testAlbum2.getAlbumId());
         List testalbumsAfterDelete = albumRepository.getAll(1);
         assertEquals(1, testalbumsAfterDelete.size());
     }

@@ -12,14 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Photo;
-import ua.com.social.demo.repository.impl.AlbumRepository;
-import ua.com.social.demo.repository.impl.PhotosRepository;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
@@ -31,9 +27,9 @@ import static org.junit.Assert.*;
 
 public class PhotosRepositoryTest {
     @Autowired
-    private PhotosRepository photosRepository;
+    private ua.com.social.demo.repository.PhotosRepository photosRepository;
     @Autowired
-    private AlbumRepository albumRepository;
+    private ua.com.social.demo.repository.AlbumRepository albumRepository;
     private Album testAlbum;
     private Photo testPhoto;
     private Photo testPhoto2;
@@ -51,15 +47,15 @@ public class PhotosRepositoryTest {
         testPhoto2.setAlbumId(testAlbumId);
         photosRepository.persist(testPhoto);
         photosRepository.persist(testPhoto2);
-        List<Photo> photosFromTestAlbum = photosRepository.getAllfromAlbum(1);
+        List<Photo> photosFromTestAlbum = photosRepository.getAllFromAlbum(1);
         assertEquals(new Integer(2), new Integer(photosFromTestAlbum.size()));
         assertEquals(testPhoto.getPhotoName(), photosFromTestAlbum.get(0).getPhotoName());
         assertEquals(testPhoto.getPhotoDescription(), photosFromTestAlbum.get(0).getPhotoDescription());
         assertEquals(testPhoto.getPhotoData(), photosFromTestAlbum.get(0).getPhotoData());
         assertEquals(testPhoto.getAvatar(), photosFromTestAlbum.get(0).getAvatar());
         testPhoto2.setPhotoId(2);
-        photosRepository.delete(testPhoto2);
-        List<Photo> photos = photosRepository.getAllfromAlbum(testAlbumId);
+        photosRepository.delete(testPhoto2.getPhotoId());
+        List<Photo> photos = photosRepository.getAllFromAlbum(testAlbumId);
         assertEquals(new Integer(1), new Integer(photos.size()));
         photosRepository.get(2);
     }

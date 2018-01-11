@@ -31,13 +31,13 @@ public class UserAuthentication implements Authentication {
         return userDetails;
     }
 
-    public void setPrincipal(UserDetails userDetails) {
-        this.userDetails = userDetails;
-    }
-
     @Override
     public Object getPrincipal() {
         return userDetails;
+    }
+
+    public void setPrincipal(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 
     @Override

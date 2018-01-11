@@ -5,7 +5,6 @@ import ua.com.social.demo.entity.impl.Conversation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 
 public class ConversationRowMapper implements RowMapper<Conversation> {
     @Override

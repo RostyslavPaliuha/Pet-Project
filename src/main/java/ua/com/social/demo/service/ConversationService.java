@@ -12,4 +12,5 @@ public interface ConversationService {
 
     public Conversation getConversation(Integer profileId, Integer companionId);
 
+    boolean deleteConversation(Integer conversationId);
 }

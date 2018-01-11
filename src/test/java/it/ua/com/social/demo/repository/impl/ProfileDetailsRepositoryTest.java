@@ -14,13 +14,11 @@ import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.entity.impl.Sex;
-import ua.com.social.demo.repository.impl.AccountRepository;
-import ua.com.social.demo.repository.impl.ProfileDetailsRepository;
-import ua.com.social.demo.repository.impl.ProfileRepository;
+import ua.com.social.demo.repository.ProfileRepository;
 
 import java.time.LocalDate;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
@@ -31,11 +29,11 @@ import static org.junit.Assert.*;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class ProfileDetailsRepositoryTest {
     @Autowired
-    private AccountRepository accountRepository;
+    private ua.com.social.demo.repository.AccountRepository accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
-    private ProfileDetailsRepository detailsRepository;
+    private ua.com.social.demo.repository.ProfileDetailsRepository detailsRepository;
     private Account account;
     private Profile profile;
     private ProfileDetails profileDetails;
@@ -43,7 +41,7 @@ public class ProfileDetailsRepositoryTest {
     public ProfileDetailsRepositoryTest() {
         this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         this.profile = new Profile();
-        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992,03,16));
+        this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992, 03, 16));
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
@@ -59,7 +57,7 @@ public class ProfileDetailsRepositoryTest {
         assertEquals(profileDetails.getFirstName(), actualProfileDetails.getFirstName());
         assertEquals(profileDetails.getLastName(), actualProfileDetails.getLastName());
         assertEquals(profileDetails.getSex(), actualProfileDetails.getSex());
-        ProfileDetails updateProfileDetails = new ProfileDetails("UpdatedTestName", "UpdatedTestLastNAme", Sex.male, LocalDate.of(1992,03,16));
+        ProfileDetails updateProfileDetails = new ProfileDetails("UpdatedTestName", "UpdatedTestLastNAme", Sex.male, LocalDate.of(1992, 03, 16));
         updateProfileDetails.setProfileId(profileId);
         updateProfileDetails.setProfileDetailsId(profileDetailsId);
         detailsRepository.update(updateProfileDetails);
@@ -70,8 +68,8 @@ public class ProfileDetailsRepositoryTest {
         assertEquals(actualUpdatedProfileDetails.getLastName(), updateProfileDetails.getLastName());
         assertEquals(actualUpdatedProfileDetails.getSex(), updateProfileDetails.getSex());
        /* Must delete and throw EmptyResultDataAccessException */
-        detailsRepository.delete(updateProfileDetails);
-        ProfileDetails checkProfileDetailsAfterDelete=detailsRepository.get(profileId);
+        detailsRepository.delete(updateProfileDetails.getProfileId());
+        ProfileDetails checkProfileDetailsAfterDelete = detailsRepository.get(profileId);
     }
 
 }

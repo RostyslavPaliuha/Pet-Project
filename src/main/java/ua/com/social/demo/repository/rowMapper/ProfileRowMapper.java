@@ -9,10 +9,10 @@ import java.sql.SQLException;
 public class ProfileRowMapper implements RowMapper<Profile> {
     @Override
     public Profile mapRow(ResultSet rs, int row) throws SQLException {
-       Profile profile=new Profile();
+        Profile profile = new Profile();
         profile.setProfileId(rs.getInt("profile_id"));
         profile.setAccountId(rs.getInt("account_id"));
-       profile.setOnlineStatus(rs.getInt("online_status"));
-       return profile;
+        profile.setOnlineStatus(rs.getInt("online_status"));
+        return profile;
     }
 }

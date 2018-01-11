@@ -1,1 +1,1 @@
-drop schema social;
+DROP SCHEMA social;

@@ -8,7 +8,7 @@ public class Album implements DomainObject {
     private Integer profileId;
 
     public Album(String albumName, Integer profileId) {
-        this.albumName=albumName;
+        this.albumName = albumName;
         this.profileId = profileId;
     }
 

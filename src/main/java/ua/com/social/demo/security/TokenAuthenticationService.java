@@ -2,17 +2,11 @@ package ua.com.social.demo.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Account;
-import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.entity.impl.Role;
-import ua.com.social.demo.repository.impl.ProfileRepository;
-import ua.com.social.demo.service.AccountService;
-import ua.com.social.demo.service.ProfileService;
 
 import java.util.Collections;
 import java.util.Date;
@@ -25,24 +19,7 @@ public class TokenAuthenticationService {
     private static long EXPIRATION_TIME;
     private static String SECRET;
 
-    @Value("${security.tokenPrefix}")
-    private void setTokenPrefix(String tokenPrefix) {
-        TOKEN_PREFIX = tokenPrefix;
-    }
-
-    @Value("${security.expirationTime}")
-    private void setExpirationTime(long expirationTime) {
-        EXPIRATION_TIME = expirationTime;
-    }
-
-    @Value("${security.secret}")
-    private void setSecret(String secret) {
-        SECRET = secret;
-    }
-
-
-
-    public static String createToken(Account account,Integer profileId) {
+    public static String createToken(Account account, Integer profileId) {
 
         String token = Jwts.builder()
                 .setSubject(account.getEmail())
@@ -87,6 +64,21 @@ public class TokenAuthenticationService {
                 .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                 .getBody().get("roles");
         return roles;
+    }
+
+    @Value("${security.tokenPrefix}")
+    private void setTokenPrefix(String tokenPrefix) {
+        TOKEN_PREFIX = tokenPrefix;
+    }
+
+    @Value("${security.expirationTime}")
+    private void setExpirationTime(long expirationTime) {
+        EXPIRATION_TIME = expirationTime;
+    }
+
+    @Value("${security.secret}")
+    private void setSecret(String secret) {
+        SECRET = secret;
     }
 
 

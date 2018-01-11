@@ -16,15 +16,14 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Photo;
-import ua.com.social.demo.service.AlbumService;
 import ua.com.social.demo.service.PhotosService;
 import ua.com.social.demo.service.impl.AlbumServiceImpl;
 
 import javax.servlet.Filter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,11 +44,12 @@ public class AlbumControllerTest {
     private List<Album> albums = Arrays.asList(new Album("TEST ALBUM", 1));
     private List<Photo> photos = Arrays.asList(new Photo("TEST PHOTO"));
     private Album album = new Album("TEST ALBUM", 1);
+    private Optional<Integer> expectedAlbumId = Optional.of(new Integer(1));
 
     @Before
     public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilters(springSecurityFilterChain).build();
-        Mockito.when(albumService.createAlbum(album)).thenReturn(1);
+        Mockito.when(albumService.createAlbum(album)).thenReturn(expectedAlbumId);
         Mockito.when(albumService.getAllAlbums(1)).thenReturn(albums);
         Mockito.when(photosService.createPhoto(photos.get(0))).thenReturn(true);
         Mockito.when(photosService.getAllfromAlbum(1)).thenReturn(photos);

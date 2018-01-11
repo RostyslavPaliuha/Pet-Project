@@ -32,9 +32,6 @@ public class FriendsListController {
     @DeleteMapping("api/profile/{profileId}/delete-friend/{friendId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteFriend(@PathVariable("profileId") Integer profileId, @PathVariable("friendId") Integer friendProfileId) {
-        FriendList friendList = new FriendList();
-        friendList.setProfileId(profileId);
-        friendList.setFriendProfileId(friendProfileId);
-        friendListService.delete(friendList);
+        friendListService.delete(profileId, friendProfileId);
     }
 }

@@ -8,8 +8,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.com.social.demo.entity.impl.Account;
-import ua.com.social.demo.repository.ExtendedEntityRepository;
-import ua.com.social.demo.repository.EntityRepository;
+import ua.com.social.demo.repository.AccountRepository;
 import ua.com.social.demo.repository.rowMapper.AccountRowMapper;
 
 import java.sql.PreparedStatement;
@@ -18,7 +17,7 @@ import java.util.List;
 
 
 @Repository("accountRepository")
-public class AccountRepository implements EntityRepository<Account>, ExtendedEntityRepository<Account> {
+public class AccountRepositoryImpl implements AccountRepository {
     @Autowired
     private JdbcOperations jdbcOperations;
 
@@ -48,8 +47,8 @@ public class AccountRepository implements EntityRepository<Account>, ExtendedEnt
     }
 
     @Override
-    public void delete(Account account) {
-        jdbcOperations.update("DELETE FROM account WHERE account_id =" + account.getAccountId() + ";");
+    public void delete(Integer accountId) {
+        jdbcOperations.update("DELETE FROM account WHERE account_id =?;", accountId);
     }
 
     @Override
@@ -57,15 +56,18 @@ public class AccountRepository implements EntityRepository<Account>, ExtendedEnt
         return jdbcOperations.queryForObject("SELECT * FROM account WHERE account_id= ?", new Object[]{id}, new AccountRowMapper());
     }
 
+    @Override
     public Account getByEmail(Account account) throws EmptyResultDataAccessException {
         return jdbcOperations.queryForObject("SELECT * FROM account WHERE email= ?", new Object[]{account.getEmail()}, new AccountRowMapper());
 
     }
 
+    @Override
     public void updateEmail(String email, Integer profileId) {
         jdbcOperations.update("UPDATE account SET email=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{email, profileId});
     }
 
+    @Override
     public void updatePassword(String password, Integer profileId) {
         jdbcOperations.update("UPDATE account SET password=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{password, profileId});
     }

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Profile;
-import ua.com.social.demo.repository.impl.ProfileRepository;
+import ua.com.social.demo.repository.ProfileRepository;
 import ua.com.social.demo.service.ProfileService;
 
 @Service("profileService")

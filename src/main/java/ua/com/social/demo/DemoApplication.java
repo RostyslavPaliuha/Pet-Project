@@ -7,7 +7,7 @@ import ua.com.social.demo.config.JpaConfig;
 @SpringBootApplication
 public class DemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(new Class[]{DemoApplication.class, JpaConfig.class}, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(new Class[]{DemoApplication.class, JpaConfig.class}, args);
+    }
 }

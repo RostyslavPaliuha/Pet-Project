@@ -7,8 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.com.social.demo.entity.impl.Album;
-import ua.com.social.demo.repository.EntityRepository;
-import ua.com.social.demo.repository.ExtendedEntityRepository;
+import ua.com.social.demo.repository.AlbumRepository;
 import ua.com.social.demo.repository.rowMapper.AlbumRowMapper;
 
 import java.sql.PreparedStatement;
@@ -16,7 +15,7 @@ import java.sql.Types;
 import java.util.List;
 
 @Repository("albumRepository")
-public class AlbumRepository implements EntityRepository<Album>, ExtendedEntityRepository<Album> {
+public class AlbumRepositoryImpl implements AlbumRepository {
     @Autowired
     private JdbcOperations jdbcOperations;
 
@@ -29,7 +28,7 @@ public class AlbumRepository implements EntityRepository<Album>, ExtendedEntityR
 
     @Override
     public void delete(Integer albumId) {
-        jdbcOperations.update("DELETE FROM album WHERE album_id =?",new Object[]{albumId});
+        jdbcOperations.update("DELETE FROM album WHERE album_id =?", new Object[]{albumId});
     }
 
     @Override
@@ -53,5 +52,10 @@ public class AlbumRepository implements EntityRepository<Album>, ExtendedEntityR
     @Override
     public List<Album> getAll(Integer profileId) {
         return jdbcOperations.query("SELECT * FROM album WHERE profile_id=?", new Object[]{profileId}, new AlbumRowMapper());
+    }
+
+    @Override
+    public void updateAlbumName(Album album) {
+        jdbcOperations.update("UPDATE album SET album_name=? WHERE profile_id=? AND album_id=?", new Object[]{album.getAlbumName(), album.getProfileId(), album.getAlbumId()});
     }
 }
