@@ -42,8 +42,8 @@ public class ConversationRepositoryImpl implements ConversationRepository {
 
     @Override
     public List<Conversation> getAll(Integer profileId) {
-        String sql = "SELECT c.conversation_id, c.profile_id, c.companion_id, pd.first_name  AS profile_lastname, pd.last_name   AS profile_name, pd2.first_name AS companion_name, pd2.last_name  AS companion_lastname,  m.message_content AS message, m.message_date AS date FROM conversation c JOIN profile_details pd ON pd.profile_id = c.profile_id JOIN profile_details pd2 ON pd2.profile_id = c.companion_id JOIN message m ON m.conversation_id=c.conversation_id WHERE c.profile_id = ? OR c.companion_id=? ORDER BY m.message_id DESC LIMIT 1";
-        return jdbcOperations.query(sql, new Object[]{profileId, profileId}, new ConversationRowMapper());
+        String sql = "SELECT c.conversation_id, c.profile_id, c.companion_id, pd.first_name AS profile_name, pd.last_name AS profile_lastname, pd2.first_name AS companion_name, pd2.last_name AS companion_lastname, m.message_date AS date FROM conversation c JOIN profile_details pd ON pd.profile_id = c.profile_id JOIN profile_details pd2 ON pd2.profile_id = c.companion_id JOIN message m ON m.conversation_id = c.conversation_id WHERE c.profile_id = ? AND m.message_date = (SELECT Max(m2.message_date) FROM message m2 WHERE m2.conversation_id = c.conversation_id) OR c.companion_id = ? AND m.message_date = (SELECT Max(m2.message_date) FROM message m2 WHERE m2.conversation_id = c.conversation_id) ORDER BY m.message_date DESC";
+        return jdbcOperations.query(sql, new Object[]{profileId,profileId}, new ConversationRowMapper());
     }
 
     @Override
