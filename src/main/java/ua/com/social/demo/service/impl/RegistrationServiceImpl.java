@@ -22,10 +22,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private ua.com.social.demo.repository.AlbumRepository albumRepository;
 
     public void register(FullProfileDto fullProfileDto) {
-        Account account = new Account();
-        account.setEmail(fullProfileDto.getEmail());
-        account.setPassword(fullProfileDto.getPassword());
-        Integer accountId = accountRepository.persistAndRetrieveId(account);
+        Integer accountId = accountRepository.persistAndRetrieveId(fullProfileDto.getEmail(),fullProfileDto.getPassword());
         Profile profile = new Profile();
         profile.setAccountId(accountId);
         Integer profileId = profileRepository.persistAndRetrieveId(profile);

@@ -12,8 +12,7 @@ import ua.com.social.demo.repository.AccountRepository;
 import ua.com.social.demo.repository.rowMapper.AccountRowMapper;
 
 import java.sql.PreparedStatement;
-import java.sql.Types;
-import java.util.List;
+import java.sql.SQLDataException;
 
 
 @Repository("accountRepository")
@@ -22,19 +21,12 @@ public class AccountRepositoryImpl implements AccountRepository {
     private JdbcOperations jdbcOperations;
 
     @Override
-    public void persist(Account account) {
-        Object[] params = new Object[]{account.getEmail(), account.getPassword()};
-        int[] types = new int[]{Types.VARCHAR, Types.CHAR};
-        jdbcOperations.update("INSERT INTO account(email,password) VALUES (?,?);", params, types);
-    }
-
-    @Override
-    public Integer persistAndRetrieveId(Account account) {
+    public Integer persistAndRetrieveId(String email, String password) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement("INSERT INTO account(email,password) VALUES (?,?);", new String[]{"account_id"});
-                    ps.setString(1, account.getEmail());
-                    ps.setString(2, account.getPassword());
+                    ps.setString(1, email);
+                    ps.setString(2, password);
                     return ps;
                 },
                 keyHolder);
@@ -42,13 +34,9 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public List<Account> getAll(Integer id) {
-        return null;
-    }
+    public void delete(Integer accountId) throws Exception {
+        jdbcOperations.update("DELETE FROM account WHERE account_id =?", new Object[]{accountId});
 
-    @Override
-    public void delete(Integer accountId) {
-        jdbcOperations.update("DELETE FROM account WHERE account_id =?;", accountId);
     }
 
     @Override
@@ -70,5 +58,10 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public void updatePassword(String password, Integer profileId) {
         jdbcOperations.update("UPDATE account SET password=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{password, profileId});
+    }
+
+    @Override
+    public Integer checkIfExist(Integer accountId) {
+        return jdbcOperations.queryForObject("SELECT COUNT(*) FROM account WHERE account_id=?", new Object[]{accountId}, Integer.class);
     }
 }

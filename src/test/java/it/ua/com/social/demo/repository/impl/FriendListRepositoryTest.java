@@ -49,7 +49,7 @@ public class FriendListRepositoryTest {
 
     @Test
     public void addFriend_checkFriends_deleteFriend_checkFriends() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account);
+        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer profileId = profileRepository.persistAndRetrieveId(profile);

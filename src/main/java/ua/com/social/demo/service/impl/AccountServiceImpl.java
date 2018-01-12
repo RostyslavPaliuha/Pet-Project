@@ -24,21 +24,27 @@ public class AccountServiceImpl implements AccountService {
     private ProfileRepository profileRepository;
 
     @Override
-    public boolean persist(String email, String password) {
+    public Optional<Integer> persist(String email, String password) {
+
+        Optional<Integer> integerOptional = Optional.empty();
         try {
-            accountRepository.persist(new Account(email, password));
-            return true;
+            integerOptional = Optional.ofNullable(accountRepository.persistAndRetrieveId(email, password));
+            return integerOptional;
         } catch (Exception e) {
             LOG.error("Error while creating profile" + e.getMessage(), e);
-            return false;
+            return integerOptional;
         }
     }
 
     @Override
     public boolean delete(Integer accountId) {
         try {
-            accountRepository.delete(accountId);
-            return true;
+            if (1 == accountRepository.checkIfExist(accountId)) {
+                accountRepository.delete(accountId);
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             LOG.error("Error while deleting profile" + e.getMessage(), e);
             return false;

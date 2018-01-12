@@ -8,7 +8,7 @@ import java.util.List;
 public interface ConversationService {
     public Integer persist(Conversation conversation);
 
-    public List<Conversation> reviewConversations(Integer id);
+    public List<Conversation> reviewConversations(Integer profileId);
 
     public Conversation getConversation(Integer profileId, Integer companionId);
 

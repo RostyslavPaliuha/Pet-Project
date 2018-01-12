@@ -54,7 +54,7 @@ public class MessageRepositoryTest {
 
     @Test
     public void createAcc_createConversation_createMessage_delete() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account);
+        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer profileId = profileRepository.persistAndRetrieveId(profile);

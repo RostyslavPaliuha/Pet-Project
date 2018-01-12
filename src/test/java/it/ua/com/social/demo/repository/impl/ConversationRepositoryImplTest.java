@@ -14,6 +14,7 @@ import ua.com.social.demo.repository.AccountRepository;
 import ua.com.social.demo.repository.ConversationRepository;
 import ua.com.social.demo.repository.ProfileDetailsRepository;
 import ua.com.social.demo.repository.ProfileRepository;
+import ua.com.social.demo.service.MessageService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,6 +38,8 @@ public class ConversationRepositoryImplTest {
     private ProfileDetailsRepository detailsRepository;
     @Autowired
     private ConversationRepository conversationRepository;
+    @Autowired
+    private MessageService messageService;
     private Account account;
     private Profile profile;
     private ProfileDetails profileDetails;
@@ -49,11 +52,17 @@ public class ConversationRepositoryImplTest {
         this.profileDetails = new ProfileDetails("testName", "testLastNAme", Sex.male, LocalDate.of(1992, 03, 16));
         this.firstConversation = new Conversation();
         this.secondConversation = new Conversation();
-    }
 
+    }
+private void createMessageForConversation(Integer conversationId){
+    Message message=new Message();
+    message.setMessageContext("Hi dude!");
+    message.setConversationId(conversationId);
+    messageService.persist(message);
+}
     @Test
     public void createAcc_createConversation_reviewConversation_reviewConversations() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account);
+        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer profileId = profileRepository.persistAndRetrieveId(profile);
@@ -66,8 +75,10 @@ public class ConversationRepositoryImplTest {
         secondConversation.setCompanionId(2);
         Integer conversationId = conversationRepository.persistAndRetrieveId(firstConversation);
         Integer secondConversationId = conversationRepository.persistAndRetrieveId(secondConversation);
-        assertEquals(new Integer(1), conversationId);
-        assertEquals(new Integer(2), secondConversationId);
+        createMessageForConversation(conversationId);
+        createMessageForConversation(secondConversationId);
+        assertEquals(new Integer(2), conversationId);
+        assertEquals(new Integer(3), secondConversationId);
         Conversation certainConversation = conversationRepository.getByProfileIdCompanionId(profileId, 1);
         Conversation certainSecondConversation = conversationRepository.getByProfileIdCompanionId(profileId, 2);
         assertEquals(firstConversation.getProfileId(), certainConversation.getProfileId());
@@ -75,7 +86,7 @@ public class ConversationRepositoryImplTest {
         assertEquals(secondConversation.getProfileId(), certainSecondConversation.getProfileId());
         assertEquals(secondConversation.getCompanionId(), certainSecondConversation.getCompanionId());
         List<Conversation> conversations = conversationRepository.getAll(profileId);
-        // assertEquals(2, conversations.size());//Some bug!
+        assertEquals(2, conversations.size());//Some bug!
     }
 
 }

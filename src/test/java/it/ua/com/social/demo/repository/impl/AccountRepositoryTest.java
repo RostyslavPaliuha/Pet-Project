@@ -12,6 +12,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
+import ua.com.social.demo.repository.AccountRepository;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,8 +25,7 @@ import static org.junit.Assert.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class AccountRepositoryTest {
     @Autowired
-
-    private ua.com.social.demo.repository.AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     private Account account;
 
@@ -37,7 +37,7 @@ public class AccountRepositoryTest {
 
     @Test
     public void persist_andGetByEmail() throws Exception {
-        accountRepository.persist(account);
+        accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
         Account actual = accountRepository.getByEmail(account);
         assertEquals(account.getEmail(), actual.getEmail());
     }
@@ -45,7 +45,7 @@ public class AccountRepositoryTest {
     @Test
     public void persistAndRetrieveId() throws Exception {
         account.setEmail("test2@gmail.com");
-        Integer id = accountRepository.persistAndRetrieveId(account);
+        Integer id = accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
         assertEquals(new Integer(4), id);
     }
 
@@ -53,8 +53,7 @@ public class AccountRepositoryTest {
     public void delete() throws Exception {
         account.setEmail("pro@gmail.com");
         accountRepository.delete(1);
-        accountRepository.getByEmail(account);
-
+       accountRepository.getByEmail(account);
     }
 
     @Test

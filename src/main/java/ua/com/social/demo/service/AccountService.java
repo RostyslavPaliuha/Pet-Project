@@ -5,7 +5,7 @@ import ua.com.social.demo.entity.impl.Account;
 import java.util.Optional;
 
 public interface AccountService {
-    public boolean persist(String email, String password);
+    public Optional<Integer> persist(String email, String password);
 
     public boolean delete(Integer id);
 
