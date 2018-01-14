@@ -11,10 +11,11 @@ public interface AccountRepository<T extends Account> {
 
     T get(Integer id);
 
-    T getByEmail(T account) throws EmptyResultDataAccessException;
+    T getByEmail(String email) throws EmptyResultDataAccessException;
 
     void updateEmail(String email, Integer profileId);
 
     void updatePassword(String password, Integer profileId);
+
     Integer checkIfExist(Integer accountId);
 }

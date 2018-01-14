@@ -10,7 +10,7 @@ public interface AlbumRepository {
 
     void delete(Integer albumId);
 
-    Album get(Integer id) throws EmptyResultDataAccessException;
+    Album get(Integer albumId) throws EmptyResultDataAccessException;
 
     Integer persistAndRetrieveId(Album album);
 

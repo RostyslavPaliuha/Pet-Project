@@ -8,6 +8,8 @@ import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.repository.ProfileRepository;
 import ua.com.social.demo.service.ProfileService;
 
+import java.util.Optional;
+
 @Service("profileService")
 public class ProfileServiceImpl implements ProfileService {
     private static final Logger LOG = Logger.getLogger(ProfileServiceImpl.class);
@@ -16,23 +18,24 @@ public class ProfileServiceImpl implements ProfileService {
     private ProfileRepository profileRepository;
 
     @Override
-    public Integer persist(Profile profile) {
+    public Optional<Integer> persist(Profile profile) {
+        Optional<Integer> integerOptional = Optional.empty();
         try {
-            return profileRepository.persistAndRetrieveId(profile);
+            return Optional.ofNullable(profileRepository.persistAndRetrieveId(profile));
         } catch (Exception e) {
-            LOG.error("Error while saving data" + e.getMessage(), e);
-            return new Integer(null);
+            LOG.error("Error while saving profile" + e.getMessage(), e);
+            return integerOptional;
         }
     }
 
     @Override
-    public Profile get(Integer id) {
-        Profile profile = null;
+    public Optional<Profile> get(Integer id) {
+        Optional<Profile> profileOptional = Optional.empty();
         try {
-            return profile = profileRepository.get(id);
+            return Optional.ofNullable(profileRepository.get(id));
         } catch (EmptyResultDataAccessException e) {
-            LOG.error("Error while saving data" + e.getMessage(), e);
-            return profile;
+            LOG.error("Error while getting profile" + e.getMessage(), e);
+            return profileOptional;
         }
 
     }
@@ -43,7 +46,7 @@ public class ProfileServiceImpl implements ProfileService {
             profileRepository.changeOnlineStatus(profile.getProfileId(), profile.getOnlineStatus());
             return true;
         } catch (Exception e) {
-            LOG.error("Error while saving data" + e.getMessage(), e);
+            LOG.error("Error while updating profile" + e.getMessage(), e);
             return false;
         }
     }

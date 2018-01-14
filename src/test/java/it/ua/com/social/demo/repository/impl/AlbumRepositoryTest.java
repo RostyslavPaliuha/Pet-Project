@@ -40,9 +40,9 @@ public class AlbumRepositoryTest {
         testAlbum.setAlbumId(testAlbumId);
         testAlbum2.setAlbumId(testAlbum2Id);
         List<Album> actualTestAlbums = albumRepository.getAll(1);
-        assertEquals(testAlbum.getAlbumName(), actualTestAlbums.get(0).getAlbumName());
+        assertEquals("Rostyslav`s Album", actualTestAlbums.get(0).getAlbumName());
         albumRepository.delete(testAlbum2.getAlbumId());
         List testalbumsAfterDelete = albumRepository.getAll(1);
-        assertEquals(1, testalbumsAfterDelete.size());
+        assertEquals(2, testalbumsAfterDelete.size());
     }
 }

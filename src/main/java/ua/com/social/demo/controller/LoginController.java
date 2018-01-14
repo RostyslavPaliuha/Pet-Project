@@ -33,10 +33,10 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<UserProxy> getAuthenticationToken(@RequestBody Account credential, HttpServletResponse response) {
-        Optional<Account> accountOptional = accountService.getByEmail(credential);
+        Optional<Account> accountOptional = accountService.getByEmail(credential.getEmail());
         Account account = accountOptional.isPresent() ? accountOptional.get() : accountOptional.orElse(new Account());
         if (passwordEncoder.matches(credential.getPassword(), account.getPassword())) {
-            Integer profileId = profileService.get(account.getAccountId()).getProfileId();
+            Integer profileId = profileService.get(account.getAccountId()).get().getProfileId();
             String fullToken = TokenAuthenticationService.createToken(account, profileId);
             logger.info("Token created.");
             response.addHeader(HEADER_NAME, fullToken);

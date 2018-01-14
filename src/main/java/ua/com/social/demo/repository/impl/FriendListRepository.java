@@ -27,9 +27,9 @@ public class FriendListRepository implements FriendsListRepository<FriendList> {
     }
 
     @Override
-    public List<Friend> getFriends(Integer id) {
-        List list = jdbcOperations.query("SELECT pd.profile_id,pd.first_name,pd.last_name FROM profile_details pd WHERE profile_id IN(SELECT fl.friend_profile_id FROM friends_list fl WHERE fl.profile_id=? )", new Object[]{id}, new FriendRowMapper());
-        List list2 = jdbcOperations.query("SELECT pd.profile_id,pd.first_name,pd.last_name FROM profile_details pd WHERE profile_id IN(SELECT fl.profile_id FROM friends_list fl WHERE fl.friend_profile_id=?)", new Object[]{id}, new FriendRowMapper());
+    public List<Friend> getFriends(Integer profileId) {
+        List list = jdbcOperations.query("SELECT pd.profile_id,pd.first_name,pd.last_name FROM profile_details pd WHERE profile_id IN(SELECT fl.friend_profile_id FROM friends_list fl WHERE fl.profile_id=? )", new Object[]{profileId}, new FriendRowMapper());
+        List list2 = jdbcOperations.query("SELECT pd.profile_id,pd.first_name,pd.last_name FROM profile_details pd WHERE profile_id IN(SELECT fl.profile_id FROM friends_list fl WHERE fl.friend_profile_id=?)", new Object[]{profileId}, new FriendRowMapper());
         list.addAll(list2);
         return list;
     }

@@ -17,7 +17,7 @@ public class ProfileDetailsController {
 
     @GetMapping("api/profile/{id}")
     public ProfileDetails get(@PathVariable("id") Integer profileId) {
-        return profileDetailsService.get(profileId);
+        return profileDetailsService.get(profileId).get();
     }
 
     @PutMapping("api/profile/{id}/update")

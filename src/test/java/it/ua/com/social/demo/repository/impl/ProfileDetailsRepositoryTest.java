@@ -46,7 +46,7 @@ public class ProfileDetailsRepositoryTest {
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void persist_Get_Update() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
+        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer profileId = profileRepository.persistAndRetrieveId(profile);

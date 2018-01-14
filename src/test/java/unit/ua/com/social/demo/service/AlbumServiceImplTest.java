@@ -39,18 +39,17 @@ public class AlbumServiceImplTest {
         Optional<Integer> integerOptional3 = albumService.createAlbum(album);
         Optional<Integer> integerOptional4 = albumService.createAlbum(album);
         List<Album> albums = albumService.getAllAlbums(1);
-        assertEquals(5, albums.size());
+        assertEquals(6, albums.size());
         assertTrue(integerOptional0.isPresent());
-        assertTrue(integerOptional0.isPresent());
-        assertEquals(new Integer(integerOptional0.get()), new Integer(1));
+        assertEquals(new Integer(2),new Integer(integerOptional0.get()));
         assertTrue(integerOptional1.isPresent());
-        assertEquals(new Integer(integerOptional1.get()), new Integer(2));
+        assertEquals(new Integer(3),new Integer(integerOptional1.get()));
         assertTrue(integerOptional2.isPresent());
-        assertEquals(new Integer(integerOptional2.get()), new Integer(3));
+        assertEquals( new Integer(4),new Integer(integerOptional2.get()));
         assertTrue(integerOptional3.isPresent());
-        assertEquals(new Integer(integerOptional3.get()), new Integer(4));
+        assertEquals(new Integer(5),new Integer(integerOptional3.get()) );
         assertTrue(integerOptional4.isPresent());
-        assertEquals(new Integer(integerOptional4.get()), new Integer(5));
+        assertEquals(new Integer(6),new Integer(integerOptional4.get()) );
     }
 
 }

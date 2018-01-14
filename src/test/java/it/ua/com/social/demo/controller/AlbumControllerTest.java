@@ -56,7 +56,8 @@ public class AlbumControllerTest {
 
     }
 
-    @Test //!!!!THIS TEST WORKS FINE, IT`S MOCKITO`S BUG, RETURN OPTIONAl.empty() instead OPTIONAL.OFNULLABLE(NEW INTEGER(1))!!!!//
+    @Test
+    //!!!!THIS TEST WORKS FINE, IT`S MOCKITO`S BUG, RETURN OPTIONAl.empty() instead OPTIONAL.OFNULLABLE(NEW INTEGER(1))!!!!//
     public void login_createAlbum_reviewAlbums_createPhoto_reviewCertainAlbumPhotos() throws Exception {
         MvcResult mvcResult = mockMvc.perform(post("/login").content("{\n" +
                 "\t\"email\":\"pro@gmail.com\",\n" +

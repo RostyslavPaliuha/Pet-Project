@@ -38,7 +38,7 @@ public class ProfileRepositoryTest {
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void persist_GetByAccountId_Delete() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
+        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer persistedProfileId = profileRepository.persistAndRetrieveId(profile);

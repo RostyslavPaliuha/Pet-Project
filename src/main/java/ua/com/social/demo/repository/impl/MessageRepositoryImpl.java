@@ -26,8 +26,8 @@ public class MessageRepositoryImpl implements MessageRepository {
     }
 
     @Override
-    public Message get(Integer id) {
-        return jdbcOperations.queryForObject("SELECT * FROM message WHERE message_id= ?", new Object[]{id}, new MessageRowMapper());
+    public Message get(Integer messageId) {
+        return jdbcOperations.queryForObject("SELECT * FROM message WHERE message_id= ?", new Object[]{messageId}, new MessageRowMapper());
     }
 
     @Override

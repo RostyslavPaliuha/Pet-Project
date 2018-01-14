@@ -9,7 +9,7 @@ public interface MessageRepository {
 
     void delete(Integer messageId);
 
-    Message get(Integer id);
+    Message get(Integer messageId);
 
     List<Message> getAllByConversation(Integer conversationId);
 }

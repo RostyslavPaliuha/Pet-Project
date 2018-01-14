@@ -7,7 +7,7 @@ public interface ProfileDetailsRepository {
 
     void delete(Integer profileId);
 
-    ProfileDetails get(Integer id) throws EmptyResultDataAccessException;
+    ProfileDetails get(Integer profileId) throws EmptyResultDataAccessException;
 
     Integer persistAndRetrieveId(ProfileDetails profileDetails);
 

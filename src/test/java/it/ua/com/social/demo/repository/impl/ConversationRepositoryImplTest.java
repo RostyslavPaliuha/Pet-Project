@@ -54,15 +54,17 @@ public class ConversationRepositoryImplTest {
         this.secondConversation = new Conversation();
 
     }
-private void createMessageForConversation(Integer conversationId){
-    Message message=new Message();
-    message.setMessageContext("Hi dude!");
-    message.setConversationId(conversationId);
-    messageService.persist(message);
-}
+
+    private void createMessageForConversation(Integer conversationId) {
+        Message message = new Message();
+        message.setMessageContext("Hi dude!");
+        message.setConversationId(conversationId);
+        messageService.persist(message);
+    }
+
     @Test
     public void createAcc_createConversation_reviewConversation_reviewConversations() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
+        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer profileId = profileRepository.persistAndRetrieveId(profile);

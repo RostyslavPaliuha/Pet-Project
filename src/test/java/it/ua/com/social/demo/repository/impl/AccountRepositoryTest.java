@@ -37,15 +37,15 @@ public class AccountRepositoryTest {
 
     @Test
     public void persist_andGetByEmail() throws Exception {
-        accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
-        Account actual = accountRepository.getByEmail(account);
+        accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
+        Account actual = accountRepository.getByEmail(account.getEmail());
         assertEquals(account.getEmail(), actual.getEmail());
     }
 
     @Test
     public void persistAndRetrieveId() throws Exception {
         account.setEmail("test2@gmail.com");
-        Integer id = accountRepository.persistAndRetrieveId(account.getEmail(),account.getPassword());
+        Integer id = accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
         assertEquals(new Integer(4), id);
     }
 
@@ -53,7 +53,7 @@ public class AccountRepositoryTest {
     public void delete() throws Exception {
         account.setEmail("pro@gmail.com");
         accountRepository.delete(1);
-       accountRepository.getByEmail(account);
+        accountRepository.getByEmail(account.getEmail());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class AccountRepositoryTest {
         andriy.setEmail("andriyMelnik@gmail.com");
         andriy.setPassword("$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         accountRepository.updateEmail(andriy.getEmail(), 3);
-        Account actual = accountRepository.getByEmail(andriy);
+        Account actual = accountRepository.getByEmail(andriy.getEmail());
         assertEquals(andriy.getEmail(), actual.getEmail());
         assertEquals(andriy.getPassword(), actual.getPassword());
         andriy.setPassword("$2y$10$P7c2zGPWZ9LLQPZiIhpJOu4WgglNabfottvvJkS1TewCSZitIfsbG");

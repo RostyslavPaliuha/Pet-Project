@@ -11,5 +11,5 @@ public interface AccountService {
 
     public Optional<Account> get(Integer id);
 
-    public Optional<Account> getByEmail(Account account);
+    public Optional<Account> getByEmail(String email);
 }

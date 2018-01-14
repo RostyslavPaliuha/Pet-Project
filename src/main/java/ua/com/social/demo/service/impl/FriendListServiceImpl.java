@@ -32,16 +32,17 @@ public class FriendListServiceImpl implements FriendListService {
     public boolean delete(Integer profileId, Integer friendId) {
         try {
             friendListRepository.delete(profileId, friendId);
+            return true;
         } catch (Exception e) {
             LOG.error("Error while deleting friend" + e.getMessage(), e);
+            return false;
         }
-        return false;
     }
 
     @Override
-    public List<Friend> getFriendList(Integer id) {
+    public List<Friend> getFriendList(Integer profileId) {
         try {
-            return friendListRepository.getFriends(id);
+            return friendListRepository.getFriends(profileId);
         } catch (Exception e) {
             LOG.error("Error while retrieve friend list" + e.getMessage(), e);
         }

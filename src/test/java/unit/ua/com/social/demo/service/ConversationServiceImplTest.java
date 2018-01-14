@@ -32,13 +32,14 @@ public class ConversationServiceImplTest {
 
     @Autowired
     private MessageService messageService;
+
     @Test
     public void persist() throws Exception {
         Conversation conversation = new Conversation();
         conversation.setProfileId(1);
         conversation.setCompanionId(3);
-        Integer conversationId=conversationService.persist(conversation);
-        assertEquals(new Integer(2),conversationId);
+        Integer conversationId = conversationService.persist(conversation);
+        assertEquals(new Integer(2), conversationId);
 
 
     }
@@ -46,7 +47,7 @@ public class ConversationServiceImplTest {
     @Test
     public void reviewConversations() throws Exception {
         this.persist();
-        Message message=new Message();
+        Message message = new Message();
         message.setMessageContext("Hi dude!");
         message.setConversationId(1);
         messageService.persist(message);

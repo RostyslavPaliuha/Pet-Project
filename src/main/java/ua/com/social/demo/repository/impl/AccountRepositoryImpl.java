@@ -12,7 +12,6 @@ import ua.com.social.demo.repository.AccountRepository;
 import ua.com.social.demo.repository.rowMapper.AccountRowMapper;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLDataException;
 
 
 @Repository("accountRepository")
@@ -45,8 +44,8 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public Account getByEmail(Account account) throws EmptyResultDataAccessException {
-        return jdbcOperations.queryForObject("SELECT * FROM account WHERE email= ?", new Object[]{account.getEmail()}, new AccountRowMapper());
+    public Account getByEmail(String email) throws EmptyResultDataAccessException {
+        return jdbcOperations.queryForObject("SELECT * FROM account WHERE email= ?", new Object[]{email}, new AccountRowMapper());
 
     }
 

@@ -25,7 +25,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Optional<Integer> persist(String email, String password) {
-
         Optional<Integer> integerOptional = Optional.empty();
         try {
             integerOptional = Optional.ofNullable(accountRepository.persistAndRetrieveId(email, password));
@@ -63,10 +62,10 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    public Optional<Account> getByEmail(Account account) {
+    public Optional<Account> getByEmail(String email) {
         Optional<Account> optionalAccount = Optional.empty();
         try {
-            optionalAccount = Optional.ofNullable(accountRepository.getByEmail(account));
+            optionalAccount = Optional.ofNullable(accountRepository.getByEmail(email));
             return optionalAccount;
         } catch (EmptyResultDataAccessException exception) {
             return optionalAccount;
