@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.com.social.demo.entity.impl.Account;
+import ua.com.social.demo.repository.AbstractRepository;
 import ua.com.social.demo.repository.AccountRepository;
 import ua.com.social.demo.repository.rowMapper.AccountRowMapper;
 
@@ -15,20 +16,9 @@ import java.sql.PreparedStatement;
 
 
 @Repository("accountRepository")
-public class AccountRepositoryImpl implements AccountRepository {
-
-    private JdbcOperations jdbcOperations;
-
-    @Override
+public class AccountRepositoryImpl extends AbstractRepository implements AccountRepository {
     @Autowired
-    public void setJdbcOperations(JdbcOperations jdbcOperations) {
-        this.jdbcOperations = jdbcOperations;
-    }
-
-    @Override
-    public JdbcOperations getJdbcOperations() {
-        return jdbcOperations;
-    }
+    private JdbcOperations jdbcOperations;
 
     @Override
     public Integer persistAndRetrieveId(String email, String password) {

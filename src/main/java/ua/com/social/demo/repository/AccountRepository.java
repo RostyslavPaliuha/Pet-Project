@@ -1,11 +1,9 @@
 package ua.com.social.demo.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcOperations;
 import ua.com.social.demo.entity.impl.Account;
 
-public interface AccountRepository<T extends Account> extends Checkable,Injectable {
+public interface AccountRepository<T extends Account> {
 
     Integer persistAndRetrieveId(String email, String password);
 
@@ -19,4 +17,5 @@ public interface AccountRepository<T extends Account> extends Checkable,Injectab
 
     void updatePassword(String password, Integer profileId);
 
+    Integer checkIfExist(String tableName, String columnIdName, Integer id);
 }

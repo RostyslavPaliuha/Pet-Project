@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean delete(Integer accountId) {
         try {
-            if (1 == accountRepository.checkIfExist(accountRepository.getJdbcOperations(),"account","account_id",accountId)) {
+            if (1 == accountRepository.checkIfExist("account","account_id",accountId)) {
                 accountRepository.delete(accountId);
                 return true;
             } else {
