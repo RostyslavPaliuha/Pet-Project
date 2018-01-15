@@ -16,8 +16,19 @@ import java.sql.PreparedStatement;
 
 @Repository("accountRepository")
 public class AccountRepositoryImpl implements AccountRepository {
-    @Autowired
+
     private JdbcOperations jdbcOperations;
+
+    @Override
+    @Autowired
+    public void setJdbcOperations(JdbcOperations jdbcOperations) {
+        this.jdbcOperations = jdbcOperations;
+    }
+
+    @Override
+    public JdbcOperations getJdbcOperations() {
+        return jdbcOperations;
+    }
 
     @Override
     public Integer persistAndRetrieveId(String email, String password) {
@@ -59,8 +70,4 @@ public class AccountRepositoryImpl implements AccountRepository {
         jdbcOperations.update("UPDATE account SET password=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{password, profileId});
     }
 
-    @Override
-    public Integer checkIfExist(Integer accountId) {
-        return jdbcOperations.queryForObject("SELECT COUNT(*) FROM account WHERE account_id=?", new Object[]{accountId}, Integer.class);
-    }
 }

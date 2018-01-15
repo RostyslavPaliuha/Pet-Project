@@ -4,9 +4,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.repository.AccountRepository;
+import ua.com.social.demo.repository.Checkable;
 import ua.com.social.demo.repository.ProfileRepository;
 import ua.com.social.demo.service.AccountService;
 
@@ -38,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean delete(Integer accountId) {
         try {
-            if (1 == accountRepository.checkIfExist(accountId)) {
+            if (1 == accountRepository.checkIfExist(accountRepository.getJdbcOperations(),"account","account_id",accountId)) {
                 accountRepository.delete(accountId);
                 return true;
             } else {
