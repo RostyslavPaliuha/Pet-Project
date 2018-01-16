@@ -14,7 +14,9 @@ import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.entity.impl.Sex;
-import ua.com.social.demo.repository.ProfileRepository;
+import ua.com.social.demo.repository.api.AccountRepository;
+import ua.com.social.demo.repository.api.ProfileDetailsRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
 
 import java.time.LocalDate;
 
@@ -29,11 +31,11 @@ import static org.junit.Assert.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class ProfileDetailsRepositoryTest {
     @Autowired
-    private ua.com.social.demo.repository.AccountRepository accountRepository;
+    private AccountRepository accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
-    private ua.com.social.demo.repository.ProfileDetailsRepository detailsRepository;
+    private ProfileDetailsRepository detailsRepository;
     private Account account;
     private Profile profile;
     private ProfileDetails profileDetails;
@@ -49,10 +51,10 @@ public class ProfileDetailsRepositoryTest {
         Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
-        Integer profileId = profileRepository.persistAndRetrieveId(profile);
+        Integer profileId = profileRepository.create(profile);
         profileDetails.setProfileId(profileId);
-        Integer profileDetailsId = detailsRepository.persistAndRetrieveId(profileDetails);
-        ProfileDetails actualProfileDetails = detailsRepository.get(profileId);
+        Integer profileDetailsId = detailsRepository.create(profileDetails);
+        ProfileDetails actualProfileDetails = detailsRepository.read(profileId);
         assertEquals(profileDetails.getProfileId(), actualProfileDetails.getProfileId());
         assertEquals(profileDetails.getFirstName(), actualProfileDetails.getFirstName());
         assertEquals(profileDetails.getLastName(), actualProfileDetails.getLastName());
@@ -61,7 +63,7 @@ public class ProfileDetailsRepositoryTest {
         updateProfileDetails.setProfileId(profileId);
         updateProfileDetails.setProfileDetailsId(profileDetailsId);
         detailsRepository.update(updateProfileDetails);
-        ProfileDetails actualUpdatedProfileDetails = detailsRepository.get(profileId);
+        ProfileDetails actualUpdatedProfileDetails = detailsRepository.read(profileId);
         assertEquals(actualUpdatedProfileDetails.getProfileDetailsId(), profileDetailsId);
         assertEquals(actualUpdatedProfileDetails.getProfileId(), updateProfileDetails.getProfileId());
         assertEquals(actualUpdatedProfileDetails.getFirstName(), updateProfileDetails.getFirstName());
@@ -69,7 +71,7 @@ public class ProfileDetailsRepositoryTest {
         assertEquals(actualUpdatedProfileDetails.getSex(), updateProfileDetails.getSex());
        /* Must delete and throw EmptyResultDataAccessException */
         detailsRepository.delete(updateProfileDetails.getProfileId());
-        ProfileDetails checkProfileDetailsAfterDelete = detailsRepository.get(profileId);
+        ProfileDetails checkProfileDetailsAfterDelete = detailsRepository.read(profileId);
     }
 
 }

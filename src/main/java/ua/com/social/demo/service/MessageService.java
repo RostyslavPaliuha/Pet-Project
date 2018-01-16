@@ -10,7 +10,7 @@ public interface MessageService {
 
     public boolean delete(Integer messageId);
 
-    public Optional<Message >get(Integer messageId);
+    public Optional<Message> get(Integer messageId);
 
     public List<Message> getAllByConversation(Integer conversationId);
 

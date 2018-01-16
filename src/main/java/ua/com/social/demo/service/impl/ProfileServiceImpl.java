@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Profile;
-import ua.com.social.demo.repository.ProfileRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.ProfileService;
 
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class ProfileServiceImpl implements ProfileService {
     public Optional<Integer> persist(Profile profile) {
         Optional<Integer> integerOptional = Optional.empty();
         try {
-            return Optional.ofNullable(profileRepository.persistAndRetrieveId(profile));
+            return Optional.ofNullable(profileRepository.create(profile));
         } catch (Exception e) {
             LOG.error("Error while saving profile" + e.getMessage(), e);
             return integerOptional;
@@ -30,12 +30,14 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public Optional<Profile> get(Integer id) {
-        Optional<Profile> profileOptional = Optional.empty();
         try {
-            return Optional.ofNullable(profileRepository.get(id));
+            return Optional.ofNullable(profileRepository.read(id));
         } catch (EmptyResultDataAccessException e) {
             LOG.error("Error while getting profile" + e.getMessage(), e);
-            return profileOptional;
+            return Optional.empty();
+        } catch (Exception e) {
+            LOG.error("Error while getting profile" + e.getMessage(), e);
+            return Optional.empty();
         }
 
     }

@@ -10,6 +10,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Album;
+import ua.com.social.demo.repository.api.AlbumRepository;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ import static org.junit.Assert.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class AlbumRepositoryTest {
     @Autowired
-    private ua.com.social.demo.repository.AlbumRepository albumRepository;
+    private AlbumRepository albumRepository;
     private Album testAlbum;
     private Album testAlbum2;
 
@@ -35,14 +36,14 @@ public class AlbumRepositoryTest {
 
     @Test
     public void persist_getAll_delete() throws Exception {
-        Integer testAlbumId = albumRepository.persistAndRetrieveId(testAlbum);
-        Integer testAlbum2Id = albumRepository.persistAndRetrieveId(testAlbum2);
+        Integer testAlbumId = albumRepository.create(testAlbum);
+        Integer testAlbum2Id = albumRepository.create(testAlbum2);
         testAlbum.setAlbumId(testAlbumId);
         testAlbum2.setAlbumId(testAlbum2Id);
-        List<Album> actualTestAlbums = albumRepository.getAll(1);
+        List<Album> actualTestAlbums = albumRepository.readAll(1);
         assertEquals("Rostyslav`s Album", actualTestAlbums.get(0).getAlbumName());
         albumRepository.delete(testAlbum2.getAlbumId());
-        List testalbumsAfterDelete = albumRepository.getAll(1);
+        List testalbumsAfterDelete = albumRepository.readAll(1);
         assertEquals(2, testalbumsAfterDelete.size());
     }
 }

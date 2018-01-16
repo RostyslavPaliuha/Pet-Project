@@ -10,10 +10,10 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.*;
-import ua.com.social.demo.repository.AccountRepository;
-import ua.com.social.demo.repository.ConversationRepository;
-import ua.com.social.demo.repository.ProfileDetailsRepository;
-import ua.com.social.demo.repository.ProfileRepository;
+import ua.com.social.demo.repository.api.AccountRepository;
+import ua.com.social.demo.repository.api.ConversationRepository;
+import ua.com.social.demo.repository.api.ProfileDetailsRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.MessageService;
 
 import java.time.LocalDate;
@@ -67,16 +67,16 @@ public class ConversationRepositoryImplTest {
         Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
-        Integer profileId = profileRepository.persistAndRetrieveId(profile);
+        Integer profileId = profileRepository.create(profile);
         profileDetails.setProfileId(profileId);
-        Integer profileDetailsId = detailsRepository.persistAndRetrieveId(profileDetails);
-        ProfileDetails actualProfileDetails = detailsRepository.get(profileId);
+        Integer profileDetailsId = detailsRepository.create(profileDetails);
+        ProfileDetails actualProfileDetails = detailsRepository.read(profileId);
         firstConversation.setProfileId(profileId);
         firstConversation.setCompanionId(1);
         secondConversation.setProfileId(profileId);
         secondConversation.setCompanionId(2);
-        Integer conversationId = conversationRepository.persistAndRetrieveId(firstConversation);
-        Integer secondConversationId = conversationRepository.persistAndRetrieveId(secondConversation);
+        Integer conversationId = conversationRepository.create(firstConversation);
+        Integer secondConversationId = conversationRepository.create(secondConversation);
         createMessageForConversation(conversationId);
         createMessageForConversation(secondConversationId);
         assertEquals(new Integer(2), conversationId);
@@ -87,7 +87,7 @@ public class ConversationRepositoryImplTest {
         assertEquals(firstConversation.getCompanionId(), certainConversation.getCompanionId());
         assertEquals(secondConversation.getProfileId(), certainSecondConversation.getProfileId());
         assertEquals(secondConversation.getCompanionId(), certainSecondConversation.getCompanionId());
-        List<Conversation> conversations = conversationRepository.getAll(profileId);
+        List<Conversation> conversations = conversationRepository.readAll(profileId);
         assertEquals(2, conversations.size());//Some bug!
     }
 

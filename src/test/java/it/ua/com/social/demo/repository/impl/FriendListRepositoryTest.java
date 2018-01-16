@@ -10,10 +10,10 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.*;
-import ua.com.social.demo.repository.AccountRepository;
-import ua.com.social.demo.repository.ProfileDetailsRepository;
-import ua.com.social.demo.repository.ProfileRepository;
-import ua.com.social.demo.repository.impl.FriendListRepository;
+import ua.com.social.demo.repository.api.AccountRepository;
+import ua.com.social.demo.repository.api.ProfileDetailsRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
+import ua.com.social.demo.repository.impl.FriendListRepositoryImpl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,13 +30,13 @@ import static org.junit.Assert.assertEquals;
 
 public class FriendListRepositoryTest {
     @Autowired
-    private AccountRepository<Account> accountRepository;
+    private AccountRepository accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
     private ProfileDetailsRepository detailsRepository;
     @Autowired
-    private FriendListRepository friendListRepository;
+    private FriendListRepositoryImpl friendListRepository;
     private Account account;
     private Profile profile;
     private ProfileDetails profileDetails;
@@ -54,13 +54,13 @@ public class FriendListRepositoryTest {
         Integer accountId = accountRepository.create(account);
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
-        Integer profileId = profileRepository.persistAndRetrieveId(profile);
+        Integer profileId = profileRepository.create(profile);
         profileDetails.setProfileId(profileId);
-        Integer profileDetailsId = detailsRepository.persistAndRetrieveId(profileDetails);
-        ProfileDetails actualProfileDetails = detailsRepository.get(profileId);
+        Integer profileDetailsId = detailsRepository.create(profileDetails);
+        ProfileDetails actualProfileDetails = detailsRepository.read(profileId);
         friendList.setProfileId(profileId);
         friendList.setFriendProfileId(1);
-        friendListRepository.persist(friendList);
+        friendListRepository.create(friendList);
 
         List<Friend> friends = friendListRepository.getFriends(profileId);
         assertEquals(new Integer(1), new Integer(friends.size()));
@@ -69,7 +69,7 @@ public class FriendListRepositoryTest {
         List<Friend> myFriendFriends = friendListRepository.getFriends(1);
         assertEquals(new Integer(2), new Integer(myFriendFriends.size()));
         assertEquals(myFriendFriends.get(1).getFirstName(), "testName");
-        friendListRepository.delete(friendList.getProfileId(), friendList.getFriendProfileId());
+        friendListRepository.deleteByProfileIdFriendProfileId(friendList.getProfileId(), friendList.getFriendProfileId());
 
         List<Friend> afterDeleteFriendList = friendListRepository.getFriends(profileId);
         assertEquals(new Integer(0), new Integer(afterDeleteFriendList.size()));

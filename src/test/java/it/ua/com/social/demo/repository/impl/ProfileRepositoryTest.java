@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.entity.impl.Profile;
-import ua.com.social.demo.repository.AccountRepository;
-import ua.com.social.demo.repository.ProfileRepository;
+import ua.com.social.demo.repository.api.AccountRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class ProfileRepositoryTest {
     @Autowired
-    private AccountRepository<Account> accountRepository;
+    private AccountRepository accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     private Account account;
@@ -42,12 +42,12 @@ public class ProfileRepositoryTest {
         Integer accountId = accountRepository.create(account);
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
-        Integer persistedProfileId = profileRepository.persistAndRetrieveId(profile);
-        Profile actualProfile = profileRepository.get(accountId);
+        Integer persistedProfileId = profileRepository.create(profile);
+        Profile actualProfile = profileRepository.read(accountId);
         assertEquals(profile.getAccountId(), actualProfile.getAccountId());
         assertEquals(profile.getOnlineStatus(), actualProfile.getOnlineStatus());
         assertEquals(persistedProfileId, new Integer(4));
 
-        profileRepository.get(10000000);
+        profileRepository.read(10000000);
     }
 }

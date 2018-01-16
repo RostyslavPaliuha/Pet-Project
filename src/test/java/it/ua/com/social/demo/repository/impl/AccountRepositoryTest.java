@@ -12,7 +12,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
-import ua.com.social.demo.repository.AccountRepository;
+import ua.com.social.demo.repository.api.AccountRepository;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class AccountRepositoryTest {
     @Autowired
-    private AccountRepository<Account> accountRepository;
+    private AccountRepository accountRepository;
 
     private Account account;
 

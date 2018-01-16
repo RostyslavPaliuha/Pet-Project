@@ -15,10 +15,10 @@ import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.entity.impl.ProfileDetails;
-import ua.com.social.demo.repository.AccountRepository;
-import ua.com.social.demo.repository.AlbumRepository;
-import ua.com.social.demo.repository.ProfileDetailsRepository;
-import ua.com.social.demo.repository.ProfileRepository;
+import ua.com.social.demo.repository.api.AccountRepository;
+import ua.com.social.demo.repository.api.AlbumRepository;
+import ua.com.social.demo.repository.api.ProfileDetailsRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.RegistrationService;
 
 import java.time.LocalDate;
@@ -37,7 +37,7 @@ public class RegistrationServiceImplTest {
     private RegistrationService registrationService;
     private FullProfileDto profileDto;
     @Autowired
-    private AccountRepository <Account>accountRepository;
+    private AccountRepository accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
@@ -62,12 +62,12 @@ public class RegistrationServiceImplTest {
         Account actualAccount = accountRepository.getByEmail("test@gmail.com");
         assertEquals(new Integer(4), new Integer(actualAccount.getAccountId()));
         assertEquals("$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni", actualAccount.getPassword());
-        Profile actualProfile = profileRepository.get(4);
+        Profile actualProfile = profileRepository.read(4);
         assertEquals(new Integer(4), actualProfile.getProfileId());
-        ProfileDetails actualProfileDetails = profileDetailsRepository.get(4);
+        ProfileDetails actualProfileDetails = profileDetailsRepository.read(4);
         assertEquals("TEST ACCOUNT", actualProfileDetails.getFirstName());
         assertEquals("TEST ACCOUNT", actualProfileDetails.getLastName());
-        Album actualAlbum = albumRepository.get(2);
+        Album actualAlbum = albumRepository.read(2);
         assertEquals("Default", actualAlbum.getAlbumName());
     }
 

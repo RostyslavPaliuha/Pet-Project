@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Account;
-import ua.com.social.demo.repository.AccountRepository;
-import ua.com.social.demo.repository.ProfileRepository;
+import ua.com.social.demo.repository.api.AccountRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.AccountService;
 
 import java.util.Optional;

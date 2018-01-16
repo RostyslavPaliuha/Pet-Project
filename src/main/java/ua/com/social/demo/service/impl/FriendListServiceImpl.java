@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Friend;
 import ua.com.social.demo.entity.impl.FriendList;
-import ua.com.social.demo.repository.impl.FriendListRepository;
+import ua.com.social.demo.repository.impl.FriendListRepositoryImpl;
 import ua.com.social.demo.service.FriendListService;
 
 import java.util.Collections;
@@ -15,12 +15,12 @@ import java.util.List;
 public class FriendListServiceImpl implements FriendListService {
     private static final Logger LOG = Logger.getLogger(FriendListServiceImpl.class);
     @Autowired
-    private FriendListRepository friendListRepository;
+    private FriendListRepositoryImpl friendListRepository;
 
     @Override
     public boolean addFriend(FriendList friendList) {
         try {
-            friendListRepository.persist(friendList);
+            friendListRepository.create(friendList);
             return true;
         } catch (Exception e) {
             LOG.error("Error while adding friend" + e.getMessage(), e);
@@ -31,7 +31,7 @@ public class FriendListServiceImpl implements FriendListService {
     @Override
     public boolean delete(Integer profileId, Integer friendId) {
         try {
-            friendListRepository.delete(profileId, friendId);
+            friendListRepository.deleteByProfileIdFriendProfileId(profileId, friendId);
             return true;
         } catch (Exception e) {
             LOG.error("Error while deleting friend" + e.getMessage(), e);

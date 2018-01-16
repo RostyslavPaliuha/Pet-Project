@@ -6,29 +6,20 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.com.social.demo.entity.impl.Conversation;
-import ua.com.social.demo.repository.ConversationRepository;
+import ua.com.social.demo.repository.api.AbstractRepository;
+import ua.com.social.demo.repository.api.ConversationRepository;
 import ua.com.social.demo.repository.rowMapper.ConversationRowMapper;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository("conversationRepository")
-public class ConversationRepositoryImpl implements ConversationRepository {
+public class ConversationRepositoryImpl extends AbstractRepository<Conversation> implements ConversationRepository {
     @Autowired
     private JdbcOperations jdbcOperations;
 
     @Override
-    public void delete(Integer conversationId) {
-        jdbcOperations.update("DELETE FROM conversation WHERE conversation_id =?", conversationId);
-    }
-
-    @Override
-    public Conversation get(Integer id) {
-        return jdbcOperations.queryForObject("SELECT * FROM conversation WHERE conversation_id= ?", new Object[]{id}, new ConversationRowMapper());
-    }
-
-    @Override
-    public Integer persistAndRetrieveId(Conversation conversation) {
+    public Integer create(Conversation conversation) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement("INSERT INTO conversation( profile_id,companion_id) VALUES (?,?);", new String[]{"conversation_id"});
@@ -41,9 +32,19 @@ public class ConversationRepositoryImpl implements ConversationRepository {
     }
 
     @Override
-    public List<Conversation> getAll(Integer profileId) {
+    public Conversation read(Integer id) {
+        return jdbcOperations.queryForObject("SELECT * FROM conversation WHERE conversation_id= ?", new Object[]{id}, new ConversationRowMapper());
+    }
+
+    @Override
+    public List<Conversation> readAll(Integer profileId) {
         String sql = "SELECT c.conversation_id, c.profile_id, c.companion_id, pd.first_name AS profile_name, pd.last_name AS profile_lastname, pd2.first_name AS companion_name, pd2.last_name AS companion_lastname, m.message_date AS date FROM conversation c JOIN profile_details pd ON pd.profile_id = c.profile_id JOIN profile_details pd2 ON pd2.profile_id = c.companion_id JOIN message m ON m.conversation_id = c.conversation_id WHERE c.profile_id = ? AND m.message_date = (SELECT Max(m2.message_date) FROM message m2 WHERE m2.conversation_id = c.conversation_id) OR c.companion_id = ? AND m.message_date = (SELECT Max(m2.message_date) FROM message m2 WHERE m2.conversation_id = c.conversation_id) ORDER BY m.message_date DESC";
         return jdbcOperations.query(sql, new Object[]{profileId, profileId}, new ConversationRowMapper());
+    }
+
+    @Override
+    public void delete(Integer conversationId) {
+        jdbcOperations.update("DELETE FROM conversation WHERE conversation_id =?", conversationId);
     }
 
     @Override

@@ -8,15 +8,15 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.com.social.demo.entity.impl.Account;
-import ua.com.social.demo.repository.AbstractRepository;
-import ua.com.social.demo.repository.AccountRepository;
+import ua.com.social.demo.repository.api.AbstractRepository;
+import ua.com.social.demo.repository.api.AccountRepository;
 import ua.com.social.demo.repository.rowMapper.AccountRowMapper;
 
 import java.sql.PreparedStatement;
 
 
 @Repository("accountRepository")
-public class AccountRepositoryImpl extends AbstractRepository<Account> implements AccountRepository<Account> {
+public class AccountRepositoryImpl extends AbstractRepository<Account> implements AccountRepository {
     @Autowired
     private JdbcOperations jdbcOperations;
 
@@ -34,18 +34,13 @@ public class AccountRepositoryImpl extends AbstractRepository<Account> implement
     }
 
     @Override
-    public void delete(Integer accountId) throws Exception {
-        jdbcOperations.update("DELETE FROM account WHERE account_id =?", new Object[]{accountId});
-
-    }
-
-    @Override
     public Account read(Integer id) throws Exception {
         return jdbcOperations.queryForObject("SELECT * FROM account WHERE account_id= ?", new Object[]{id}, new AccountRowMapper());
     }
 
     @Override
-    public void update(Account entity) throws Exception {
+    public void delete(Integer accountId) throws Exception {
+        jdbcOperations.update("DELETE FROM account WHERE account_id =?", new Object[]{accountId});
 
     }
 

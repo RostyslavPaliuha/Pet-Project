@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Photo;
-import ua.com.social.demo.repository.PhotosRepository;
+import ua.com.social.demo.repository.api.PhotosRepository;
 import ua.com.social.demo.service.PhotosService;
 
 import java.util.Collections;
@@ -20,7 +20,7 @@ public class PhotoServiceImpl implements PhotosService {
     @Override
     public boolean createPhoto(Photo photo) {
         try {
-            photosRepository.persist(photo);
+            photosRepository.create(photo);
             return true;
         } catch (Exception e) {
             LOG.error("Error while saving photo" + e.getMessage(), e);
@@ -43,7 +43,7 @@ public class PhotoServiceImpl implements PhotosService {
     public Optional<Photo> get(Integer photoId) {
         Optional<Photo> photoOptional = Optional.empty();
         try {
-            return Optional.ofNullable(photosRepository.get(photoId));
+            return Optional.ofNullable(photosRepository.read(photoId));
         } catch (Exception e) {
             LOG.error("Error while getting photo" + e.getMessage(), e);
             return photoOptional;

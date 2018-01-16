@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Photo;
+import ua.com.social.demo.repository.api.AlbumRepository;
+import ua.com.social.demo.repository.api.PhotosRepository;
 
 import java.util.List;
 
@@ -27,9 +29,9 @@ import static org.junit.Assert.assertEquals;
 
 public class PhotosRepositoryTest {
     @Autowired
-    private ua.com.social.demo.repository.PhotosRepository photosRepository;
+    private PhotosRepository photosRepository;
     @Autowired
-    private ua.com.social.demo.repository.AlbumRepository albumRepository;
+    private AlbumRepository albumRepository;
     private Album testAlbum;
     private Photo testPhoto;
     private Photo testPhoto2;
@@ -44,11 +46,11 @@ public class PhotosRepositoryTest {
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void persist_getAll_delete_expectException() throws Exception {
-        Integer testAlbumId = albumRepository.persistAndRetrieveId(testAlbum);
+        Integer testAlbumId = albumRepository.create(testAlbum);
         testPhoto.setAlbumId(testAlbumId);
         testPhoto2.setAlbumId(testAlbumId);
-        photosRepository.persist(testPhoto);
-        photosRepository.persist(testPhoto2);
+        photosRepository.create(testPhoto);
+        photosRepository.create(testPhoto2);
         List<Photo> photosFromTestAlbum = photosRepository.getAllFromAlbum(2);
         assertEquals(new Integer(2), new Integer(photosFromTestAlbum.size()));
         assertEquals(testPhoto.getPhotoName(), photosFromTestAlbum.get(0).getPhotoName());
@@ -59,6 +61,6 @@ public class PhotosRepositoryTest {
         photosRepository.delete(testPhoto2.getPhotoId());
         List<Photo> photos = photosRepository.getAllFromAlbum(testAlbumId);
         assertEquals(new Integer(1), new Integer(photos.size()));
-        photosRepository.get(2);
+        photosRepository.read(2);
     }
 }

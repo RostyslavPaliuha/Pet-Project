@@ -8,30 +8,21 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.com.social.demo.entity.impl.ProfileDetails;
-import ua.com.social.demo.repository.ProfileDetailsRepository;
+import ua.com.social.demo.repository.api.AbstractRepository;
+import ua.com.social.demo.repository.api.ProfileDetailsRepository;
 import ua.com.social.demo.repository.rowMapper.ProfileDetailsRowMapper;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 
 @Repository("profileDetailsRepository")
-public class ProfileDetailsRepositoryImpl implements ProfileDetailsRepository {
+public class ProfileDetailsRepositoryImpl extends AbstractRepository<ProfileDetails> implements ProfileDetailsRepository {
 
     @Autowired
     private JdbcOperations jdbcOperations;
 
     @Override
-    public void delete(Integer profileId) {
-        jdbcOperations.update("DELETE FROM profile_details WHERE profile_details_id =?", profileId);
-    }
-
-    @Override
-    public ProfileDetails get(Integer profileId) throws EmptyResultDataAccessException {
-        return jdbcOperations.queryForObject("SELECT * FROM profile_details WHERE profile_id= ?", new Integer[]{profileId}, new ProfileDetailsRowMapper());
-    }
-
-    @Override
-    public Integer persistAndRetrieveId(ProfileDetails profileDetails) {
+    public Integer create(ProfileDetails profileDetails) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement("INSERT INTO profile_details(first_name, last_name, sex, birthday,profile_id) VALUES (?,?,?,?,?);", new String[]{"profile_details_id"});
@@ -47,8 +38,18 @@ public class ProfileDetailsRepositoryImpl implements ProfileDetailsRepository {
     }
 
     @Override
+    public ProfileDetails read(Integer profileId) throws EmptyResultDataAccessException {
+        return jdbcOperations.queryForObject("SELECT * FROM profile_details WHERE profile_id= ?", new Integer[]{profileId}, new ProfileDetailsRowMapper());
+    }
+
+    @Override
     public void update(ProfileDetails profileDetails) {
         jdbcOperations.update("UPDATE  profile_details SET first_name=?,last_name=?,sex=?,birthday=? WHERE profile_id=?", profileDetails.getFirstName(), profileDetails.getLastName(), profileDetails.getSex(), profileDetails.getBirthDay(), profileDetails.getProfileId());
+    }
+
+    @Override
+    public void delete(Integer profileId) {
+        jdbcOperations.update("DELETE FROM profile_details WHERE profile_details_id =?", profileId);
     }
 
 

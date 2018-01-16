@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Message;
-import ua.com.social.demo.repository.MessageRepository;
+import ua.com.social.demo.repository.api.MessageRepository;
 import ua.com.social.demo.service.MessageService;
 
 import java.util.Collections;
@@ -21,7 +21,7 @@ public class MessageSeviceImpl implements MessageService {
     @Override
     public boolean persist(Message message) {
         try {
-            messageRepository.persist(message);
+            messageRepository.create(message);
             return true;
         } catch (Exception e) {
             LOG.error("Error while saving message" + e.getMessage(), e);
@@ -43,7 +43,7 @@ public class MessageSeviceImpl implements MessageService {
     @Override
     public Optional<Message> get(Integer id) {
         try {
-            return Optional.ofNullable(messageRepository.get(id));
+            return Optional.ofNullable(messageRepository.read(id));
         } catch (Exception e) {
             LOG.error("Error while getting message" + e.getMessage(), e);
             return Optional.empty();

@@ -2,22 +2,36 @@ package ua.com.social.demo.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.com.social.demo.entity.impl.Message;
-import ua.com.social.demo.repository.MessageRepository;
+import ua.com.social.demo.repository.api.AbstractRepository;
+import ua.com.social.demo.repository.api.MessageRepository;
 import ua.com.social.demo.repository.rowMapper.MessageRowMapper;
 
+import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository("messageRepository")
-public class MessageRepositoryImpl implements MessageRepository {
+public class MessageRepositoryImpl extends AbstractRepository<Message> implements MessageRepository {
     @Autowired
     private JdbcOperations jdbcOperations;
 
     @Override
-    public void persist(Message message) {
+    public Integer create(Message message) {
         Object[] params = new Object[]{message.getMessageContext(), message.getMessageDate(), message.getConversationId()};
-        jdbcOperations.update("INSERT INTO message(message_content, message_date, conversation_id) VALUES (?,?,?);", params);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcOperations.update(connection -> {
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO message(message_content, message_date, conversation_id) VALUES (?,?,?);", new String[]{"message_id"});
+                    ps.setString(1, (String) params[0]);
+                    ps.setTimestamp(2, (Timestamp) params[1]);
+                    ps.setInt(3, (int) params[2]);
+                    return ps;
+                },
+                keyHolder);
+        return keyHolder.getKey().intValue();
     }
 
     @Override
@@ -26,7 +40,7 @@ public class MessageRepositoryImpl implements MessageRepository {
     }
 
     @Override
-    public Message get(Integer messageId) {
+    public Message read(Integer messageId) {
         return jdbcOperations.queryForObject("SELECT * FROM message WHERE message_id= ?", new Object[]{messageId}, new MessageRowMapper());
     }
 

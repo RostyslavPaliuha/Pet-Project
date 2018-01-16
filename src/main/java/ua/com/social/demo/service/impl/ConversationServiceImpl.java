@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Conversation;
+import ua.com.social.demo.repository.api.ConversationRepository;
 import ua.com.social.demo.service.ConversationService;
 
 import java.util.Collections;
@@ -13,11 +14,11 @@ import java.util.List;
 public class ConversationServiceImpl implements ConversationService {
     private static final Logger LOG = Logger.getLogger(ConversationServiceImpl.class);
     @Autowired
-    private ua.com.social.demo.repository.ConversationRepository conversationRepository;
+    private ConversationRepository conversationRepository;
 
     public Integer persist(Conversation conversation) {
         try {
-            return conversationRepository.persistAndRetrieveId(conversation);
+            return conversationRepository.create(conversation);
         } catch (Exception e) {
             LOG.error("Error while saving conversation" + e.getMessage(), e);
             return null;
@@ -26,7 +27,7 @@ public class ConversationServiceImpl implements ConversationService {
 
     public List<Conversation> reviewConversations(Integer profileId) {
         try {
-            return conversationRepository.getAll(profileId);
+            return conversationRepository.readAll(profileId);
         } catch (Exception e) {
             LOG.error("Error while review conversations" + e.getMessage(), e);
             return Collections.emptyList();

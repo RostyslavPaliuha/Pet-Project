@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Photo;
-import ua.com.social.demo.repository.AlbumRepository;
-import ua.com.social.demo.repository.PhotosRepository;
+import ua.com.social.demo.repository.api.AlbumRepository;
+import ua.com.social.demo.repository.api.PhotosRepository;
 import ua.com.social.demo.service.AlbumService;
 
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class AlbumServiceImpl implements AlbumService {
     public Optional<Integer> createAlbum(Album album) {
         Optional<Integer> integerOptional = Optional.empty();
         try {
-            integerOptional = Optional.ofNullable(albumRepository.persistAndRetrieveId(album));
+            integerOptional = Optional.ofNullable(albumRepository.create(album));
             return integerOptional;
         } catch (Exception e) {
             LOG.error("Error while creating album" + e.getMessage(), e);
@@ -45,7 +45,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     public List<Album> getAllAlbums(Integer profileId) {
         try {
-            return albumRepository.getAll(profileId);
+            return albumRepository.readAll(profileId);
         } catch (Exception e) {
             LOG.error("Error while getting list of albums" + e.getMessage(), e);
             return Collections.emptyList();

@@ -41,15 +41,15 @@ public class AlbumServiceImplTest {
         List<Album> albums = albumService.getAllAlbums(1);
         assertEquals(6, albums.size());
         assertTrue(integerOptional0.isPresent());
-        assertEquals(new Integer(2),new Integer(integerOptional0.get()));
+        assertEquals(new Integer(2), new Integer(integerOptional0.get()));
         assertTrue(integerOptional1.isPresent());
-        assertEquals(new Integer(3),new Integer(integerOptional1.get()));
+        assertEquals(new Integer(3), new Integer(integerOptional1.get()));
         assertTrue(integerOptional2.isPresent());
-        assertEquals( new Integer(4),new Integer(integerOptional2.get()));
+        assertEquals(new Integer(4), new Integer(integerOptional2.get()));
         assertTrue(integerOptional3.isPresent());
-        assertEquals(new Integer(5),new Integer(integerOptional3.get()) );
+        assertEquals(new Integer(5), new Integer(integerOptional3.get()));
         assertTrue(integerOptional4.isPresent());
-        assertEquals(new Integer(6),new Integer(integerOptional4.get()) );
+        assertEquals(new Integer(6), new Integer(integerOptional4.get()));
     }
 
 }

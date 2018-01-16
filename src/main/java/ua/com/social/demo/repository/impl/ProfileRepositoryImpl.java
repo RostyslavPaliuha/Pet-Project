@@ -8,18 +8,19 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.com.social.demo.entity.impl.Profile;
-import ua.com.social.demo.repository.ProfileRepository;
+import ua.com.social.demo.repository.api.AbstractRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.repository.rowMapper.ProfileRowMapper;
 
 import java.sql.PreparedStatement;
 
 @Repository("profileRepository")
-public class ProfileRepositoryImpl implements ProfileRepository {
+public class ProfileRepositoryImpl extends AbstractRepository<Profile> implements ProfileRepository {
     @Autowired
     private JdbcOperations jdbcOperations;
 
     @Override
-    public Integer persistAndRetrieveId(Profile profile) {
+    public Integer create(Profile profile) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement("INSERT INTO profile(account_id) VALUES (?);", new String[]{"profile_id"});
@@ -31,7 +32,7 @@ public class ProfileRepositoryImpl implements ProfileRepository {
     }
 
     @Override
-    public Profile get(Integer accountId) throws EmptyResultDataAccessException {
+    public Profile read(Integer accountId) throws EmptyResultDataAccessException {
         return jdbcOperations.queryForObject("SELECT * FROM profile WHERE account_id= ?", new Object[]{accountId}, new ProfileRowMapper());
     }
 
