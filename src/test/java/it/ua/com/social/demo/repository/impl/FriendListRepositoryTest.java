@@ -10,6 +10,8 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.*;
+import ua.com.social.demo.repository.AccountRepository;
+import ua.com.social.demo.repository.ProfileDetailsRepository;
 import ua.com.social.demo.repository.ProfileRepository;
 import ua.com.social.demo.repository.impl.FriendListRepository;
 
@@ -28,11 +30,11 @@ import static org.junit.Assert.assertEquals;
 
 public class FriendListRepositoryTest {
     @Autowired
-    private ua.com.social.demo.repository.AccountRepository accountRepository;
+    private AccountRepository<Account> accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
-    private ua.com.social.demo.repository.ProfileDetailsRepository detailsRepository;
+    private ProfileDetailsRepository detailsRepository;
     @Autowired
     private FriendListRepository friendListRepository;
     private Account account;
@@ -49,7 +51,7 @@ public class FriendListRepositoryTest {
 
     @Test
     public void addFriend_checkFriends_deleteFriend_checkFriends() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
+        Integer accountId = accountRepository.create(account);
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer profileId = profileRepository.persistAndRetrieveId(profile);

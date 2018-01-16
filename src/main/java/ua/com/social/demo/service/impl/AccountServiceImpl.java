@@ -13,7 +13,7 @@ import ua.com.social.demo.service.AccountService;
 import java.util.Optional;
 
 @Service("accountService")
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements AccountService<Account, Integer> {
     private static final Logger LOG = Logger.getLogger(AccountServiceImpl.class);
 
     @Autowired
@@ -24,21 +24,19 @@ public class AccountServiceImpl implements AccountService {
     private ProfileRepository profileRepository;
 
     @Override
-    public Optional<Integer> persist(String email, String password) {
-        Optional<Integer> integerOptional = Optional.empty();
+    public Optional persist(Account account) {
         try {
-            integerOptional = Optional.ofNullable(accountRepository.persistAndRetrieveId(email, password));
-            return integerOptional;
+            return Optional.ofNullable(accountRepository.create(account));
         } catch (Exception e) {
             LOG.error("Error while creating profile" + e.getMessage(), e);
-            return integerOptional;
+            return Optional.empty();
         }
     }
 
     @Override
     public boolean delete(Integer accountId) {
         try {
-            if (1 == accountRepository.checkIfExist("account","account_id",accountId)) {
+            if (1 == accountRepository.checkIfExist("account", "account_id", accountId)) {
                 accountRepository.delete(accountId);
                 return true;
             } else {
@@ -51,27 +49,24 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<Account> get(Integer id) {
-        Optional<Account> optionalAccount = Optional.empty();
+    public Optional get(Integer id) {
         try {
-            optionalAccount = Optional.ofNullable(accountRepository.get(id));
-            return optionalAccount;
+            return Optional.ofNullable(accountRepository.read(id));
         } catch (Exception e) {
             LOG.error("Error while getting profile" + e.getMessage(), e);
-            return optionalAccount;
+            return Optional.empty();
         }
     }
 
-    public Optional<Account> getByEmail(String email) {
-        Optional<Account> optionalAccount = Optional.empty();
+    public Optional getByEmail(String email) {
         try {
-            optionalAccount = Optional.ofNullable(accountRepository.getByEmail(email));
-            return optionalAccount;
+            return Optional.ofNullable(accountRepository.getByEmail(email));
+
         } catch (EmptyResultDataAccessException exception) {
-            return optionalAccount;
+            return Optional.empty();
         } catch (Exception e) {
             LOG.error("Error while getting by email profile" + e.getMessage(), e);
-            return optionalAccount;
+            return Optional.empty();
         }
     }
 

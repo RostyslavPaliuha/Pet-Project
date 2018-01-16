@@ -37,7 +37,7 @@ public class RegistrationServiceImplTest {
     private RegistrationService registrationService;
     private FullProfileDto profileDto;
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepository <Account>accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired

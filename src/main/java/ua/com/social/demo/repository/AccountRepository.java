@@ -1,21 +1,15 @@
 package ua.com.social.demo.repository;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import ua.com.social.demo.entity.impl.Account;
 
-public interface AccountRepository<T extends Account> {
 
-    Integer persistAndRetrieveId(String email, String password);
-
-    void delete(Integer accountId) throws Exception;
-
-    T get(Integer id);
+public interface AccountRepository<T> extends EntityRepository<T> {
 
     T getByEmail(String email) throws EmptyResultDataAccessException;
 
-    void updateEmail(String email, Integer profileId);
+    void updateEmail(String email, Integer profileId) throws Exception;
 
-    void updatePassword(String password, Integer profileId);
+    void updatePassword(String password, Integer profileId) throws Exception;
 
-    Integer checkIfExist(String tableName, String columnIdName, Integer id);
+
 }

@@ -1,15 +1,13 @@
 package ua.com.social.demo.service;
 
-import ua.com.social.demo.entity.impl.Account;
-
 import java.util.Optional;
 
-public interface AccountService {
-    public Optional<Integer> persist(String email, String password);
+public interface AccountService<T, N> {
+    public Optional<N> persist(T t);
 
     public boolean delete(Integer id);
 
-    public Optional<Account> get(Integer id);
+    public Optional<T> get(Integer id);
 
-    public Optional<Account> getByEmail(String email);
+    public Optional<T> getByEmail(String email);
 }

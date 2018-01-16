@@ -64,7 +64,7 @@ public class ConversationRepositoryImplTest {
 
     @Test
     public void createAcc_createConversation_reviewConversation_reviewConversations() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
+        Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer profileId = profileRepository.persistAndRetrieveId(profile);

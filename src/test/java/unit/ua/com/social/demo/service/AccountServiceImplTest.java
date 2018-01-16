@@ -32,12 +32,12 @@ public class AccountServiceImplTest {
 
     @Before
     public void setUp() {
-        accountService.persist("test@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
+        accountService.persist(new Account("test@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni"));
     }
 
     @Test
     public void persist() throws Exception {
-        Optional optional = accountService.persist("test1@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
+        Optional optional = accountService.persist(new Account("test1@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni"));
         assertTrue(optional.isPresent());
         assertEquals(new Integer(5), optional.get());
     }

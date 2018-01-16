@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class AccountRepositoryTest {
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepository<Account> accountRepository;
 
     private Account account;
 
@@ -37,7 +37,7 @@ public class AccountRepositoryTest {
 
     @Test
     public void persist_andGetByEmail() throws Exception {
-        accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
+        accountRepository.create(new Account(account.getEmail(), account.getPassword()));
         Account actual = accountRepository.getByEmail(account.getEmail());
         assertEquals(account.getEmail(), actual.getEmail());
     }
@@ -45,7 +45,7 @@ public class AccountRepositoryTest {
     @Test
     public void persistAndRetrieveId() throws Exception {
         account.setEmail("test2@gmail.com");
-        Integer id = accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
+        Integer id = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
         assertEquals(new Integer(4), id);
     }
 
@@ -57,7 +57,7 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    public void update_get_assert() {
+    public void update_get_assert() throws Exception {
         Account andriy = new Account();
         andriy.setEmail("andriyMelnik@gmail.com");
         andriy.setPassword("$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");

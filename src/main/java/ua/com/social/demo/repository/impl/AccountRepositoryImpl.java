@@ -16,17 +16,17 @@ import java.sql.PreparedStatement;
 
 
 @Repository("accountRepository")
-public class AccountRepositoryImpl extends AbstractRepository implements AccountRepository {
+public class AccountRepositoryImpl extends AbstractRepository<Account> implements AccountRepository<Account> {
     @Autowired
     private JdbcOperations jdbcOperations;
 
     @Override
-    public Integer persistAndRetrieveId(String email, String password) {
+    public Integer create(Account account) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement("INSERT INTO account(email,password) VALUES (?,?);", new String[]{"account_id"});
-                    ps.setString(1, email);
-                    ps.setString(2, password);
+                    ps.setString(1, account.getEmail());
+                    ps.setString(2, account.getPassword());
                     return ps;
                 },
                 keyHolder);
@@ -40,8 +40,13 @@ public class AccountRepositoryImpl extends AbstractRepository implements Account
     }
 
     @Override
-    public Account get(Integer id) {
+    public Account read(Integer id) throws Exception {
         return jdbcOperations.queryForObject("SELECT * FROM account WHERE account_id= ?", new Object[]{id}, new AccountRowMapper());
+    }
+
+    @Override
+    public void update(Account entity) throws Exception {
+
     }
 
     @Override
@@ -51,12 +56,12 @@ public class AccountRepositoryImpl extends AbstractRepository implements Account
     }
 
     @Override
-    public void updateEmail(String email, Integer profileId) {
+    public void updateEmail(String email, Integer profileId) throws Exception {
         jdbcOperations.update("UPDATE account SET email=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{email, profileId});
     }
 
     @Override
-    public void updatePassword(String password, Integer profileId) {
+    public void updatePassword(String password, Integer profileId) throws Exception {
         jdbcOperations.update("UPDATE account SET password=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{password, profileId});
     }
 

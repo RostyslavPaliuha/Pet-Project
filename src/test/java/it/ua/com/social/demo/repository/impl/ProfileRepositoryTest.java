@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.entity.impl.Profile;
+import ua.com.social.demo.repository.AccountRepository;
 import ua.com.social.demo.repository.ProfileRepository;
 
 import static org.junit.Assert.assertEquals;
@@ -25,7 +26,7 @@ import static org.junit.Assert.assertEquals;
         @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:sql/cleardata.sql")})
 public class ProfileRepositoryTest {
     @Autowired
-    private ua.com.social.demo.repository.AccountRepository accountRepository;
+    private AccountRepository<Account> accountRepository;
     @Autowired
     private ProfileRepository profileRepository;
     private Account account;
@@ -38,7 +39,7 @@ public class ProfileRepositoryTest {
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void persist_GetByAccountId_Delete() throws Exception {
-        Integer accountId = accountRepository.persistAndRetrieveId(account.getEmail(), account.getPassword());
+        Integer accountId = accountRepository.create(account);
         profile.setAccountId(accountId);
         profile.setOnlineStatus(0);
         Integer persistedProfileId = profileRepository.persistAndRetrieveId(profile);
