@@ -19,7 +19,7 @@ import ua.com.social.demo.repository.api.AccountRepository;
 import ua.com.social.demo.repository.api.AlbumRepository;
 import ua.com.social.demo.repository.api.ProfileDetailsRepository;
 import ua.com.social.demo.repository.api.ProfileRepository;
-import ua.com.social.demo.service.RegistrationService;
+import ua.com.social.demo.service.api.RegistrationService;
 
 import java.time.LocalDate;
 

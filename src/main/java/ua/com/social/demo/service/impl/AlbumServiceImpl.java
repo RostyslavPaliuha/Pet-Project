@@ -7,7 +7,7 @@ import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Photo;
 import ua.com.social.demo.repository.api.AlbumRepository;
 import ua.com.social.demo.repository.api.PhotosRepository;
-import ua.com.social.demo.service.AlbumService;
+import ua.com.social.demo.service.api.AlbumService;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,4 +1,4 @@
-package ua.com.social.demo.service;
+package ua.com.social.demo.service.api;
 
 import ua.com.social.demo.entity.impl.Profile;
 

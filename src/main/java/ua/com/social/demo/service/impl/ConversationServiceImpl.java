@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Conversation;
 import ua.com.social.demo.repository.api.ConversationRepository;
-import ua.com.social.demo.service.ConversationService;
+import ua.com.social.demo.service.api.ConversationService;
 
 import java.util.Collections;
 import java.util.List;

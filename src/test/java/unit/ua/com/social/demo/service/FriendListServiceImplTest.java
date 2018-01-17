@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Friend;
 import ua.com.social.demo.entity.impl.FriendList;
-import ua.com.social.demo.service.FriendListService;
+import ua.com.social.demo.service.api.FriendListService;
 
 import java.util.List;
 

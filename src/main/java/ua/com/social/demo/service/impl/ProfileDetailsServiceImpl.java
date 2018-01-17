@@ -6,7 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.repository.api.ProfileDetailsRepository;
-import ua.com.social.demo.service.ProfileDetailsService;
+import ua.com.social.demo.service.api.ProfileDetailsService;
 
 import java.util.Optional;
 

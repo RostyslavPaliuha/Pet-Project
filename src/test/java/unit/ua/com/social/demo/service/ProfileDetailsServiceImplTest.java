@@ -11,7 +11,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.ProfileDetails;
-import ua.com.social.demo.service.ProfileDetailsService;
+import ua.com.social.demo.service.api.ProfileDetailsService;
 
 import java.time.LocalDate;
 import java.util.Optional;

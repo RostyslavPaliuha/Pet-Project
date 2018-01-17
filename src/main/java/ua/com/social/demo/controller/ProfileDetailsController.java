@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.security.TokenAuthenticationService;
-import ua.com.social.demo.service.ProfileDetailsService;
+import ua.com.social.demo.service.api.ProfileDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 

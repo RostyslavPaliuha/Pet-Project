@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.security.TokenAuthenticationService;
 import ua.com.social.demo.security.UserProxy;
-import ua.com.social.demo.service.AccountService;
-import ua.com.social.demo.service.ProfileService;
+import ua.com.social.demo.service.api.AccountService;
+import ua.com.social.demo.service.api.ProfileService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

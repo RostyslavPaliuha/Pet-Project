@@ -10,7 +10,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Album;
-import ua.com.social.demo.service.AlbumService;
+import ua.com.social.demo.service.api.AlbumService;
 
 import java.util.List;
 import java.util.Optional;

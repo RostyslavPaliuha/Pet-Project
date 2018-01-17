@@ -12,7 +12,7 @@ import ua.com.social.demo.repository.api.AccountRepository;
 import ua.com.social.demo.repository.api.AlbumRepository;
 import ua.com.social.demo.repository.api.ProfileDetailsRepository;
 import ua.com.social.demo.repository.api.ProfileRepository;
-import ua.com.social.demo.service.RegistrationService;
+import ua.com.social.demo.service.api.RegistrationService;
 
 @Service("registrationService")
 public class RegistrationServiceImpl implements RegistrationService {
@@ -37,6 +37,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             profileDetails.setLastName(fullProfileDto.getLastName());
             profileDetails.setBirthDay(fullProfileDto.getBirthday());
             profileDetails.setSex(fullProfileDto.getSex());
+            profileDetails.setCountry(fullProfileDto.getCountry());
             profileDetails.setProfileId(profileId);
             Integer profileDetailId = profileDetailsRepository.create(profileDetails);
             Album album = new Album();

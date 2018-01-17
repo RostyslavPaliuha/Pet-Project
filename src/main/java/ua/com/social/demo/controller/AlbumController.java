@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Photo;
-import ua.com.social.demo.service.AlbumService;
-import ua.com.social.demo.service.PhotosService;
+import ua.com.social.demo.service.api.AlbumService;
+import ua.com.social.demo.service.api.PhotosService;
 
 import java.util.List;
 import java.util.Optional;

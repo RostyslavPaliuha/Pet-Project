@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Photo;
 import ua.com.social.demo.repository.api.PhotosRepository;
-import ua.com.social.demo.service.PhotosService;
+import ua.com.social.demo.service.api.PhotosService;
 
 import java.util.Collections;
 import java.util.List;

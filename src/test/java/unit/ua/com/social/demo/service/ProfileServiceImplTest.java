@@ -11,7 +11,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Profile;
-import ua.com.social.demo.service.ProfileService;
+import ua.com.social.demo.service.api.ProfileService;
 
 import java.util.Optional;
 

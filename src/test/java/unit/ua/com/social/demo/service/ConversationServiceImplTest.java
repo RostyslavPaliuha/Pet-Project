@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Conversation;
 import ua.com.social.demo.entity.impl.Message;
-import ua.com.social.demo.service.ConversationService;
-import ua.com.social.demo.service.MessageService;
+import ua.com.social.demo.service.api.ConversationService;
+import ua.com.social.demo.service.api.MessageService;
 
 import java.util.List;
 

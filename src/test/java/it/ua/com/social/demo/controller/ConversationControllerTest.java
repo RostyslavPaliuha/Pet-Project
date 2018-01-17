@@ -16,8 +16,8 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Conversation;
 import ua.com.social.demo.entity.impl.Message;
-import ua.com.social.demo.service.ConversationService;
-import ua.com.social.demo.service.MessageService;
+import ua.com.social.demo.service.api.ConversationService;
+import ua.com.social.demo.service.api.MessageService;
 
 import javax.servlet.Filter;
 import java.util.Arrays;

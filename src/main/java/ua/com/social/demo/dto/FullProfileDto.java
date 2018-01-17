@@ -11,6 +11,7 @@ public class FullProfileDto implements DomainObject {
     private String lastName;
     private String sex;
     private LocalDate birthday;
+    private String country;
 
     public FullProfileDto(String email, String password, String firstName, String lastName, String sex, LocalDate birthday) {
         this.email = email;
@@ -70,5 +71,13 @@ public class FullProfileDto implements DomainObject {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

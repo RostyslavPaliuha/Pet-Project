@@ -11,7 +11,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Message;
-import ua.com.social.demo.service.MessageService;
+import ua.com.social.demo.service.api.MessageService;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

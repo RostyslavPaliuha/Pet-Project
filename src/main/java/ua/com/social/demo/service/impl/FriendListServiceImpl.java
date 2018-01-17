@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ua.com.social.demo.entity.impl.Friend;
 import ua.com.social.demo.entity.impl.FriendList;
 import ua.com.social.demo.repository.impl.FriendListRepositoryImpl;
-import ua.com.social.demo.service.FriendListService;
+import ua.com.social.demo.service.api.FriendListService;
 
 import java.util.Collections;
 import java.util.List;

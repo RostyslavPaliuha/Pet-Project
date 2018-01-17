@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Photo;
-import ua.com.social.demo.service.PhotosService;
+import ua.com.social.demo.service.api.PhotosService;
 import ua.com.social.demo.service.impl.AlbumServiceImpl;
 
 import javax.servlet.Filter;

@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.dto.FullProfileDto;
-import ua.com.social.demo.service.RegistrationService;
+import ua.com.social.demo.service.api.RegistrationService;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
