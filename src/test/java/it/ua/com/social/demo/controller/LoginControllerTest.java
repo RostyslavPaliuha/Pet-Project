@@ -31,7 +31,7 @@ public class LoginControllerTest {
 
     @Test
     public void login() throws Exception {
-        String url = new StringBuilder().append("/login").toString();
+        String url = new StringBuilder().append("/auth/login").toString();
         MvcResult mvcResult = mockMvc.perform(post(url).content("{\n" +
                 "\t\"email\":\"andriy@gmail.com\",\n" +
                 "\t\"password\":\"1111\"\n" +

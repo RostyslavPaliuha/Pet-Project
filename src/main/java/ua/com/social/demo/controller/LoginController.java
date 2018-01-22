@@ -20,7 +20,7 @@ import java.util.Optional;
 @RestController
 public class LoginController {
 
-    static Logger logger = Logger.getLogger(LoginController.class.getName());
+    static Logger logger = Logger.getLogger(LoginController.class);
     @Value("${security.headerName}")
     private String HEADER_NAME;
     @Autowired
@@ -30,22 +30,26 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "auth/login", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<UserProxy> getAuthenticationToken(@RequestBody Account credential, HttpServletResponse response) {
-        Optional<Account> accountOptional = accountService.getByEmail(credential.getEmail());
-        Account account = accountOptional.isPresent() ? accountOptional.get() : accountOptional.orElse(new Account());
-        if (passwordEncoder.matches(credential.getPassword(), account.getPassword())) {
-            Integer profileId = profileService.get(account.getAccountId()).get().getProfileId();
-            String fullToken = TokenAuthenticationService.createToken(account, profileId);
-            logger.info("Token created.");
-            response.addHeader(HEADER_NAME, fullToken);
-            logger.info("User authentication success. User: " + account.getEmail() + " logged in.");
-            return ResponseEntity.status(HttpStatus.OK).build();
-        } else {
-            logger.info("Bad user credentials");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        if (credential.getEmail() != null && credential.getEmail() != "") {
+            Optional<Account> accountOptional = accountService.getByEmail(credential.getEmail());
+            Account account = accountOptional.isPresent() ? accountOptional.get() : accountOptional.orElse(new Account());
+            if (passwordEncoder.matches(credential.getPassword(), account.getPassword())) {
+                Integer profileId = profileService.get(account.getAccountId()).get().getProfileId();
+                String fullToken = TokenAuthenticationService.createToken(account, profileId);
+                logger.info("Token created.");
+                response.addHeader(HEADER_NAME, fullToken);
+                logger.info("User authentication success. User: " + account.getEmail() + " logged in.");
+                responseEntity = ResponseEntity.status(HttpStatus.OK).build();
+            } else {
+                logger.info("Bad user credentials");
+                return responseEntity;
+            }
         }
+        return responseEntity;
     }
 
     @RequestMapping(value = "api/logout", method = RequestMethod.POST)
