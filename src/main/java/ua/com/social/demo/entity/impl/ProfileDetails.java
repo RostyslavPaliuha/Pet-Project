@@ -12,6 +12,7 @@ public class ProfileDetails implements DomainObject {
     private LocalDate birthDay;
     private String country;
     private Integer profileId;
+    private Photo avatar;
 
     public ProfileDetails(String firstName, String lastName, Sex sex, LocalDate birthDay) {
         this.firstName = firstName;
@@ -77,5 +78,13 @@ public class ProfileDetails implements DomainObject {
 
     public void setProfileId(Integer profileId) {
         this.profileId = profileId;
+    }
+
+    public Photo getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Photo avatar) {
+        this.avatar = avatar;
     }
 }

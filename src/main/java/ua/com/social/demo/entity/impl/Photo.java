@@ -1,11 +1,12 @@
 package ua.com.social.demo.entity.impl;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ua.com.social.demo.entity.DomainObject;
 
 
 public class Photo implements DomainObject {
-
+@JsonIgnore
     private Integer photoId;
     private String photoName;
     private String photoDescription;
