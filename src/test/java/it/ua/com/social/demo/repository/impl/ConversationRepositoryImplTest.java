@@ -63,32 +63,25 @@ public class ConversationRepositoryImplTest {
     }
 
     @Test
-    public void createAcc_createConversation_reviewConversation_reviewConversations() throws Exception {
-        Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
-        profile.setAccountId(accountId);
-        profile.setOnlineStatus(0);
-        Integer profileId = profileRepository.create(profile);
-        profileDetails.setProfileId(profileId);
-        Integer profileDetailsId = detailsRepository.create(profileDetails);
-        ProfileDetails actualProfileDetails = detailsRepository.read(profileId);
-        firstConversation.setProfileId(profileId);
-        firstConversation.setCompanionId(1);
-        secondConversation.setProfileId(profileId);
-        secondConversation.setCompanionId(2);
+    public void createConversation_reviewConversations() throws Exception {
+        firstConversation.setProfileId(1);
+        firstConversation.setCompanionId(3);
+        secondConversation.setProfileId(2);
+        secondConversation.setCompanionId(3);
         Integer conversationId = conversationRepository.create(firstConversation);
         Integer secondConversationId = conversationRepository.create(secondConversation);
         createMessageForConversation(conversationId);
         createMessageForConversation(secondConversationId);
         assertEquals(new Integer(2), conversationId);
         assertEquals(new Integer(3), secondConversationId);
-        Conversation certainConversation = conversationRepository.getByProfileIdCompanionId(profileId, 1);
-        Conversation certainSecondConversation = conversationRepository.getByProfileIdCompanionId(profileId, 2);
+        Conversation certainConversation = conversationRepository.getByProfileIdCompanionId(1, 3);
+        Conversation certainSecondConversation = conversationRepository.getByProfileIdCompanionId(2, 3);
         assertEquals(firstConversation.getProfileId(), certainConversation.getProfileId());
         assertEquals(firstConversation.getCompanionId(), certainConversation.getCompanionId());
         assertEquals(secondConversation.getProfileId(), certainSecondConversation.getProfileId());
         assertEquals(secondConversation.getCompanionId(), certainSecondConversation.getCompanionId());
-        List<Conversation> conversations = conversationRepository.readAll(profileId);
-        assertEquals(2, conversations.size());//Some bug!
+        List<Conversation> conversations = conversationRepository.readAll(1);
+        assertEquals(2, conversations.size());
     }
 
 }

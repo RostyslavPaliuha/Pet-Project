@@ -49,7 +49,7 @@ public class ProfileDetailsControllerTest {
 
     @Test
     public void login_reviewProfile_update() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(post("/login").content("{\n" +
+        MvcResult mvcResult = mockMvc.perform(post("/auth/login").content("{\n" +
                 "\t\"email\":\"pro@gmail.com\",\n" +
                 "\t\"password\":\"1111\"\n" +
                 "}").contentType(MediaType.APPLICATION_JSON_UTF8))

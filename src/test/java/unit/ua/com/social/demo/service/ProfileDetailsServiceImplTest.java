@@ -40,6 +40,7 @@ public class ProfileDetailsServiceImplTest {
         details.setProfileId(4);
         details.setSex("male");
         details.setCountry("Ukraine");
+        details.setProfileId(3);
     }
 
     @Test
@@ -52,9 +53,9 @@ public class ProfileDetailsServiceImplTest {
     @Test
     public void get() throws Exception {
         this.persist();
-        Optional<ProfileDetails> actualProfileDetailsOptional = detailsService.get(4);
+        Optional<ProfileDetails> actualProfileDetailsOptional = detailsService.get(1);
         assertTrue(actualProfileDetailsOptional.isPresent());
-        assertEquals("", actualProfileDetailsOptional.get().getFirstName());
+        assertEquals("Rostyslav", actualProfileDetailsOptional.get().getFirstName());
     }
 
     @Test

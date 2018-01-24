@@ -51,27 +51,19 @@ public class FriendListRepositoryTest {
 
     @Test
     public void addFriend_checkFriends_deleteFriend_checkFriends() throws Exception {
-        Integer accountId = accountRepository.create(account);
-        profile.setAccountId(accountId);
-        profile.setOnlineStatus(0);
-        Integer profileId = profileRepository.create(profile);
-        profileDetails.setProfileId(profileId);
-        Integer profileDetailsId = detailsRepository.create(profileDetails);
-        ProfileDetails actualProfileDetails = detailsRepository.read(profileId);
-        friendList.setProfileId(profileId);
-        friendList.setFriendProfileId(1);
+        friendList.setProfileId(1);
+        friendList.setFriendProfileId(3);
         friendListRepository.create(friendList);
-
-        List<Friend> friends = friendListRepository.getFriends(profileId);
+        List<Friend> friends = friendListRepository.getFriends(3);
         assertEquals(new Integer(1), new Integer(friends.size()));
         assertEquals("Rostyslav", friends.get(0).getFirstName());
 
         List<Friend> myFriendFriends = friendListRepository.getFriends(1);
         assertEquals(new Integer(2), new Integer(myFriendFriends.size()));
-        assertEquals(myFriendFriends.get(1).getFirstName(), "testName");
+        assertEquals(myFriendFriends.get(1).getFirstName(), "Andriy");
         friendListRepository.deleteByProfileIdFriendProfileId(friendList.getProfileId(), friendList.getFriendProfileId());
 
-        List<Friend> afterDeleteFriendList = friendListRepository.getFriends(profileId);
+        List<Friend> afterDeleteFriendList = friendListRepository.getFriends(3);
         assertEquals(new Integer(0), new Integer(afterDeleteFriendList.size()));
 
         List<Friend> myFriendFriendsAfterDelete = friendListRepository.getFriends(1);

@@ -55,7 +55,7 @@ public class ConversationControllerTest {
 
     @Test
     public void login_postMessage_reviewConversations_reviewConversation() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(post("/login").content("{\n" +
+        MvcResult mvcResult = mockMvc.perform(post("/auth/login").content("{\n" +
                 "\t\"email\":\"pro@gmail.com\",\n" +
                 "\t\"password\":\"1111\"\n" +
                 "}").contentType(MediaType.APPLICATION_JSON_UTF8))

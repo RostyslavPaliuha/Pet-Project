@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -24,6 +25,7 @@ import ua.com.social.demo.service.api.RegistrationService;
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
@@ -44,7 +46,8 @@ public class RegistrationServiceImplTest {
     private ProfileDetailsRepository profileDetailsRepository;
     @Autowired
     private AlbumRepository albumRepository;
-
+@Autowired
+private PasswordEncoder passwordEncoder;
     @Before
     public void setUp() {
         profileDto = new FullProfileDto();
@@ -52,7 +55,7 @@ public class RegistrationServiceImplTest {
         profileDto.setLastName("TEST ACCOUNT");
         profileDto.setBirthday(LocalDate.of(1992, 03, 16));
         profileDto.setEmail("test@gmail.com");
-        profileDto.setPassword("$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
+        profileDto.setPassword("1111");
         profileDto.setSex("male");
     }
 
@@ -61,7 +64,7 @@ public class RegistrationServiceImplTest {
         registrationService.register(profileDto);
         Account actualAccount = accountRepository.getByEmail("test@gmail.com");
         assertEquals(new Integer(4), new Integer(actualAccount.getAccountId()));
-        assertEquals("$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni", actualAccount.getPassword());
+        assertTrue( passwordEncoder.matches("1111",actualAccount.getPassword()));
         Profile actualProfile = profileRepository.read(4);
         assertEquals(new Integer(4), actualProfile.getProfileId());
         ProfileDetails actualProfileDetails = profileDetailsRepository.read(4);

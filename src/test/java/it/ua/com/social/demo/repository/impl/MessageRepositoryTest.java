@@ -54,28 +54,17 @@ public class MessageRepositoryTest {
 
     @Test
     public void createAcc_createConversation_createMessage_delete() throws Exception {
-        Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
-        profile.setAccountId(accountId);
-        profile.setOnlineStatus(0);
-        Integer profileId = profileRepository.create(profile);
-        profileDetails.setProfileId(profileId);
-        Integer profileDetailsId = detailsRepository.create(profileDetails);
-        ProfileDetails actualProfileDetails = detailsRepository.read(profileId);
-        firstConversation.setProfileId(profileId);
-        firstConversation.setCompanionId(1);
-        Integer conversationId = conversationRepository.create(firstConversation);
         message = new Message();
-        message.setConversationId(conversationId);
+        message.setConversationId(1);
         message.setMessageDate(Timestamp.valueOf(LocalDateTime.now()));
         message.setMessageContext("TEST MESSAGE!");
         messageRepository.create(message);
-        messageRepository.create(message);
-        List<Message> messages = messageRepository.getAllByConversation(conversationId);
+        List<Message> messages = messageRepository.getAllByConversation(1);
         assertEquals(2, messages.size());
-        assertEquals(message.getMessageContext(), messages.get(0).getMessageContext());
+        assertEquals(message.getMessageContext(), messages.get(1).getMessageContext());
         message.setMessageId(messages.get(0).getMessageId());
         messageRepository.delete(message.getMessageId());
-        List<Message> afterDeletemessages = messageRepository.getAllByConversation(conversationId);
+        List<Message> afterDeletemessages = messageRepository.getAllByConversation(1);
         assertEquals(1, afterDeletemessages.size());
     }
 }

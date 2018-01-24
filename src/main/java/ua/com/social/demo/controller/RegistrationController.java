@@ -13,7 +13,7 @@ public class RegistrationController {
     @Autowired
     private RegistrationServiceImpl registrationService;
 
-    @PostMapping("/registration")
+    @PostMapping("auth/registration")
     public ResponseEntity registration(@RequestBody FullProfileDto fullProfileDto) {
         registrationService.register(fullProfileDto);
         return ResponseEntity.ok().build();

@@ -39,7 +39,7 @@ public class RegistrationControllerTest {
 
     @Test
     public void registration() throws Exception {
-        mockMvc.perform(post("auth/registration").content("{\n" +
+        mockMvc.perform(post("/auth/registration").content("{\n" +
                 "\t\"email\":\"andriymelnik@gmail.com\",\n" +
                 "\t\"password\":\"$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni\",\n" +
                 "\t\"firstName\":\"Andriy\",\n" +

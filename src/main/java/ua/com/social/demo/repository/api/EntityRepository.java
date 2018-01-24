@@ -2,14 +2,14 @@ package ua.com.social.demo.repository.api;
 
 import java.util.List;
 
-public interface EntityRepository<T> {
-    Integer create(T entity) throws Exception;
+public interface EntityRepository<E> {
+    Integer create(E entity) throws Exception;
 
-    T read(Integer entityId) throws Exception;
+    E read(Integer entityId) throws Exception;
 
-    List<T> readAll() throws Exception;
+    List<E> readAll() throws Exception;
 
-    void update(T entity) throws Exception;
+    void update(E entity) throws Exception;
 
     void delete(Integer entityId) throws Exception;
 
