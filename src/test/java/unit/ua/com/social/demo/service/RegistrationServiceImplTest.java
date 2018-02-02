@@ -46,8 +46,9 @@ public class RegistrationServiceImplTest {
     private ProfileDetailsRepository profileDetailsRepository;
     @Autowired
     private AlbumRepository albumRepository;
-@Autowired
-private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Before
     public void setUp() {
         profileDto = new FullProfileDto();
@@ -64,7 +65,7 @@ private PasswordEncoder passwordEncoder;
         registrationService.register(profileDto);
         Account actualAccount = accountRepository.getByEmail("test@gmail.com");
         assertEquals(new Integer(4), new Integer(actualAccount.getAccountId()));
-        assertTrue( passwordEncoder.matches("1111",actualAccount.getPassword()));
+        assertTrue(passwordEncoder.matches("1111", actualAccount.getPassword()));
         Profile actualProfile = profileRepository.read(4);
         assertEquals(new Integer(4), actualProfile.getProfileId());
         ProfileDetails actualProfileDetails = profileDetailsRepository.read(4);

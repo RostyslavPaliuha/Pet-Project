@@ -39,7 +39,7 @@ public class ProfileDetailsRepositoryImpl extends AbstractRepository<ProfileDeta
 
     @Override
     public ProfileDetails read(Integer profileId) throws EmptyResultDataAccessException {
-        return jdbcOperations.queryForObject("SELECT pd.first_name,pd.last_name,pd.birthday,pd.sex,pd.country, p.photo_name,p.description,p.photo_data FROM profile_details pd JOIN album a ON a.profile_id = ? JOIN photo p ON p.album_id = a.album_id and p.avatar=1 WHERE pd.profile_id=?", new Integer[]{profileId,profileId}, new ProfileDetailsRowMapper());
+        return jdbcOperations.queryForObject("SELECT pd.first_name,pd.last_name,pd.birthday,pd.sex,pd.country, p.photo_name,p.description,p.photo_data FROM profile_details pd JOIN album a ON a.profile_id = ? JOIN photo p ON p.album_id = a.album_id AND p.avatar=1 WHERE pd.profile_id=?", new Integer[]{profileId, profileId}, new ProfileDetailsRowMapper());
     }
 
     @Override

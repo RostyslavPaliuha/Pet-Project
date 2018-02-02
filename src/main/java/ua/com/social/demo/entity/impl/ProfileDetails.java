@@ -14,6 +14,10 @@ public class ProfileDetails implements DomainObject {
     private Integer profileId;
     private Photo avatar;
 
+    public enum Sex {
+        male, female
+    }
+
     public ProfileDetails(String firstName, String lastName, Sex sex, LocalDate birthDay) {
         this.firstName = firstName;
         this.lastName = lastName;
