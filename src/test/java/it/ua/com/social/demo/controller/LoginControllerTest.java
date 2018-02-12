@@ -23,6 +23,7 @@ public class LoginControllerTest {
     @Autowired
     private WebApplicationContext context;
     private MockMvc mockMvc;
+    private String header;
 
     @Before
     public void setup() {
@@ -38,8 +39,15 @@ public class LoginControllerTest {
                 "}").contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn();
-        String header = mvcResult.getResponse().getHeader("Authentication");
+        header = mvcResult.getResponse().getHeader("Authentication");
         assertNotNull(header);
     }
 
+    public MockMvc getMockMvc() {
+        return mockMvc;
+    }
+
+    public String getHeader() {
+        return header;
+    }
 }
