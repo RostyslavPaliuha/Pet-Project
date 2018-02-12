@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.MultipartFilter;
 import ua.com.social.demo.security.JwtAuthenticationEntryPoint;
 import ua.com.social.demo.security.TokenAuthenticationFilter;
 import ua.com.social.demo.security.TokenAuthenticationManager;
@@ -27,8 +29,6 @@ import ua.com.social.demo.security.TokenAuthenticationManager;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @PropertySources(@PropertySource("classpath:security.properties"))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private String LOGIN_URL = "/login";
 
     private String SECURE_URL = "/api/**";
 
@@ -42,10 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                // don't create session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
-                // allow anonymous resource requests
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers(
                         HttpMethod.GET,
                         "/",
@@ -58,11 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/registration").permitAll()
-                .antMatchers(HttpMethod.GET, "/register/**").permitAll()
                 .anyRequest().authenticated();
-        // Custom JWT based security filter
         http.addFilterBefore(getTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        // disable page caching
         http.headers().cacheControl();
     }
 
@@ -82,10 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationManager(tokenAuthenticationManager);
         return filter;
     }
-    @Bean
-    public MultipartResolver multipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-        return multipartResolver;
-    }
+
 
 }

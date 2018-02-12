@@ -1,8 +1,8 @@
 $("#header").load("./components/header/header.html ");
-$.ajaxSetup({
+/*$.ajaxSetup({
 
     headers: {'Authentication':sessionStorage.getItem('token')}
-});
+});*/
 
 function decodeToken(token) {
     var playload = JSON.parse(atob(token.split('.')[1]));

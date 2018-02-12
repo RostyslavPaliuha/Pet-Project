@@ -3,7 +3,6 @@ package ua.com.social.demo.controller;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,14 +12,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
+
 
 @RestController
-public class PhotoUploadController {
+public class UploadController {
     @PostMapping("/api/upload")
         public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
             if (uploadfile.isEmpty()) {
