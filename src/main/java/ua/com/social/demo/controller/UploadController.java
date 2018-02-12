@@ -30,7 +30,7 @@ public class PhotoUploadController {
                 saveUploadedFiles(uploadfile);
             } catch (IOException e) {
                 System.out.println(e.getCause());
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
             }
             return new ResponseEntity("Successfully uploaded - " +
                     uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);

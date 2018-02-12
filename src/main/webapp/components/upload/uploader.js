@@ -1,10 +1,10 @@
-
-$("#btnSubmit").click(function (event) {
+$("#btnSubmit").on("submit",function (event) {
     event.preventDefault();
-    debugger
     var form = $('#fileUploadForm')[0];
     var data = new FormData(form);
-    $("#btnSubmit").prop("disabled", true);
+    debugger
+
+    alert( event.isDefaultPrevented() ); // true
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
@@ -14,13 +14,14 @@ $("#btnSubmit").click(function (event) {
         contentType: false,
         cache: false,
         timeout: 600000,
+        headers: {'Authentication': sessionStorage.getItem('token')},
         success: function (data) {
             alert("SUCCESS");
-            $("#btnSubmit").prop("disabled", false);
+
         },
         error: function (e) {
             alert("ERROR : ", e);
-            $("#btnSubmit").prop("disabled", false);
+
 
         }
     });
