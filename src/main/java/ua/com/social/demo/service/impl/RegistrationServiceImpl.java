@@ -8,6 +8,7 @@ import ua.com.social.demo.dto.FullProfileDto;
 import ua.com.social.demo.entity.impl.*;
 import ua.com.social.demo.repository.api.*;
 import ua.com.social.demo.service.api.RegistrationService;
+import ua.com.social.demo.service.api.StorageService;
 
 @Service("registrationService")
 public class RegistrationServiceImpl implements RegistrationService {
@@ -24,6 +25,8 @@ public class RegistrationServiceImpl implements RegistrationService {
     private PhotosRepository photosRepository;
     @Autowired
     private PasswordEncoder encoder;
+    @Autowired
+    private StorageService storageService;
 
     public void register(FullProfileDto fullProfileDto) {
         try {
@@ -48,6 +51,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             defaultPhoto.setAlbumId(defaultAlbumId);
             defaultPhoto.setAvatar(1);
             photosRepository.create(defaultPhoto);
+            storageService.mkDirForNewUser();
         } catch (Exception e) {
             LOG.error("Error while registering profile" + e.getMessage(), e);
         }

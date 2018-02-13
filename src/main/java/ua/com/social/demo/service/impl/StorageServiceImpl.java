@@ -5,13 +5,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.com.social.demo.service.api.StorageService;
 
+import javax.imageio.IIOException;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 @Service("storageService")
 public class StorageServiceImpl implements StorageService {
     private static final Logger LOG = Logger.getLogger(StorageServiceImpl.class);
+    private static final String MAIN_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\userFilesArchive";
 
     public StorageServiceImpl() {
     }
@@ -30,5 +35,23 @@ public class StorageServiceImpl implements StorageService {
         }
 
     }
+
+    @Override
+    public boolean mkDirForNewUser() throws IIOException {
+
+        return false;
+    }
+
+    @Override
+    public boolean checkMainPath() throws IOException {
+       return Files.exists(Paths.get(MAIN_PATH));
+    }
+
+    @Override
+    public boolean createMainPath() {
+        new File(MAIN_PATH).mkdir();
+        return true;
+    }
+
 }
 
