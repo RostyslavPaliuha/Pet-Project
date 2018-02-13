@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.com.social.demo.service.api.GraphicService;
 import ua.com.social.demo.service.api.StorageService;
 
-import java.io.File;
 import java.io.IOException;
 
 
@@ -27,7 +26,7 @@ public class UploadController {
     @PostMapping("/api/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
 
-       if (uploadfile.getOriginalFilename().equals("")) {
+        if (uploadfile.getOriginalFilename().equals("")) {
             return new ResponseEntity("Please select a file!", HttpStatus.CONFLICT);
         } else if (uploadfile.getOriginalFilename().endsWith("jpg") || uploadfile.getOriginalFilename().endsWith("png") || uploadfile.getOriginalFilename().endsWith("jpeg")) {
             try {

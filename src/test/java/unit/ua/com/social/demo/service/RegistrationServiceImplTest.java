@@ -54,7 +54,7 @@ public class RegistrationServiceImplTest {
         profileDto = new FullProfileDto();
         profileDto.setFirstName("TEST ACCOUNT");
         profileDto.setLastName("TEST ACCOUNT");
-        profileDto.setBirthday(LocalDate.of(1992, 03, 16));
+        profileDto.setBirthday("16-03-1992");
         profileDto.setEmail("test@gmail.com");
         profileDto.setPassword("1111");
         profileDto.setSex("male");

@@ -45,7 +45,7 @@ public class RegistrationControllerTest {
                 "\t\"firstName\":\"Andriy\",\n" +
                 "\t\"lastName\":\"Melnik\",\n" +
                 "\t\"sex\":\"male\",\n" +
-                "\t\"age\":\"25\"\n" +
+                "\t\"age\":\"1992-01-01\"\n" +
                 "}").contentType(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
     }
 

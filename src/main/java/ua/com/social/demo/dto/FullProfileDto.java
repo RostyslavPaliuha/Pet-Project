@@ -69,8 +69,11 @@ public class FullProfileDto implements DomainObject {
         return birthday;
     }
 
+    public void setBirthday(String birthday) {
+        this.birthday =LocalDate.parse(birthday);
+    }
     public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
+        this.birthday =birthday;
     }
 
     public String getCountry() {
