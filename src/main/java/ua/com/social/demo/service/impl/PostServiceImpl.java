@@ -10,7 +10,7 @@ import ua.com.social.demo.service.api.PostService;
 import java.util.Collections;
 import java.util.List;
 
-@Service("photoService")
+@Service("postService")
 public class PostServiceImpl implements PostService {
     private static final Logger LOG = Logger.getLogger(PostServiceImpl.class);
     @Autowired
@@ -33,7 +33,7 @@ public class PostServiceImpl implements PostService {
             postRepository.delete(postId);
             return true;
         } catch (Exception e) {
-            LOG.error("Error while deleting photo" + e.getMessage(), e);
+            LOG.error("Error while deleting post" + e.getMessage(), e);
             return false;
         }
     }
@@ -55,7 +55,7 @@ public class PostServiceImpl implements PostService {
         try {
             return postRepository.getAllFromWall(wallId);
         } catch (Exception e) {
-            LOG.error("Error while geting data" + e.getMessage(), e);
+            LOG.error("Error while getting posts" + e.getMessage(), e);
             return Collections.emptyList();
         }
     }

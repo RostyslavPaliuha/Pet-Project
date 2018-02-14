@@ -38,33 +38,33 @@ public class ProfileDetailsRepositoryTest {
     private Account account;
     private Profile profile;
     private ProfileDetails profileDetails;
+    private ProfileDetails updateProfileDetails;
 
     public ProfileDetailsRepositoryTest() {
         this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
         this.profile = new Profile();
         this.profileDetails = new ProfileDetails("testName", "testLastNAme", ProfileDetails.Sex.male, LocalDate.of(1992, 03, 16));
+        updateProfileDetails = new ProfileDetails("UpdatedTestName", "UpdatedTestLastNAme", ProfileDetails.Sex.male, LocalDate.of(1992, 03, 16));
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void persist_Get_Update() throws Exception {
         Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
         profile.setAccountId(accountId);
-        profile.setOnlineStatus(0);
         Integer profileId = profileRepository.create(profile);
         profileDetails.setProfileId(profileId);
         Integer profileDetailsId = detailsRepository.create(profileDetails);
         ProfileDetails actualProfileDetails = detailsRepository.read(profileId);
-        assertEquals(profileDetails.getProfileId(), actualProfileDetails.getProfileId());
+        assertEquals(new Integer(profileDetails.getProfileId()), new Integer(actualProfileDetails.getProfileId()));
         assertEquals(profileDetails.getFirstName(), actualProfileDetails.getFirstName());
         assertEquals(profileDetails.getLastName(), actualProfileDetails.getLastName());
         assertEquals(profileDetails.getSex(), actualProfileDetails.getSex());
-        ProfileDetails updateProfileDetails = new ProfileDetails("UpdatedTestName", "UpdatedTestLastNAme", ProfileDetails.Sex.male, LocalDate.of(1992, 03, 16));
         updateProfileDetails.setProfileId(profileId);
         updateProfileDetails.setProfileDetailsId(profileDetailsId);
         detailsRepository.update(updateProfileDetails);
         ProfileDetails actualUpdatedProfileDetails = detailsRepository.read(profileId);
-        assertEquals(actualUpdatedProfileDetails.getProfileDetailsId(), profileDetailsId);
-        assertEquals(actualUpdatedProfileDetails.getProfileId(), updateProfileDetails.getProfileId());
+        assertEquals(new Integer(actualUpdatedProfileDetails.getProfileDetailsId()), new Integer(profileDetailsId));
+        assertEquals(new Integer(actualUpdatedProfileDetails.getProfileId()), new Integer(updateProfileDetails.getProfileId()));
         assertEquals(actualUpdatedProfileDetails.getFirstName(), updateProfileDetails.getFirstName());
         assertEquals(actualUpdatedProfileDetails.getLastName(), updateProfileDetails.getLastName());
         assertEquals(actualUpdatedProfileDetails.getSex(), updateProfileDetails.getSex());

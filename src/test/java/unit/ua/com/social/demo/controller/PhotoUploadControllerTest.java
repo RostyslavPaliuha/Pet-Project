@@ -32,10 +32,10 @@ public class PhotoUploadControllerTest extends LoginControllerTest{
     @Test
     public void uploadFile() throws Exception {
         super.login();
-        byte[]bytes=Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"\\src\\test\\resources\\test.txt"));
-        MockMultipartFile firstFile = new MockMultipartFile("test",bytes);
+        byte[]bytes=Files.readAllBytes(Paths.get(System.getProperty("user.dir")+"\\src\\main\\resources\\usersFileArchive\\defaults\\Question-mark-face.jpg"));
+        MockMultipartFile file = new MockMultipartFile("file",bytes);
         getMockMvc().perform(fileUpload("/api/upload")
-                .file(firstFile).contentType(MediaType.ALL)
+                .file(file)
                 .header("Authentication", getHeader()))
                 .andExpect(status().isOk());
 

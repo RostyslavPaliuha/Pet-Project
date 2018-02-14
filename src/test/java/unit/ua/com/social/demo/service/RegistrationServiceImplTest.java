@@ -1,5 +1,6 @@
 package unit.ua.com.social.demo.service;
 
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.FileSystemUtils;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.dto.FullProfileDto;
 import ua.com.social.demo.entity.impl.Account;
@@ -19,6 +21,11 @@ import ua.com.social.demo.repository.api.AccountRepository;
 import ua.com.social.demo.repository.api.ProfileDetailsRepository;
 import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.api.RegistrationService;
+import ua.com.social.demo.service.api.StorageService;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -42,13 +49,15 @@ public class RegistrationServiceImplTest {
     private ProfileDetailsRepository profileDetailsRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private StorageService storageService;
 
     @Before
     public void setUp() {
         profileDto = new FullProfileDto();
         profileDto.setFirstName("TEST ACCOUNT");
         profileDto.setLastName("TEST ACCOUNT");
-        profileDto.setBirthday("16-03-1992");
+        profileDto.setBirthday("1992-03-16");
         profileDto.setEmail("test@gmail.com");
         profileDto.setPassword("1111");
         profileDto.setSex("male");
@@ -65,7 +74,9 @@ public class RegistrationServiceImplTest {
         ProfileDetails actualProfileDetails = profileDetailsRepository.read(4);
         assertEquals("TEST ACCOUNT", actualProfileDetails.getFirstName());
         assertEquals("TEST ACCOUNT", actualProfileDetails.getLastName());
-
+        Path mainMediaDir = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\usersFileArchive\\" + actualProfile.getProfileId());
+        assertTrue(Files.exists(mainMediaDir));
+        FileSystemUtils.deleteRecursively(mainMediaDir.toFile());
     }
 
 }
