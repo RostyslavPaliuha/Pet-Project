@@ -13,16 +13,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.dto.FullProfileDto;
 import ua.com.social.demo.entity.impl.Account;
-import ua.com.social.demo.entity.impl.Album;
 import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.repository.api.AccountRepository;
-import ua.com.social.demo.repository.api.AlbumRepository;
 import ua.com.social.demo.repository.api.ProfileDetailsRepository;
 import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.api.RegistrationService;
-
-import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -44,8 +40,6 @@ public class RegistrationServiceImplTest {
     private ProfileRepository profileRepository;
     @Autowired
     private ProfileDetailsRepository profileDetailsRepository;
-    @Autowired
-    private AlbumRepository albumRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -71,8 +65,7 @@ public class RegistrationServiceImplTest {
         ProfileDetails actualProfileDetails = profileDetailsRepository.read(4);
         assertEquals("TEST ACCOUNT", actualProfileDetails.getFirstName());
         assertEquals("TEST ACCOUNT", actualProfileDetails.getLastName());
-        Album actualAlbum = albumRepository.read(2);
-        assertEquals("Default", actualAlbum.getAlbumName());
+
     }
 
 }

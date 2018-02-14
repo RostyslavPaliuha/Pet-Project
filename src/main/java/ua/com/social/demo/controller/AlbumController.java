@@ -1,12 +1,11 @@
+/*
 package ua.com.social.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.com.social.demo.entity.impl.Album;
-import ua.com.social.demo.entity.impl.Photo;
-import ua.com.social.demo.service.api.AlbumService;
+import ua.com.social.demo.entity.impl.Post;
 import ua.com.social.demo.service.api.PhotosService;
 
 import java.util.List;
@@ -21,9 +20,9 @@ public class AlbumController {
 
     @PostMapping("api/profile/{id}/albums/create-album")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity create(@PathVariable("id") Integer profileId, @RequestBody Album album) {
-        album.setProfileId(profileId);
-        Optional<Integer> newlyAlbumId = albumService.createAlbum(album);
+    public ResponseEntity create(@PathVariable("id") Integer profileId, @RequestBody Wall wall) {
+
+        Optional<Integer> newlyAlbumId = albumService.createAlbum(wall);
         if (newlyAlbumId.isPresent()) {
             return ResponseEntity.status(201).body(newlyAlbumId.get());
         } else {
@@ -33,20 +32,21 @@ public class AlbumController {
 
     @GetMapping("api/profile/{id}/albums")
     @ResponseStatus(HttpStatus.OK)
-    public List<Album> getAlbumsForCertainProfile(@PathVariable("id") Integer profileId) {
+    public List<> getAlbumsForCertainProfile(@PathVariable("id") Integer profileId) {
         return albumService.getAllAlbums(profileId);
     }
 
     @GetMapping("api/profile/{profileId}/album/{albumId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Photo> getAllPhotosForCertainAlbum(@PathVariable("albumId") Integer albumId) {
+    public List<Post> getAllPhotosForCertainAlbum(@PathVariable("albumId") Integer albumId) {
         return photosService.getAllfromAlbum(albumId);
     }
 
     @PostMapping("api/profile/{id}/album/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addPhoto(@PathVariable("id") Integer profileId, @PathVariable("id") Integer albumId, @RequestBody Photo photo) {
-        photo.setAlbumId(albumId);
-        photosService.createPhoto(photo);
+    public void addPhoto(@PathVariable("id") Integer profileId, @PathVariable("id") Integer albumId, @RequestBody Post post) {
+        post.setAlbumId(albumId);
+        photosService.createPhoto(post);
     }
 }
+*/

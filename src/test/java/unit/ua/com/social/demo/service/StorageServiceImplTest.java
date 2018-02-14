@@ -27,6 +27,7 @@ public class StorageServiceImplTest {
     @Test
     public void mkDirForNewUser() throws Exception {
        /* storageService.mkDirForNewUser(1111);*/
+        int hash =new Integer(1111).hashCode();
         String userName = encoder.encode(new Integer(11).toString());
         System.out.println(System.getProperty("user.dir") + "\\src\\main\\resources\\userFilesArchive\\" + "userName" + "\\audio");
         new File(System.getProperty("user.dir") + "\\src\\main\\resources\\userFilesArchive\\" + userName + "\\audio").mkdirs();

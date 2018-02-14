@@ -12,7 +12,7 @@ public class ProfileDetails implements DomainObject {
     private LocalDate birthDay;
     private String country;
     private Integer profileId;
-    private Photo avatar;
+    private Post avatar;
 
     public enum Sex {
         male, female
@@ -84,11 +84,11 @@ public class ProfileDetails implements DomainObject {
         this.profileId = profileId;
     }
 
-    public Photo getAvatar() {
+    public Post getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Photo avatar) {
+    public void setAvatar(Post avatar) {
         this.avatar = avatar;
     }
 }

@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class StorageServiceImpl implements StorageService {
     private static final Logger LOG = Logger.getLogger(StorageServiceImpl.class);
     private static final String MAIN_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\usersFileArchive";
-    private String images = "\\images";
+    private String images = "\\images\\avatar";
     private String audio = "\\audios";
     private String video = "\\videos";
     @Autowired
@@ -46,6 +46,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public boolean mkDirForNewUser(Integer profileId) throws IOException {
+
         //String UserMainDirName=encoder.encode(profileId.toString()); TO DO SOMETHING WITH HASH!
         String[] media = {images, audio, video};
         Arrays.stream(media).forEach(s ->new File(MAIN_PATH+"\\"+profileId.toString()+s).mkdirs());

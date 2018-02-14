@@ -18,11 +18,11 @@ public class RegistrationController {
 
     @PostMapping("auth/registration")
     public ResponseEntity registration(@RequestBody FullProfileDto fullProfileDto) {
-       try{
-           registrationService.register(fullProfileDto);
-       }catch(InvalidParameterException ipe){
-           return new ResponseEntity(ipe.getMessage(), HttpStatus.CONFLICT);
-       }
-        return new ResponseEntity("Greetings!",HttpStatus.OK);
+        try {
+            registrationService.register(fullProfileDto);
+        } catch (InvalidParameterException ipe) {
+            return new ResponseEntity(ipe.getMessage(), HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity("Greetings! Dear " + fullProfileDto.getFirstName() + " " + fullProfileDto.getLastName() + ", you successful register on resource!", HttpStatus.OK);
     }
 }
