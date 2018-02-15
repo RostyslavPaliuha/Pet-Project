@@ -2,54 +2,63 @@ package ua.com.social.demo.service.impl;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.com.social.demo.service.api.StorageService;
 
-import javax.imageio.IIOException;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service("storageService")
 public class StorageServiceImpl implements StorageService {
     private static final Logger LOG = Logger.getLogger(StorageServiceImpl.class);
     private static final String MAIN_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\usersFileArchive";
     private String images = "\\images\\avatar";
+    private String previews = "\\images\\previews";
     private String audio = "\\audios";
     private String video = "\\videos";
     @Autowired
     PasswordEncoder encoder;
+
     public StorageServiceImpl() {
     }
 
     @Override
-    public boolean saveFile(MultipartFile file) throws IOException {
-        try {
-            byte[] bytes = file.getBytes();
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(System.getProperty("user.dir") + "\\src\\main\\resources\\uploaded\\photo\\" + file.getOriginalFilename())));
+    public boolean saveFile(MultipartFile file, String path) throws Exception {
+        byte[] bytes = file.getBytes();
+        try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(MAIN_PATH + path + file.getOriginalFilename())))) {
             stream.write(bytes);
-            stream.close();
             return true;
         } catch (IOException e) {
             LOG.error("Error while system try to write " + file.getOriginalFilename());
-            throw e;
+            throw new Exception("\"Error while system try to write \" + file.getOriginalFilename()", e);
         }
 
     }
 
+    public void savePreview(MultipartFile srcFile, String path) throws IOException {
+        BufferedImage image = ImageIO.read(srcFile.getInputStream());
+        BufferedImage resized = GraphicServiceImpl.resize(image, 100, 100);
+        File output = new File(
+                System.getProperty("user.dir") + "\\src\\main\\resources\\usersFileArchive\\" + path + "previews\\min-"
+                        + srcFile.getOriginalFilename());
+        ImageIO.write(resized, "png", output);
+    }
+
     @Override
     public boolean mkDirForNewUser(Integer profileId) throws IOException {
-
         //String UserMainDirName=encoder.encode(profileId.toString()); TO DO SOMETHING WITH HASH!
-        String[] media = {images, audio, video};
-        Arrays.stream(media).forEach(s ->new File(MAIN_PATH+"\\"+profileId.toString()+s).mkdirs());
+        String[] media = {images, audio, video, previews};
+        Arrays.stream(media).forEach(s -> new File(MAIN_PATH + "\\" + profileId.toString() + s).mkdirs());
         return true;
     }
 
@@ -64,5 +73,28 @@ public class StorageServiceImpl implements StorageService {
         return true;
     }
 
+    public List getFilesNamesFromDir(String path) {
+        List files = new ArrayList();
+        try {
+            Files.list(Paths.get(MAIN_PATH + path))
+                    .filter(Files::isRegularFile)
+                    .forEach(file -> files.add(file));
+            return files;
+        } catch (IOException e) {
+            LOG.error("Failed when create file list from dir: " + e.getMessage());
+        }
+        return files;
+    }
+
+    public InputStreamResource prepareFileForDownload(Integer profileId, String photoName) throws FileNotFoundException {
+        InputStreamResource resource = null;
+        try {
+            Path pathToPhoto = Paths.get(MAIN_PATH + "\\" + profileId + "\\images\\" + photoName);
+            resource = new InputStreamResource(Files.newInputStream(pathToPhoto));
+            return resource;
+        } catch (IOException e) {
+            throw new FileNotFoundException("No matched files found.");
+        }
+    }
 }
 
