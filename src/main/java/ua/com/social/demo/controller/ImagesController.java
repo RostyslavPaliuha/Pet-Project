@@ -12,20 +12,23 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.com.social.demo.service.api.StorageService;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
+@RequestMapping("api/profile/{id}/image/")
 public class ImagesController {
     @Autowired
     private StorageService storageService;
 
     private static final Logger LOG = Logger.getLogger(ImagesController.class);
 
-    @RequestMapping(value = "api/profile/{id}/image/", method = RequestMethod.GET)
-    public ResponseEntity downloadPhoto(@PathVariable("id") Integer id, @RequestParam(value = "photoName", required = true) String photoName) {
+    @GetMapping
+    public ResponseEntity downloadPhoto(@PathVariable("id") Integer id, @RequestParam(value = "photoName") String photoName) {
         try {
             InputStreamResource resource = storageService.prepareFileForDownload(id, photoName);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
+
             return new ResponseEntity(resource, headers, HttpStatus.OK);
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -33,11 +36,11 @@ public class ImagesController {
         }
     }
 
-    @PostMapping("/api/profile/{id}/image/upload")
-    public ResponseEntity uploadPhoto(@RequestParam(value = "file", required = true) MultipartFile uploadfile, @PathVariable("id") Integer id) {
+    @PostMapping("/upload")
+    public ResponseEntity uploadPhoto(@RequestParam(value = "file") MultipartFile uploadfile, @PathVariable("id") Integer id) {
         String pathToPhoto = "\\" + id + "\\images\\";
         if (uploadfile.getOriginalFilename().equals("")) {
-            return new ResponseEntity("Please select a file!", HttpStatus.CONFLICT);
+            return new ResponseEntity("Please select a file!", HttpStatus.NO_CONTENT);
         } else if (uploadfile.getOriginalFilename().endsWith("jpg") || uploadfile.getOriginalFilename().endsWith("png") || uploadfile.getOriginalFilename().endsWith("jpeg")) {
             try {
                 storageService.saveFile(uploadfile, pathToPhoto);
@@ -56,12 +59,13 @@ public class ImagesController {
         }
     }
 
-    @GetMapping("/api/profile/{id}/images/previews")//TODO
+    @GetMapping("/previews")
     public ResponseEntity getPreviews(@PathVariable("id") Integer id) {
-        String path = "\\" + id + "\\images";
-        storageService.getFilesNamesFromDir(path);
-
-        return ResponseEntity.ok().build();
+        String path = "\\" + id + "\\images\\previews";
+      Map<String,String> previewsMap= storageService.downloadPreviews(path);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity(previewsMap, headers, HttpStatus.OK);
     }
 
 }

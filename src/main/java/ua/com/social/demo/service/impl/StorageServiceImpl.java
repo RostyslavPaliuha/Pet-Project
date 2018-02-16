@@ -1,6 +1,7 @@
 package ua.com.social.demo.service.impl;
 
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,9 +15,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service("storageService")
 public class StorageServiceImpl implements StorageService {
@@ -95,6 +94,25 @@ public class StorageServiceImpl implements StorageService {
         } catch (IOException e) {
             throw new FileNotFoundException("No matched files found.");
         }
+    }
+
+    public Map<String,String> downloadPreviews(String path)  {
+        Map<String,String> encodedfile = new HashMap<>();
+        Path previews = Paths.get(MAIN_PATH + path);
+        try {
+            Files.list(previews)
+                    .filter(Files::isRegularFile)
+                    .forEach(file -> {
+                        try {
+                            encodedfile.put(file.getFileName().toString(),new String(Base64.encodeBase64String(Files.readAllBytes(file))));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return encodedfile;
     }
 }
 
