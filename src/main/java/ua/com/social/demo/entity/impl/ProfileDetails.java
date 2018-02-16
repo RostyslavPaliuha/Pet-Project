@@ -14,10 +14,6 @@ public class ProfileDetails implements DomainObject {
     private Integer profileId;
     private String avatar;
 
-    public enum Sex {
-        male, female
-    }
-
     public ProfileDetails(String firstName, String lastName, Sex sex, LocalDate birthDay) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -88,7 +84,11 @@ public class ProfileDetails implements DomainObject {
         return avatar;
     }
 
-    public void setAvatar(String  avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public enum Sex {
+        male, female
     }
 }

@@ -24,11 +24,11 @@ public class PostRepositpryImpl extends AbstractRepository<Post> implements Post
 
     @Override
     public Integer create(Post post) {
-        Object[] params = new Object[]{post.getPostDate(),post.getWallId(),post.getPostContent(),post.getAudio(),post.getPhoto(),post.getVideo(),post.getPostCreaterId()};
+        Object[] params = new Object[]{post.getPostDate(), post.getWallId(), post.getPostContent(), post.getAudio(), post.getPhoto(), post.getVideo(), post.getPostCreaterId()};
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
                     PreparedStatement ps = connection.prepareStatement("INSERT INTO post(post_date, wall_id, post_content, audio, video, photo, creater_id) VALUES (?,?,?,?,?,?,?);", new String[]{"post_id"});
-                    ps.setTimestamp(1, Timestamp.valueOf((LocalDateTime)params[0]));
+                    ps.setTimestamp(1, Timestamp.valueOf((LocalDateTime) params[0]));
                     ps.setInt(2, (int) params[1]);
                     ps.setString(3, (String) params[2]);
                     ps.setString(4, (String) params[3]);

@@ -21,12 +21,12 @@ import java.util.*;
 public class StorageServiceImpl implements StorageService {
     private static final Logger LOG = Logger.getLogger(StorageServiceImpl.class);
     private static final String MAIN_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\usersFileArchive";
+    @Autowired
+    PasswordEncoder encoder;
     private String images = "\\images\\avatar";
     private String previews = "\\images\\previews";
     private String audio = "\\audios";
     private String video = "\\videos";
-    @Autowired
-    PasswordEncoder encoder;
 
     public StorageServiceImpl() {
     }
@@ -96,15 +96,15 @@ public class StorageServiceImpl implements StorageService {
         }
     }
 
-    public Map<String,String> downloadPreviews(String path)  {
-        Map<String,String> encodedfile = new HashMap<>();
+    public Map<String, String> downloadPreviews(String path) {
+        Map<String, String> encodedfile = new HashMap<>();
         Path previews = Paths.get(MAIN_PATH + path);
         try {
             Files.list(previews)
                     .filter(Files::isRegularFile)
                     .forEach(file -> {
                         try {
-                            encodedfile.put(file.getFileName().toString(),new String(Base64.encodeBase64String(Files.readAllBytes(file))));
+                            encodedfile.put(file.getFileName().toString(), new String(Base64.encodeBase64String(Files.readAllBytes(file))));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

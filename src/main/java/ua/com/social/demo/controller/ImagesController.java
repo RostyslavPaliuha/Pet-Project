@@ -17,10 +17,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/profile/{id}/image/")
 public class ImagesController {
+    private static final Logger LOG = Logger.getLogger(ImagesController.class);
     @Autowired
     private StorageService storageService;
-
-    private static final Logger LOG = Logger.getLogger(ImagesController.class);
 
     @GetMapping
     public ResponseEntity downloadPhoto(@PathVariable("id") Integer id, @RequestParam(value = "photoName") String photoName) {
@@ -62,7 +61,7 @@ public class ImagesController {
     @GetMapping("/previews")
     public ResponseEntity getPreviews(@PathVariable("id") Integer id) {
         String path = "\\" + id + "\\images\\previews";
-      Map<String,String> previewsMap= storageService.downloadPreviews(path);
+        Map<String, String> previewsMap = storageService.downloadPreviews(path);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity(previewsMap, headers, HttpStatus.OK);

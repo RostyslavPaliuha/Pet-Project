@@ -1,7 +1,6 @@
 package ua.com.social.demo.repository.rowMapper;
 
 import org.springframework.jdbc.core.RowMapper;
-import ua.com.social.demo.entity.impl.Post;
 import ua.com.social.demo.entity.impl.ProfileDetails;
 
 import java.sql.ResultSet;

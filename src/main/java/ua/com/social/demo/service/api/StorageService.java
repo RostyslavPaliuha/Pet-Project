@@ -22,5 +22,5 @@ public interface StorageService {
 
     public InputStreamResource prepareFileForDownload(Integer profileId, String photoName) throws IOException;
 
-    public Map<String,String> downloadPreviews(String path);
+    public Map<String, String> downloadPreviews(String path);
 }

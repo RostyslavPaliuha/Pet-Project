@@ -6,8 +6,13 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.social.demo.dto.FullProfileDto;
-import ua.com.social.demo.entity.impl.*;
-import ua.com.social.demo.repository.api.*;
+import ua.com.social.demo.entity.impl.Account;
+import ua.com.social.demo.entity.impl.Profile;
+import ua.com.social.demo.entity.impl.ProfileDetails;
+import ua.com.social.demo.repository.api.AccountRepository;
+import ua.com.social.demo.repository.api.PostRepository;
+import ua.com.social.demo.repository.api.ProfileDetailsRepository;
+import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.api.RegistrationService;
 import ua.com.social.demo.service.api.StorageService;
 
@@ -46,8 +51,8 @@ public class RegistrationServiceImpl implements RegistrationService {
             profileDetails.setProfileId(profileId);
             Integer profileDetailId = profileDetailsRepository.create(profileDetails);
             storageService.mkDirForNewUser(profileId);
-        }catch (DuplicateKeyException dke){
-            throw new InvalidParameterException("This email is used, try differently. "+dke.getMessage());
+        } catch (DuplicateKeyException dke) {
+            throw new InvalidParameterException("This email is used, try differently. " + dke.getMessage());
         } catch (Exception e) {
             LOG.error("Error while registering profile" + e.getMessage(), e);
         }

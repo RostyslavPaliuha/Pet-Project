@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.repository.api.AbstractRepository;
 import ua.com.social.demo.repository.api.AccountRepository;

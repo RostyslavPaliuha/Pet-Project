@@ -1,4 +1,3 @@
-
 package ua.com.social.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;

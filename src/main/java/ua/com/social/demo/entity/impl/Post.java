@@ -1,6 +1,7 @@
 package ua.com.social.demo.entity.impl;
 
 import ua.com.social.demo.entity.DomainObject;
+
 import java.time.LocalDateTime;
 
 public class Post implements DomainObject {
@@ -40,11 +41,12 @@ public class Post implements DomainObject {
         return postDate;
     }
 
-    public void setPostDate(LocalDateTime postDate) {
-        this.postDate = postDate;
-    }
     public void setPostDate(String postDate) {
         this.postDate = LocalDateTime.parse(postDate);
+    }
+
+    public void setPostDate(LocalDateTime postDate) {
+        this.postDate = postDate;
     }
 
     public Integer getWallId() {

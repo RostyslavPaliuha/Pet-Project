@@ -1,6 +1,7 @@
 package ua.com.social.demo.service.api;
 
 import ua.com.social.demo.entity.impl.Post;
+
 import java.util.List;
 
 public interface PostService {
