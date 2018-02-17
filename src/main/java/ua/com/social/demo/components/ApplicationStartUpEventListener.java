@@ -16,7 +16,7 @@ public class ApplicationStartUpEventListener implements ApplicationListener<Appl
     private StorageService storageService;
 
     /**
-     * This event is executed as late as conceivably possible to indicate that
+     * This event is executed as late as possible to indicate that
      * the application is ready to service requests.
      */
     @Override

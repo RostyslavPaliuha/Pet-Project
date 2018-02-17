@@ -61,7 +61,6 @@ public class AccountServiceImpl implements AccountService<Account, Integer> {
     public Optional getByEmail(String email) {
         try {
             return Optional.ofNullable(accountRepository.getByEmail(email));
-
         } catch (EmptyResultDataAccessException exception) {
             return Optional.empty();
         } catch (Exception e) {

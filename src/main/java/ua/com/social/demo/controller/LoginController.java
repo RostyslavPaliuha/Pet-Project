@@ -21,7 +21,7 @@ import java.util.Optional;
 @RestController
 public class LoginController {
 
-    static Logger logger = Logger.getLogger(LoginController.class);
+    static Logger LOG = Logger.getLogger(LoginController.class);
     @Value("${security.headerName}")
     private String HEADER_NAME;
     @Autowired
@@ -41,12 +41,12 @@ public class LoginController {
             if (passwordEncoder.matches(credential.getPassword(), account.getPassword())) {
                 Integer profileId = profileService.get(account.getAccountId()).get().getProfileId();
                 String fullToken = TokenAuthenticationService.createToken(account, profileId);
-                logger.info("Token created.");
+                LOG.info("Token created.");
                 response.addHeader(HEADER_NAME, fullToken);
-                logger.info("User authentication success. User: " + account.getEmail() + " logged in.");
+                LOG.info("User authentication success. User: " + account.getEmail() + " logged in.");
                 responseEntity = ResponseEntity.status(HttpStatus.OK).build();
             } else {
-                logger.info("Bad user credentials");
+                LOG.info("Bad user credentials");
                 return responseEntity;
             }
         }
@@ -57,7 +57,7 @@ public class LoginController {
     public ResponseEntity logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         String token = httpServletRequest.getHeader("Authentication");
         String email = TokenAuthenticationService.getAccountEmailFromToken(token);
-        logger.info("User " + email + " logout");
+        LOG.info("User " + email + " logout");
         return new ResponseEntity(HttpStatus.OK);
     }
 

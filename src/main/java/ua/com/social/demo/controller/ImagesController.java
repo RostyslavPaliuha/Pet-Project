@@ -27,11 +27,10 @@ public class ImagesController {
             InputStreamResource resource = storageService.prepareFileForDownload(id, photoName);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
-
             return new ResponseEntity(resource, headers, HttpStatus.OK);
         } catch (Exception e) {
-            LOG.error(e.getMessage());
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            LOG.error("Unsuccessful attempt to download photo. " + e.getMessage());
+            return new ResponseEntity("Unsuccessful attempt to download photo.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -45,26 +44,31 @@ public class ImagesController {
                 storageService.saveFile(uploadfile, pathToPhoto);
                 storageService.savePreview(uploadfile, pathToPhoto);
             } catch (IOException e) {
-                LOG.error("Problem while upload file saved: " + e.getMessage());
-                return new ResponseEntity("Error while data save", HttpStatus.BAD_REQUEST);
+                LOG.error("Unsuccessful attempt to save data. " + e.getMessage());
+                return new ResponseEntity("Unsuccessful attempt to save data.", HttpStatus.BAD_REQUEST);
             } catch (Exception e) {
-                LOG.error("Problem while upload file saved: " + e.getMessage());
-                return new ResponseEntity("Error while data save", HttpStatus.BAD_REQUEST);
+                LOG.error("Unsuccessful attempt to save data. "+ e.getMessage());
+                return new ResponseEntity("Unsuccessful attempt to save data.", HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity("Successfully uploaded - " +
-                    uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+                    uploadfile.getOriginalFilename() + ".", new HttpHeaders(), HttpStatus.OK);
         } else {
-            return new ResponseEntity("Selected incopatible file type", HttpStatus.CONFLICT);
+            return new ResponseEntity("Selected incompatible file type.", HttpStatus.CONFLICT);
         }
     }
 
     @GetMapping("/previews")
     public ResponseEntity getPreviews(@PathVariable("id") Integer id) {
-        String path = "\\" + id + "\\images\\previews";
-        Map<String, String> previewsMap = storageService.downloadPreviews(path);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity(previewsMap, headers, HttpStatus.OK);
-    }
+        try {
+            String path = "\\" + id + "\\images\\previews";
+            Map<String, String> previewsMap = storageService.downloadPreviews(path);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            return new ResponseEntity(previewsMap, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.error("Unsuccessful attempt to download previews. " + e.getMessage());
+            return new ResponseEntity("Unsuccessful attempt to download previews.", HttpStatus.BAD_REQUEST);
+        }
 
+    }
 }
