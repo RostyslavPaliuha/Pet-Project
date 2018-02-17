@@ -24,7 +24,8 @@ public class ImagesController {
     @GetMapping
     public ResponseEntity downloadPhoto(@PathVariable("id") Integer id, @RequestParam(value = "photoName") String photoName) {
         try {
-            InputStreamResource resource = storageService.prepareFileForDownload(id, photoName);
+            String path="\\"+id+"\\images\\"+photoName;
+            InputStreamResource resource = storageService.prepareFileForDownload(path);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
             return new ResponseEntity(resource, headers, HttpStatus.OK);

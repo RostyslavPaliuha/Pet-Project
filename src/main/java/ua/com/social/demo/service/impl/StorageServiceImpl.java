@@ -39,7 +39,7 @@ public class StorageServiceImpl implements StorageService {
             return true;
         } catch (IOException e) {
             LOG.error("Error while system try to write " + file.getOriginalFilename());
-            throw new Exception("\"Error while system try to write \" + file.getOriginalFilename()", e);
+            throw new Exception("Error while system try to write " + file.getOriginalFilename(), e);
         }
 
     }
@@ -85,11 +85,11 @@ public class StorageServiceImpl implements StorageService {
         return files;
     }
 
-    public InputStreamResource prepareFileForDownload(Integer profileId, String photoName) throws FileNotFoundException {
+    public InputStreamResource prepareFileForDownload(String path) throws FileNotFoundException {
         InputStreamResource resource = null;
         try {
-            Path pathToPhoto = Paths.get(MAIN_PATH + "\\" + profileId + "\\images\\" + photoName);
-            resource = new InputStreamResource(Files.newInputStream(pathToPhoto));
+            Path pathTofile = Paths.get(MAIN_PATH + path);
+            resource = new InputStreamResource(Files.newInputStream(pathTofile));
             return resource;
         } catch (IOException e) {
             throw new FileNotFoundException("No matched files found.");

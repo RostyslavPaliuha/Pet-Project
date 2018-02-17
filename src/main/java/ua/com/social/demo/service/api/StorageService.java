@@ -20,7 +20,7 @@ public interface StorageService {
 
     public List getFilesNamesFromDir(String path);
 
-    public InputStreamResource prepareFileForDownload(Integer profileId, String photoName) throws IOException;
+    public InputStreamResource prepareFileForDownload(String path) throws IOException;
 
     public Map<String, String> downloadPreviews(String path);
 }
