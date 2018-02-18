@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.service.api.AccountService;
+import ua.com.social.demo.service.impl.RegistrationServiceImpl;
 
 import java.util.Optional;
 
@@ -32,12 +33,12 @@ public class AccountServiceImplTest {
 
     @Before
     public void setUp() {
-        accountService.persist(new Account("test@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni"));
+        accountService.persist(new Account("test@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni", RegistrationServiceImpl.prepareActivateLink()));
     }
 
     @Test
     public void persist() throws Exception {
-        Optional optional = accountService.persist(new Account("test1@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni"));
+        Optional optional = accountService.persist(new Account("test1@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni",RegistrationServiceImpl.prepareActivateLink()));
         assertTrue(optional.isPresent());
         assertEquals(new Integer(5), optional.get());
     }

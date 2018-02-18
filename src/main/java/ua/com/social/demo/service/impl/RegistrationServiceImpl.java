@@ -16,7 +16,9 @@ import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.api.RegistrationService;
 import ua.com.social.demo.service.api.StorageService;
 
+import java.nio.charset.Charset;
 import java.security.InvalidParameterException;
+import java.util.Random;
 
 
 @Service("registrationService")
@@ -35,10 +37,13 @@ public class RegistrationServiceImpl implements RegistrationService {
     private PasswordEncoder encoder;
     @Autowired
     private StorageService storageService;
+    @Autowired
+    private EmailServiceImpl emailService;
 
     public void register(FullProfileDto fullProfileDto) {
+        Integer hash = prepareActivateLink();
         try {
-            Integer accountId = accountRepository.create(new Account(fullProfileDto.getEmail(), encoder.encode(fullProfileDto.getPassword())));
+            Integer accountId = accountRepository.create(new Account(fullProfileDto.getEmail(), encoder.encode(fullProfileDto.getPassword()), hash));
             Profile profile = new Profile();
             profile.setAccountId(accountId);
             Integer profileId = profileRepository.create(profile);
@@ -51,10 +56,27 @@ public class RegistrationServiceImpl implements RegistrationService {
             profileDetails.setProfileId(profileId);
             Integer profileDetailId = profileDetailsRepository.create(profileDetails);
             storageService.mkDirForNewUser(profileId);
+            String msg = "Congratulation! This is the last step of registration. To activate your account click on this link: http://localhost:8181/auth/activate/" + fullProfileDto.getEmail() + "/?hash=" + hash;
+            emailService.sendSimpleMessage(fullProfileDto.getEmail(), "Activate service message.", msg);
         } catch (DuplicateKeyException dke) {
             throw new InvalidParameterException("This email is used, try differently. " + dke.getMessage());
         } catch (Exception e) {
             LOG.error("Error while registering profile" + e.getMessage(), e);
+        }
+    }
+
+    public static Integer prepareActivateLink() {
+       Integer generatedInt=(int)(Math.random()*1000000);
+        return generatedInt;
+    }
+
+    public boolean activateAccount(String email, Integer hash) {
+        Account account = accountRepository.getByEmail(email);
+        if (account.getActivateHash().equals(hash)) {
+            accountRepository.updateActivationStatus(email);
+            return true;
+        } else {
+            return false;
         }
     }
 }

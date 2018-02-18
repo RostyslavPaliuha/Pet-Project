@@ -16,6 +16,7 @@ import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.repository.api.AccountRepository;
 import ua.com.social.demo.repository.api.ProfileDetailsRepository;
 import ua.com.social.demo.repository.api.ProfileRepository;
+import ua.com.social.demo.service.impl.RegistrationServiceImpl;
 
 import java.time.LocalDate;
 
@@ -41,7 +42,7 @@ public class ProfileDetailsRepositoryTest {
     private ProfileDetails updateProfileDetails;
 
     public ProfileDetailsRepositoryTest() {
-        this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
+        this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni", RegistrationServiceImpl.prepareActivateLink());
         this.profile = new Profile();
         this.profileDetails = new ProfileDetails("testName", "testLastNAme", ProfileDetails.Sex.male, LocalDate.of(1992, 03, 16));
         updateProfileDetails = new ProfileDetails("UpdatedTestName", "UpdatedTestLastNAme", ProfileDetails.Sex.male, LocalDate.of(1992, 03, 16));
@@ -49,7 +50,7 @@ public class ProfileDetailsRepositoryTest {
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void persist_Get_Update() throws Exception {
-        Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
+        Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword(),RegistrationServiceImpl.prepareActivateLink()));
         profile.setAccountId(accountId);
         Integer profileId = profileRepository.create(profile);
         profileDetails.setProfileId(profileId);

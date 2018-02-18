@@ -15,6 +15,7 @@ import ua.com.social.demo.repository.api.ConversationRepository;
 import ua.com.social.demo.repository.api.ProfileDetailsRepository;
 import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.api.MessageService;
+import ua.com.social.demo.service.impl.RegistrationServiceImpl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -47,7 +48,7 @@ public class ConversationRepositoryImplTest {
     private Conversation secondConversation;
 
     public ConversationRepositoryImplTest() {
-        this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
+        this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni", RegistrationServiceImpl.prepareActivateLink());
         this.profile = new Profile();
         this.profileDetails = new ProfileDetails("testName", "testLastNAme", ProfileDetails.Sex.male, LocalDate.of(1992, 03, 16));
         this.firstConversation = new Conversation();

@@ -6,10 +6,30 @@ public class Account implements DomainObject {
     private int accountId;
     private String email;
     private String password;
+    private int activate;
 
-    public Account(String email, String password) {
+    private Integer activateHash;
+
+    public Integer getActivateHash() {
+        return activateHash;
+    }
+
+    public void setActivateHash(Integer activateHash) {
+        this.activateHash = activateHash;
+    }
+
+    public int getStatus() {
+        return activate;
+    }
+
+    public void setStatus(int activate) {
+        this.activate = activate;
+    }
+
+    public Account(String email, String password, Integer hash) {
         this.email = email;
         this.password = password;
+        this.activateHash = hash;
     }
 
     public Account(int accountId) {

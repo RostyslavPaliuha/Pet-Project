@@ -25,9 +25,10 @@ public class AccountRepositoryImpl extends AbstractRepository<Account> implement
     public Integer create(Account account) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
-                    PreparedStatement ps = connection.prepareStatement("INSERT INTO account(email,password) VALUES (?,?);", new String[]{"account_id"});
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO account(email,password,activateHash) VALUES (?,?,?);", new String[]{"account_id"});
                     ps.setString(1, account.getEmail());
                     ps.setString(2, account.getPassword());
+                    ps.setInt(3, account.getActivateHash());
                     return ps;
                 },
                 keyHolder);
@@ -59,6 +60,12 @@ public class AccountRepositoryImpl extends AbstractRepository<Account> implement
     @Override
     public void updatePassword(String password, Integer profileId) throws Exception {
         jdbcOperations.update("UPDATE account SET password=? WHERE account_id=(SELECT account_id FROM profile WHERE profile_id=?)", new Object[]{password, profileId});
+    }
+
+    @Override
+    public boolean updateActivationStatus(String email) {
+        jdbcOperations.update("UPDATE account SET activate=1 WHERE email=?", new Object[]{email});
+        return true;
     }
 
 }

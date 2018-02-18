@@ -12,5 +12,5 @@ public interface AccountRepository extends EntityRepository<Account> {
 
     void updatePassword(String password, Integer profileId) throws Exception;
 
-
+    boolean updateActivationStatus(String email);
 }

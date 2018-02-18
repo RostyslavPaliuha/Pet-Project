@@ -13,6 +13,8 @@ public class AccountRowMapper implements RowMapper<Account> {
         account.setAccountId(rs.getInt("account_id"));
         account.setEmail(rs.getString("email"));
         account.setPassword(rs.getString("password"));
+        account.setStatus(rs.getInt("activate"));
+        account.setActivateHash(rs.getInt("activateHash"));
         return account;
     }
 }

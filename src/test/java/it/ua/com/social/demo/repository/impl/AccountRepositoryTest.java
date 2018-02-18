@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.repository.api.AccountRepository;
+import ua.com.social.demo.service.impl.RegistrationServiceImpl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,7 +38,7 @@ public class AccountRepositoryTest {
 
     @Test
     public void persist_andGetByEmail() throws Exception {
-        accountRepository.create(new Account(account.getEmail(), account.getPassword()));
+        accountRepository.create(new Account(account.getEmail(), account.getPassword(), RegistrationServiceImpl.prepareActivateLink()));
         Account actual = accountRepository.getByEmail(account.getEmail());
         assertEquals(account.getEmail(), actual.getEmail());
     }
@@ -45,7 +46,7 @@ public class AccountRepositoryTest {
     @Test
     public void persistAndRetrieveId() throws Exception {
         account.setEmail("test2@gmail.com");
-        Integer id = accountRepository.create(new Account(account.getEmail(), account.getPassword()));
+        Integer id = accountRepository.create(new Account(account.getEmail(), account.getPassword(),RegistrationServiceImpl.prepareActivateLink()));
         assertEquals(new Integer(4), id);
     }
 

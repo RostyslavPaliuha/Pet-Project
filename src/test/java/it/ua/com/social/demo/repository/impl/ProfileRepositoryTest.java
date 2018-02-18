@@ -14,6 +14,7 @@ import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.entity.impl.Profile;
 import ua.com.social.demo.repository.api.AccountRepository;
 import ua.com.social.demo.repository.api.ProfileRepository;
+import ua.com.social.demo.service.impl.RegistrationServiceImpl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,7 +34,7 @@ public class ProfileRepositoryTest {
     private Profile profile;
 
     public ProfileRepositoryTest() {
-        this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni");
+        this.account = new Account("testAccount@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni", RegistrationServiceImpl.prepareActivateLink());
         this.profile = new Profile();
     }
 

@@ -25,12 +25,13 @@ public class ProfileDetailsRepositoryImpl extends AbstractRepository<ProfileDeta
     public Integer create(ProfileDetails profileDetails) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcOperations.update(connection -> {
-                    PreparedStatement ps = connection.prepareStatement("INSERT INTO profile_details(first_name, last_name, sex, birthday,profile_id) VALUES (?,?,?,?,?);", new String[]{"profile_details_id"});
+                    PreparedStatement ps = connection.prepareStatement("INSERT INTO profile_details(first_name, last_name, sex, birthday,profile_id,country) VALUES (?,?,?,?,?,?);", new String[]{"profile_details_id"});
                     ps.setString(1, profileDetails.getFirstName());
                     ps.setString(2, profileDetails.getLastName());
                     ps.setString(3, profileDetails.getSex());
                     ps.setDate(4, Date.valueOf(profileDetails.getBirthDay()));
                     ps.setInt(5, profileDetails.getProfileId());
+                    ps.setString(6,profileDetails.getCountry());
                     return ps;
                 },
                 keyHolder);

@@ -12,12 +12,13 @@ import ua.com.social.demo.service.api.ProfileDetailsService;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@RequestMapping("api/profile/{id}")
 public class ProfileDetailsController {
     private static final Logger LOG = Logger.getLogger(ProfileDetailsController.class);
     @Autowired
     private ProfileDetailsService profileDetailsService;
 
-    @GetMapping("api/profile/{id}")
+    @GetMapping
     public ResponseEntity get(@PathVariable("id") Integer profileId) {
         try {
             ProfileDetails details = profileDetailsService.get(profileId).get();
@@ -28,7 +29,7 @@ public class ProfileDetailsController {
         }
     }
 
-    @PutMapping("api/profile/{id}/update")
+    @PutMapping("/update")
     public ResponseEntity update(@PathVariable("id") Integer profileId, @RequestBody ProfileDetails profileDetails, HttpServletRequest request) {
         try {
             if (profileId == TokenAuthenticationService.getAccountIdFromToken(request.getHeader("Authentication"))) {
