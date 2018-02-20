@@ -10,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
@@ -23,7 +22,6 @@ import javax.servlet.Filter;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertNotEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -31,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
-public class ConversationControllerTest  extends LoginControllerTest{
+public class ConversationControllerTest extends LoginControllerTest {
     private MockMvc mockMvc;
     @Autowired
     private WebApplicationContext context;
@@ -55,8 +53,8 @@ public class ConversationControllerTest  extends LoginControllerTest{
 
     @Test
     public void login_postMessage_reviewConversations_reviewConversation() throws Exception {
-      login();
-      String token=super.getHeader();
+        login();
+        String token = super.getHeader();
         mockMvc.perform(post("/api/profile/1/send-msg-to/2")
                 .header("Authentication", token)
                 .content("{\"messageContent\":\"TEST MESSAGE\"}")

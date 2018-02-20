@@ -56,7 +56,7 @@ public class PostRepositoryTest {
         assertEquals(new Integer(postsFromTestWall.size()), new Integer(2));
         postRepository.delete(postId);
         List<Post> posts = postRepository.getAllFromWall(1);
-        assertEquals( new Integer(1),new Integer(posts.size()));
+        assertEquals(new Integer(1), new Integer(posts.size()));
 
     }
 }

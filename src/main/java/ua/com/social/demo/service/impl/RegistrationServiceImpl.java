@@ -16,9 +16,7 @@ import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.service.api.RegistrationService;
 import ua.com.social.demo.service.api.StorageService;
 
-import java.nio.charset.Charset;
 import java.security.InvalidParameterException;
-import java.util.Random;
 
 
 @Service("registrationService")
@@ -39,6 +37,11 @@ public class RegistrationServiceImpl implements RegistrationService {
     private StorageService storageService;
     @Autowired
     private EmailServiceImpl emailService;
+
+    public static Integer prepareActivateLink() {
+        Integer generatedInt = (int) (Math.random() * 1000000);
+        return generatedInt;
+    }
 
     public void register(FullProfileDto fullProfileDto) {
         Integer hash = prepareActivateLink();
@@ -63,11 +66,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         } catch (Exception e) {
             LOG.error("Error while registering profile" + e.getMessage(), e);
         }
-    }
-
-    public static Integer prepareActivateLink() {
-       Integer generatedInt=(int)(Math.random()*1000000);
-        return generatedInt;
     }
 
     public boolean activateAccount(String email, Integer hash) {

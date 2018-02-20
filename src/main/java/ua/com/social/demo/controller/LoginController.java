@@ -46,7 +46,7 @@ public class LoginController {
                 String fullToken = TokenAuthenticationService.createToken(account, profileId);
                 response.addHeader(HEADER_NAME, fullToken);
                 Optional<ProfileDetails> details = profileDetailsService.get(profileId);
-                return new  ResponseEntity(details.get(),HttpStatus.OK);
+                return new ResponseEntity(details.get(), HttpStatus.OK);
             } else if (account.getStatus() == 0) {
                 LOG.info("Account does not have activate email.");
                 return new ResponseEntity("Please check your email, and click on the activate link in it. Or request it again.", HttpStatus.CONFLICT);

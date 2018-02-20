@@ -7,7 +7,20 @@ public class Account implements DomainObject {
     private String email;
     private String password;
     private int activate;
+    private Integer activateHash;
 
+    public Account(String email, String password, Integer hash) {
+        this.email = email;
+        this.password = password;
+        this.activateHash = hash;
+    }
+
+    public Account(int accountId) {
+        this.accountId = accountId;
+    }
+
+    public Account() {
+    }
 
     public int getActivate() {
         return activate;
@@ -16,8 +29,6 @@ public class Account implements DomainObject {
     public void setActivate(int activate) {
         this.activate = activate;
     }
-
-    private Integer activateHash;
 
     public Integer getActivateHash() {
         return activateHash;
@@ -33,19 +44,6 @@ public class Account implements DomainObject {
 
     public void setStatus(int activate) {
         this.activate = activate;
-    }
-
-    public Account(String email, String password, Integer hash) {
-        this.email = email;
-        this.password = password;
-        this.activateHash = hash;
-    }
-
-    public Account(int accountId) {
-        this.accountId = accountId;
-    }
-
-    public Account() {
     }
 
     public int getAccountId() {

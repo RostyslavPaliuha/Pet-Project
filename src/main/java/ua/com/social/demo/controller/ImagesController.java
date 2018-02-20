@@ -24,7 +24,7 @@ public class ImagesController {
     @GetMapping
     public ResponseEntity downloadPhoto(@PathVariable("id") Integer id, @RequestParam(value = "photoName") String photoName) {
         try {
-            String path="\\"+id+"\\images\\"+photoName;
+            String path = "\\" + id + "\\images\\" + photoName;
             InputStreamResource resource = storageService.prepareFileForDownload(path);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
@@ -48,7 +48,7 @@ public class ImagesController {
                 LOG.error("Unsuccessful attempt to save data. " + e.getMessage());
                 return new ResponseEntity("Unsuccessful attempt to save data.", HttpStatus.BAD_REQUEST);
             } catch (Exception e) {
-                LOG.error("Unsuccessful attempt to save data. "+ e.getMessage());
+                LOG.error("Unsuccessful attempt to save data. " + e.getMessage());
                 return new ResponseEntity("Unsuccessful attempt to save data.", HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity("Successfully uploaded - " +

@@ -1,4 +1,5 @@
 $("#header").load("./components/header/header.html ");
+
 /*$.ajaxSetup({
 
     headers: {'Authentication':sessionStorage.getItem('token')}

@@ -14,7 +14,6 @@ import ua.com.social.demo.repository.api.AccountRepository;
 import ua.com.social.demo.repository.api.ProfileDetailsRepository;
 import ua.com.social.demo.repository.api.ProfileRepository;
 import ua.com.social.demo.repository.impl.FriendListRepositoryImpl;
-import ua.com.social.demo.service.api.RegistrationService;
 import ua.com.social.demo.service.impl.RegistrationServiceImpl;
 
 import java.time.LocalDate;

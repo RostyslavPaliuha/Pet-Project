@@ -38,7 +38,7 @@ public class AccountServiceImplTest {
 
     @Test
     public void persist() throws Exception {
-        Optional optional = accountService.persist(new Account("test1@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni",RegistrationServiceImpl.prepareActivateLink()));
+        Optional optional = accountService.persist(new Account("test1@gmail.com", "$2a$04$8exKZMIRO8IfE/t8rZR10eJr88mM9y6gjQIIQ66PPP/i6SSF96Mni", RegistrationServiceImpl.prepareActivateLink()));
         assertTrue(optional.isPresent());
         assertEquals(new Integer(5), optional.get());
     }

@@ -46,7 +46,7 @@ public class AccountRepositoryTest {
     @Test
     public void persistAndRetrieveId() throws Exception {
         account.setEmail("test2@gmail.com");
-        Integer id = accountRepository.create(new Account(account.getEmail(), account.getPassword(),RegistrationServiceImpl.prepareActivateLink()));
+        Integer id = accountRepository.create(new Account(account.getEmail(), account.getPassword(), RegistrationServiceImpl.prepareActivateLink()));
         assertEquals(new Integer(4), id);
     }
 

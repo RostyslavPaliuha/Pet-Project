@@ -30,14 +30,14 @@ public class RegistrationController {
     @PostMapping("auth/activate/{email}")
     public ResponseEntity activateAccount(@PathVariable("email") String email, @RequestParam("hash") Integer hash) {
         try {
-            if(registrationService.activateAccount(email, hash)) {
+            if (registrationService.activateAccount(email, hash)) {
                 return new ResponseEntity("Congratulation you activate your account! Now you can login.", HttpStatus.OK);
-            }else{
-                return new ResponseEntity("Something wrong during activation attempt. Try to request new activation Link on your email.",HttpStatus.FORBIDDEN);
+            } else {
+                return new ResponseEntity("Something wrong during activation attempt. Try to request new activation Link on your email.", HttpStatus.FORBIDDEN);
             }
         } catch (Exception e) {
             LOG.error(e.getMessage());
-            return new ResponseEntity("Something wrong during activation attempt. Try to request new activation Link on your email.",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Something wrong during activation attempt. Try to request new activation Link on your email.", HttpStatus.BAD_REQUEST);
         }
     }
 }

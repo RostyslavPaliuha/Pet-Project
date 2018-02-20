@@ -50,7 +50,7 @@ public class ProfileDetailsRepositoryTest {
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void persist_Get_Update() throws Exception {
-        Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword(),RegistrationServiceImpl.prepareActivateLink()));
+        Integer accountId = accountRepository.create(new Account(account.getEmail(), account.getPassword(), RegistrationServiceImpl.prepareActivateLink()));
         profile.setAccountId(accountId);
         Integer profileId = profileRepository.create(profile);
         profileDetails.setProfileId(profileId);

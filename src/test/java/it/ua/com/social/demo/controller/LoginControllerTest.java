@@ -32,21 +32,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
 public class LoginControllerTest {
-    @Autowired
-    private WebApplicationContext context;
-    @Autowired
-    private Filter springSecurityFilterChain;
     protected MockMvc mockMvc;
-    private String header;
     @MockBean
     protected AccountService accountService;
     @MockBean
     protected ProfileService profileService;
     @MockBean
     protected ProfileDetailsService profileDetailsService;
+    protected ProfileDetails profileDetails;
+    @Autowired
+    private WebApplicationContext context;
+    @Autowired
+    private Filter springSecurityFilterChain;
+    private String header;
     private Account account;
     private Profile profile;
-    protected ProfileDetails profileDetails;
 
     public LoginControllerTest() {
         account = new Account();

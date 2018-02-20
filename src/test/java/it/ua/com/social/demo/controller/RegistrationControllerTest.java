@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
-import ua.com.social.demo.dto.FullProfileDto;
 import ua.com.social.demo.service.api.RegistrationService;
 
 import static org.mockito.Matchers.any;
@@ -29,6 +28,7 @@ public class RegistrationControllerTest {
     private MockMvc mockMvc;
     @SpyBean
     private RegistrationService registrationService;
+
     @Before
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();

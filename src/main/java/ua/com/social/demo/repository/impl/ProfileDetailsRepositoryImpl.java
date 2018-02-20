@@ -31,7 +31,7 @@ public class ProfileDetailsRepositoryImpl extends AbstractRepository<ProfileDeta
                     ps.setString(3, profileDetails.getSex());
                     ps.setDate(4, Date.valueOf(profileDetails.getBirthDay()));
                     ps.setInt(5, profileDetails.getProfileId());
-                    ps.setString(6,profileDetails.getCountry());
+                    ps.setString(6, profileDetails.getCountry());
                     return ps;
                 },
                 keyHolder);
