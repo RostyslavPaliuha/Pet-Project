@@ -1,70 +1,38 @@
 package it.ua.com.social.demo.controller;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.com.social.demo.DemoApplication;
-import ua.com.social.demo.entity.impl.ProfileDetails;
-import ua.com.social.demo.service.api.ProfileDetailsService;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
-
-public class ProfileDetailsControllerTest {
-    @MockBean
-    private ProfileDetailsService profileDetailsService;
-    @Autowired
-    private WebApplicationContext context;
-    private MockMvc mockMvc;
-
-    @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-        ProfileDetails profileDetails = new ProfileDetails();
-        profileDetails.setProfileId(1);
-        profileDetails.setFirstName("Test");
-        profileDetails.setLastName("Test");
-        profileDetails.setBirthDay(LocalDate.of(1992, 03, 16));
-        profileDetails.setSex("male");
+public class ProfileDetailsControllerTest extends LoginControllerTest {
+    @Test
+    public void login_reviewProfile_update() throws Exception {
         Mockito.when(profileDetailsService.get(profileDetails.getProfileId()))
                 .thenReturn(Optional.ofNullable(profileDetails));
         Mockito.when(profileDetailsService.update(profileDetails)).thenReturn(true);
-    }
-
-    @Test
-    public void login_reviewProfile_update() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(post("/auth/login").content("{\n" +
-                "\t\"email\":\"pro@gmail.com\",\n" +
-                "\t\"password\":\"1111\"\n" +
-                "}").contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk())
-                .andReturn();
-        String token = mvcResult.getResponse().getHeader("Authentication");
+        login();
+        String token = getHeader();
         mockMvc.perform(get("/api/profile/1")
                 .header("Authentication", token))
                 .andExpect(status().isOk()).
                 andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(jsonPath("firstName").value("Test"))
-                .andExpect(jsonPath("lastName").value("Test"));
+                .andExpect(jsonPath("firstName").value("Rostyslav"))
+                .andExpect(jsonPath("lastName").value("Paliuha"));
         mockMvc.perform(put("/api/profile/1/update")
                 .header("Authentication", token)
-                .content("{\"firstName\":\"Rostyslav\",\"lastName\":\"Paliuha\"}")
+                .content("{\"firstName\":\"RostyslavUpdate\",\"lastName\":\"PaliuhaUpdate\"}")
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
         mockMvc.perform(put("/api/profile/2/update")

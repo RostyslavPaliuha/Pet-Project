@@ -16,9 +16,13 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.com.social.demo.DemoApplication;
 import ua.com.social.demo.entity.impl.Account;
 import ua.com.social.demo.entity.impl.Profile;
+import ua.com.social.demo.entity.impl.ProfileDetails;
 import ua.com.social.demo.service.api.AccountService;
+import ua.com.social.demo.service.api.ProfileDetailsService;
 import ua.com.social.demo.service.api.ProfileService;
 
+import javax.servlet.Filter;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
@@ -30,14 +34,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LoginControllerTest {
     @Autowired
     private WebApplicationContext context;
-    private MockMvc mockMvc;
+    @Autowired
+    private Filter springSecurityFilterChain;
+    protected MockMvc mockMvc;
     private String header;
     @MockBean
-    AccountService accountService;
+    protected AccountService accountService;
     @MockBean
-    ProfileService profileService;
+    protected ProfileService profileService;
+    @MockBean
+    protected ProfileDetailsService profileDetailsService;
     private Account account;
-private Profile profile;
+    private Profile profile;
+    protected ProfileDetails profileDetails;
+
     public LoginControllerTest() {
         account = new Account();
         account.setEmail("rostyslavpaliuha@gmail.com");
@@ -46,13 +56,22 @@ private Profile profile;
         account.setActivate(1);
         profile = new Profile();
         profile.setProfileId(1);
+        profile.setAccountId(1);
+        profileDetails = new ProfileDetails();
+        profileDetails.setProfileId(1);
+        profileDetails.setFirstName("Rostyslav");
+        profileDetails.setLastName("Paliuha");
+        profileDetails.setBirthDay(LocalDate.of(1992, 03, 16));
+        profileDetails.setSex("male");
+        profileDetails.setCountry("IF");
     }
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilters(springSecurityFilterChain).build();
         Mockito.when(accountService.getByEmail("rostyslavpaliuha@gmail.com")).thenReturn(Optional.of(account));
         Mockito.when(profileService.get(1)).thenReturn(Optional.of(profile));
+        Mockito.when(profileDetailsService.get(1)).thenReturn(Optional.of(profileDetails));
     }
 
     @Test

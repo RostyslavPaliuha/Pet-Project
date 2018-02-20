@@ -29,8 +29,6 @@ public class RegistrationControllerTest {
     private MockMvc mockMvc;
     @SpyBean
     private RegistrationService registrationService;
-    private FullProfileDto fullProfileDto;
-
     @Before
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();

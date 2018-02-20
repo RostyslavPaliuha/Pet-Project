@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
-public class ConversationControllerTest {
+public class ConversationControllerTest  extends LoginControllerTest{
     private MockMvc mockMvc;
     @Autowired
     private WebApplicationContext context;
@@ -55,14 +55,8 @@ public class ConversationControllerTest {
 
     @Test
     public void login_postMessage_reviewConversations_reviewConversation() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(post("/auth/login").content("{\n" +
-                "\t\"email\":\"pro@gmail.com\",\n" +
-                "\t\"password\":\"1111\"\n" +
-                "}").contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk()).andDo(print())
-                .andReturn();
-        String token = mvcResult.getResponse().getHeader("Authentication");
-        assertNotEquals("", token);
+      login();
+      String token=super.getHeader();
         mockMvc.perform(post("/api/profile/1/send-msg-to/2")
                 .header("Authentication", token)
                 .content("{\"messageContent\":\"TEST MESSAGE\"}")

@@ -7,18 +7,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.com.social.demo.entity.impl.Friend;
 import ua.com.social.demo.entity.impl.FriendList;
+import ua.com.social.demo.service.api.FriendListService;
 import ua.com.social.demo.service.impl.FriendListServiceImpl;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("api/profile/{profileId}")
 public class FriendsListController {
     private static final Logger LOG = Logger.getLogger(FriendsListController.class);
     @Autowired
-    private FriendListServiceImpl friendListService;
+    private FriendListService friendListService;
 
-    @GetMapping("api/profile/{id}/friends")
-    public ResponseEntity getFriendList(@PathVariable("id") Integer id) {
+    @GetMapping("/friends")
+    public ResponseEntity getFriendList(@PathVariable("profileId") Integer id) {
         try {
             List<Friend> friends = friendListService.getFriendList(id);
             return new ResponseEntity(friends, HttpStatus.OK);
@@ -28,7 +30,7 @@ public class FriendsListController {
         }
     }
 
-    @PostMapping("api/profile/{profileId}/add-friend/{friendId}")
+    @PostMapping("/add-friend/{friendId}")
     public ResponseEntity addNewFriend(@PathVariable("profileId") Integer profileId, @PathVariable("friendId") Integer friendProfileId) {
         try {
             FriendList friendList = new FriendList();
@@ -42,7 +44,7 @@ public class FriendsListController {
         }
     }
 
-    @DeleteMapping("api/profile/{profileId}/delete-friend/{friendId}")
+    @DeleteMapping("/delete-friend/{friendId}")
     public ResponseEntity deleteFriend(@PathVariable("profileId") Integer profileId, @PathVariable("friendId") Integer friendProfileId) {
         try {
             friendListService.delete(profileId, friendProfileId);
