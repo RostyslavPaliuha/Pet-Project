@@ -29,6 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = DemoApplication.class)
 public class PhotoUploadControllerTest extends LoginControllerTest{
 
+
+
     @Test
     public void uploadFile() throws Exception {
         super.login();
