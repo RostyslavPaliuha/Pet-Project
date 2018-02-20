@@ -8,6 +8,15 @@ public class Account implements DomainObject {
     private String password;
     private int activate;
 
+
+    public int getActivate() {
+        return activate;
+    }
+
+    public void setActivate(int activate) {
+        this.activate = activate;
+    }
+
     private Integer activateHash;
 
     public Integer getActivateHash() {
