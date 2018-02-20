@@ -34,8 +34,8 @@ public class LoginControllerTest {
     public void login() throws Exception {
         String url = new StringBuilder().append("/auth/login").toString();
         MvcResult mvcResult = mockMvc.perform(post(url).content("{\n" +
-                "\t\"email\":\"pro@gmail.com\",\n" +
-                "\t\"password\":\"1111\"\n" +
+                "\t\"email\":\"rostyslavpaliuha@gmail.com\",\n" +
+                "\t\"password\":\"16031992pro\"\n" +
                 "}").contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn();
